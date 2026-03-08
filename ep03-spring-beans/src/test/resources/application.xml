@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+    <!-- bean definitions here -->
+    <bean id="userName" class="java.lang.String">
+    	<constructor-arg value="Aung Aung" />
+    </bean>
+    
+    <bean id="user" class="com.jdc.bean.User">
+    	<constructor-arg name="name" ref="userName" />
+    	<constructor-arg name="phone" value="09782003098" />
+    	<constructor-arg name="email" value="aung@gmail.com" />
+    </bean>
+    
+    <bean id="defaultUser" class="com.jdc.bean.User"></bean>
+    
+    <bean id="thidar" class="com.jdc.bean.User" factory-method="createWithName">
+    	<constructor-arg value="Thidar" />
+    </bean>
+    
+    <bean id="nilar" factory-bean="user" factory-method="clone">
+    	<constructor-arg value="Nilar" />
+    </bean>
+
+</beans>
