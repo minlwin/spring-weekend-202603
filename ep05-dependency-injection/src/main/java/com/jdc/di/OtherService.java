@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MyService {
+public class OtherService {
 
 	@Autowired
-	private MyClient[] clients;
+	private MyClient client;
 	
 	public void showMessage() {
-		for(var client : clients) {
-			System.out.println(client.greet());
-		}
+		System.out.println(client.greet());
 	}
+	
 }

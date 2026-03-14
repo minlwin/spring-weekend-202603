@@ -11,10 +11,9 @@ public class BeanConfigTest {
 	void testConfig() {
 		try(var context = new ClassPathXmlApplicationContext(
 				"/application.xml",
-				"/default-config.xml",
-				"/custom-config.xml")) {
+				"/default-config.xml")) {
 			
-			var service = context.getBean(MyService.class);
+			var service = context.getBean(OtherService.class);
 			assertNotNull(service);
 			
 			service.showMessage();

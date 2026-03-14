@@ -7,8 +7,6 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
     <!-- bean definitions here -->
-    <bean id="defaultClient" class="com.jdc.di.MyClientDefault">
-    	<qualifier value="default" />
-    </bean>
+    <bean id="defaultClient" class="com.jdc.di.MyClientDefault" />
 
 </beans>
