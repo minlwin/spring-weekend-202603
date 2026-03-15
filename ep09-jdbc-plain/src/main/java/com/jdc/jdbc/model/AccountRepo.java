@@ -35,4 +35,9 @@ public class AccountRepo {
 		
 		return result;
 	}
+
+	public Account findById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
