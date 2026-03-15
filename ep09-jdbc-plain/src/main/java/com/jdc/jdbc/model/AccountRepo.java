@@ -1,5 +1,6 @@
 package com.jdc.jdbc.model;
 
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,49 @@ public class AccountRepo {
 	}
 
 	public Account findById(int id) {
-		// TODO Auto-generated method stub
+		try(var connection = dataSource.getConnection();
+				var stmt = connection.prepareStatement("select * from account where id = ?")) {
+			
+			stmt.setInt(1, id);
+			var resultSet = stmt.executeQuery();
+			
+			while(resultSet.next()) {
+				return new Account(
+						resultSet.getInt("id"), 
+						resultSet.getString("name"), 
+						resultSet.getString("phone"), 
+						resultSet.getString("email"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return null;
+	}
+	
+	public int create(String name, String phone, String email) {
+		try(var connection = dataSource.getConnection();
+				var stmt = connection.prepareStatement(
+						"insert into account (name, phone, email) values (?, ?, ?)", 
+						Statement.RETURN_GENERATED_KEYS
+				)) {
+			
+			stmt.setString(1, name);
+			stmt.setString(2, phone);
+			stmt.setString(3, email);
+			
+			stmt.executeUpdate();
+			
+			var rs = stmt.getGeneratedKeys();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 0;
 	}
 }

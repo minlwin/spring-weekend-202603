@@ -4,19 +4,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
+@TestMethodOrder(OrderAnnotation.class)
 public class AccountRepoTest {
 
 	@Autowired
 	private AccountRepo repo;
 	
 	@Test
+	@Order(1)
 	void test_getAll() {
 		var result = repo.getAll();
 		assertNotNull(result);
@@ -33,6 +38,7 @@ public class AccountRepoTest {
 		}
 	}
 	
+	@Order(2)
 	@ParameterizedTest
 	@ValueSource(ints = {
 		1, 2, 3	
@@ -46,9 +52,25 @@ public class AccountRepoTest {
 		assertEquals("email%d".formatted(id), account.email());
 	}
 	
+	@Order(3)
 	@Test
 	void test_findById_notFound() {
 		var account = repo.findById(4);
 		assertNull(account);
+	}
+	
+	
+	@Order(4)
+	@ParameterizedTest
+	@ValueSource(ints = {
+		1, 2, 3	
+	})
+	void test_create_success(int num) {
+		var result = repo.create(
+				"name%d".formatted(num), 
+				"phone%d".formatted(num), 
+				"email%d".formatted(num));
+		
+		assertEquals(num + 3, result);
 	}
 }
