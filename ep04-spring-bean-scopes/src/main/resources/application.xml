@@ -7,11 +7,13 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
     <!-- bean definitions here -->
+    <context:annotation-config />
+    
     <bean id="aungAung" class="com.jdc.bean.User">
     	<constructor-arg value="Aung Aung" />
     </bean>
     
-    <bean class="com.jdc.bean.UserWrapper">
+    <bean class="com.jdc.bean.UserWrapper" scope="prototype">
     	<property name="theUser" ref="aungAung" />
     </bean>
 

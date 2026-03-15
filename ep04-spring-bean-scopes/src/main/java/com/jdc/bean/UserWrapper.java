@@ -16,12 +16,12 @@ public class UserWrapper {
 	}
 
 	@PostConstruct
-	public void init() throws Exception {
+	public void initBean() {
 		System.out.println(user.getName());
 	}
 
 	@PreDestroy
-	public void destroy() throws Exception {
+	public void destroyBean() {
 		System.out.println("%s has to destroy".formatted(user.getName()));
 	}
 }
