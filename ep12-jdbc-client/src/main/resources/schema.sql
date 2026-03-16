@@ -1,3 +1,4 @@
+SET FOREIGN_KEY_CHECKS = 0;
 --
 -- Courses Table
 --
@@ -45,3 +46,6 @@ CREATE TABLE registrations (
     CONSTRAINT registration_class FOREIGN KEY (classes_id) REFERENCES classes(id),
     CONSTRAINT registration_student FOREIGN KEY (students_id) REFERENCES students(id)
 );
+
+SET FOREIGN_KEY_CHECKS = 1;
+
