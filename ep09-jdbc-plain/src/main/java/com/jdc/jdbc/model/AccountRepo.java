@@ -63,20 +63,17 @@ public class AccountRepo {
 		try(var connection = dataSource.getConnection();
 				var stmt = connection.prepareStatement(
 						"insert into account (name, phone, email) values (?, ?, ?)", 
-						Statement.RETURN_GENERATED_KEYS
-				)) {
+						Statement.RETURN_GENERATED_KEYS)) {
 			
 			stmt.setString(1, name);
 			stmt.setString(2, phone);
 			stmt.setString(3, email);
-			
 			stmt.executeUpdate();
 			
 			var rs = stmt.getGeneratedKeys();
 			if(rs.next()) {
 				return rs.getInt(1);
-			}
-			
+			}		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
