@@ -1,6 +1,6 @@
 services:
   db:
-    image: mysql:8.0
+    image: mysql:9.6
     container_name: ep12_container
     restart: always
     environment:

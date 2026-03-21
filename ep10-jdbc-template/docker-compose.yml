@@ -1,7 +1,7 @@
 services:
   db:
-    image: mysql:8.0
-    container_name: ep10_container
+    image: mysql:9.6
+    container_name: ep10_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: admin
