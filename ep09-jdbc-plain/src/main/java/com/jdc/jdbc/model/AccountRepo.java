@@ -1,5 +1,8 @@
 package com.jdc.jdbc.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +20,13 @@ public class AccountRepo {
 
 	public List<Account> getAll() {
 		var result = new ArrayList<Account>();
-		try(var connection = dataSource.getConnection();
-				var stmt = connection.prepareStatement("select * from account")) {
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			
+			connection = dataSource.getConnection();
+			stmt = connection.prepareStatement("select * from account");
 			
 			var resultSet = stmt.executeQuery();
 			
@@ -32,6 +40,24 @@ public class AccountRepo {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if(null != stmt) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(null != connection) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return result;
