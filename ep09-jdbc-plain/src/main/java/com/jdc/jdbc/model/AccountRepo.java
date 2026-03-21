@@ -106,4 +106,37 @@ public class AccountRepo {
 
 		return 0;
 	}
+
+	public Integer update(int id, String name, String phone, String email) {
+		
+		try(var conn = dataSource.getConnection();
+				var stmt = conn.prepareStatement("update account set name = ?, phone = ?, email = ? where id = ?")) {
+			
+			stmt.setString(1, name);
+			stmt.setString(2, phone);
+			stmt.setString(3, email);
+			stmt.setInt(4, id);
+			
+			return stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	public Integer deleteById(int id) {
+		try(var conn = dataSource.getConnection();
+				var stmt = conn.prepareStatement("delete from account where id = ?")) {
+			
+			stmt.setInt(1, id);
+			return stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 }
