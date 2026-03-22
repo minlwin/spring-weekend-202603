@@ -30,3 +30,4 @@ target
 .settings
 
 .DS_Store
+.factorypath
