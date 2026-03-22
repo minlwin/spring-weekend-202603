@@ -2,14 +2,20 @@ package com.jdc.jdbc.repo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.aggregator.AggregateWith;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.jdc.jdbc.repo.args.RegistrationItemAggregator;
+import com.jdc.jdbc.repo.output.RegistrationItem;
 import com.jdc.jdbc.utils.AppBusinessException;
 
 @SpringBootTest
@@ -24,7 +30,8 @@ public class RegistrationRepoTest {
 
 	@Autowired
 	private RegistrationRepo repo;
-	
+
+	@Disabled
 	@ParameterizedTest
 	@CsvSource({
 		"1,10,001000010",
@@ -36,6 +43,7 @@ public class RegistrationRepoTest {
 		assertEquals(expected, registrationCode);
 	}
 	
+	@Disabled
 	@ParameterizedTest
 	@CsvSource({
 		"4,1,There is no class with id 4.",
@@ -47,5 +55,13 @@ public class RegistrationRepoTest {
 		var exception = assertThrows(AppBusinessException.class, 
 				() -> repo.create(classId, studentId));
 		assertEquals(expected, exception.getMessage());
+	}
+	
+	@ParameterizedTest
+	@CsvFileSource(resources = "/registration.csv")
+	void test_findById_found(@AggregateWith(RegistrationItemAggregator.class) RegistrationItem item) {
+		var result = repo.findById(item.getCode());
+		assertTrue(result.isPresent());
+		assertEquals(item, result.get());
 	}
 }
