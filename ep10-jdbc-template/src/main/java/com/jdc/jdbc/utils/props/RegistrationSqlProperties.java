@@ -11,7 +11,7 @@ import lombok.Setter;
 public class RegistrationSqlProperties {
 
 	private String insert;
-	private String select;
+	private String search;
 	private String findById;
 	private String delete;	
 }
