@@ -89,21 +89,9 @@ public class RegistrationRepoTest {
 		"Java,,1,8",
 	})
 	void test_search(String key, String fromStr, String toStr, int expected) {
+		LocalDate from = getDate(fromStr);
+		LocalDate to = getDate(toStr);
 		
-		LocalDate from = null != fromStr ? switch(fromStr) {
-		case "0" -> LocalDate.now();
-		case "1" -> LocalDate.now().plusDays(1);
-		case "-1" -> LocalDate.now().minusDays(1);
-		default -> null;
-		} : null;
-		
-		LocalDate to = null != toStr ? switch(toStr) {
-		case "0" -> LocalDate.now();
-		case "1" -> LocalDate.now().plusDays(1);
-		case "-1" -> LocalDate.now().minusDays(1);
-		default -> null;
-		} : null;
-
 		var result = repo.search(new RegistrationSearch(key, from, to));
 		assertEquals(expected, result.size());
 	}
@@ -116,5 +104,14 @@ public class RegistrationRepoTest {
 	void test_delete(String code, int expected) {
 		var result = repo.delete(code);
 		assertEquals(expected, result);
+	}
+	
+	LocalDate getDate(String dateStr) {
+		return null != dateStr ? switch(dateStr) {
+		case "0" -> LocalDate.now();
+		case "1" -> LocalDate.now().plusDays(1);
+		case "-1" -> LocalDate.now().minusDays(1);
+		default -> null;
+		} : null;
 	}
 }

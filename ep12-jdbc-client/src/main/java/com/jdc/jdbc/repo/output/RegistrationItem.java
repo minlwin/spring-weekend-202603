@@ -13,4 +13,7 @@ public record RegistrationItem(
 		String phone,
 		String email) {
 
+	public String getCode() {
+		return "%03d%06d".formatted(classId, studentId);
+	}
 }

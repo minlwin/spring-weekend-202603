@@ -10,14 +10,13 @@ import com.jdc.jdbc.repo.output.CourseItem;
 
 public interface CourseRepo {
 
-	Integer create(CourseForm form);
+	List<CourseItem> search(CourseSearch form);
 	
 	Optional<CourseDetails> findById(int id);
 	
-	List<CourseItem> search(CourseSearch form);
+	Integer create(CourseForm form);
 	
 	int update(int id, CourseForm form);
 	
 	int delete(int id);
-
 }

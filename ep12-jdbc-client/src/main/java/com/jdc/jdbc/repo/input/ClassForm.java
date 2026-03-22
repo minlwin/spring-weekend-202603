@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record ClassForm(
 		int courseId,
-		LocalDate startFrom,
-		LocalDate startTo) {
+		LocalDate startDate,
+		int months) {
 
 }

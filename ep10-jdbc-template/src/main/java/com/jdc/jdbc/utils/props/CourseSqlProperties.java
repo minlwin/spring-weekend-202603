@@ -11,4 +11,6 @@ public class CourseSqlProperties {
 	private String insert;
 	private String countByName;
 	private String findById;
+	private String search;
+	private String update;
 }
