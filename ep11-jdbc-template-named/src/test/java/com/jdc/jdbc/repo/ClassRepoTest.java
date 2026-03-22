@@ -18,6 +18,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.jdc.jdbc.repo.args.ClassDetailsAggregator;
 import com.jdc.jdbc.repo.input.ClassForm;
+import com.jdc.jdbc.repo.input.ClassSearch;
 import com.jdc.jdbc.repo.output.ClassDetails;
 import com.jdc.jdbc.utils.AppBusinessException;
 
@@ -119,6 +120,26 @@ public class ClassRepoTest {
 	})
 	void test_delete(int id, int expected) {
 		assertEquals(expected, repo.delete(id));
+	}
+	
+	@ParameterizedTest
+	@CsvSource({
+		",,,3",
+		"Java,,,1",
+		"java,,,1",
+		"javd,,,0",
+		",2026-04-01,,3",
+		",2026-04-15,,2",
+		",2026-05-01,,1",
+		",2026-05-02,,0",
+		",,2026-03-31,0",
+		",,2026-04-01,1",
+		",,2026-04-15,2",
+		",,2026-05-01,3",
+	})
+	void test_search(String keyword, LocalDate dateFrom, LocalDate dateTo, int expected) {
+		var result = repo.search(new ClassSearch(keyword, dateFrom, dateTo));
+		assertEquals(expected, result.size());
 	}
 	
 	LocalDate getDate(String dateStr) {

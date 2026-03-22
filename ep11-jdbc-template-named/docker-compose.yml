@@ -12,7 +12,6 @@ services:
       - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
-      - ./src/test/resources:/var/lib/mysql-files/
 
 volumes:
   dbdata:

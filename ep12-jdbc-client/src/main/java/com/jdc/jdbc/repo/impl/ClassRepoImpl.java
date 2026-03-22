@@ -5,38 +5,38 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.jdc.jdbc.repo.StudentRepo;
-import com.jdc.jdbc.repo.input.StudentForm;
-import com.jdc.jdbc.repo.input.StudentSearch;
+import com.jdc.jdbc.repo.ClassRepo;
+import com.jdc.jdbc.repo.input.ClassForm;
+import com.jdc.jdbc.repo.input.ClassSearch;
+import com.jdc.jdbc.repo.output.ClassDetails;
 import com.jdc.jdbc.repo.output.ClassItem;
-import com.jdc.jdbc.repo.output.StudentDetails;
 
 import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class StudentRepoImpl implements StudentRepo {
-	
+public class ClassRepoImpl implements ClassRepo {
+		
 	@Override
-	public List<ClassItem> search(StudentSearch form) {
+	public List<ClassItem> search(ClassSearch form) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<StudentDetails> findById(int id) {
+	public Optional<ClassDetails> findById(int id) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
 
 	@Override
-	public Integer create(StudentForm form) {
+	public Integer create(ClassForm form) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer update(int id, StudentForm form) {
+	public Integer update(int id, ClassForm form) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -46,5 +46,4 @@ public class StudentRepoImpl implements StudentRepo {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

@@ -9,8 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.jdc.jdbc.repo.StudentRepo;
-import com.jdc.jdbc.repo.input.ClassSearch;
 import com.jdc.jdbc.repo.input.StudentForm;
+import com.jdc.jdbc.repo.input.StudentSearch;
 import com.jdc.jdbc.repo.output.ClassItem;
 import com.jdc.jdbc.repo.output.StudentDetails;
 
@@ -32,7 +32,7 @@ public class StudentRepoImpl implements StudentRepo {
 	}
 
 	@Override
-	public List<ClassItem> search(ClassSearch form) {
+	public List<ClassItem> search(StudentSearch form) {
 		// TODO Auto-generated method stub
 		return null;
 	}
