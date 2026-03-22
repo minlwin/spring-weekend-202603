@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:9.6
-    container_name: ep12_container
+    container_name: ep12_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: admin
@@ -12,6 +12,7 @@ services:
       - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
+      - ./src/test/resources:/var/lib/mysql-files/
 
 volumes:
   dbdata:

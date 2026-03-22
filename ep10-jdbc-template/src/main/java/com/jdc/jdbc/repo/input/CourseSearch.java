@@ -2,7 +2,7 @@ package com.jdc.jdbc.repo.input;
 
 public record CourseSearch(
 		String keyword,
-		int feesFrom,
-		int feesTo) {
+		Integer feesFrom,
+		Integer feesTo) {
 
 }
