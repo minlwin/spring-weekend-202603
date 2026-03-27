@@ -92,13 +92,6 @@ public class CourseRepoImpl implements CourseRepo {
 	@Override
 	public int update(int id, CourseForm form) {
 		
-		if(!StringUtils.hasLength(form.name())
-				&& null == form.fees()
-				&& null == form.hours()
-				&& !StringUtils.hasLength(form.description())) {
-			throw new AppBusinessException("There is no fields for update course.");
-		}
-		
 		if(null != form.hours() && form.hours() <= 0) {
 			throw new AppBusinessException("Hours must be greater than Zero.");
 		}
@@ -108,10 +101,39 @@ public class CourseRepoImpl implements CourseRepo {
 		}
 		
 		if(StringUtils.hasLength(form.name()) && findCountByName(form.name(), id) > 0) {
-			throw new AppBusinessException("%s course is already created.".formatted(form.name()));
+			throw new AppBusinessException("%s is already created.".formatted(form.name()));
 		}
-
-		return 0;
+		
+		var sb = new StringBuffer();
+		var params = new ArrayList<Object>();
+		
+		if(StringUtils.hasLength(form.name())) {
+			sb.append("name = ?");
+			params.add(form.name());
+		}
+		
+		if(null != form.hours()) {
+			sb.append(params.isEmpty() ? "hours = ?" : ", hours = ?");
+			params.add(form.hours());
+		}
+		
+		if(null != form.fees()) {
+			sb.append(params.isEmpty() ? "fees = ?" : ", fees = ?");
+			params.add(form.fees());
+		}
+		
+		if(StringUtils.hasLength(form.description())) {
+			sb.append(params.isEmpty() ? "description = ?" : ", description = ?");
+			params.add(form.description());
+		}
+		
+		if(params.isEmpty()) {
+			throw new AppBusinessException("There is no fields for update course.");
+		}
+		
+		params.add(id);
+		
+		return template.update(props.getUpdate().formatted(sb.toString()), params.toArray());
 	}
 
 	@Override
