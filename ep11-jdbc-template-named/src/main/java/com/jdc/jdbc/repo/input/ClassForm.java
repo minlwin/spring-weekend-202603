@@ -3,8 +3,8 @@ package com.jdc.jdbc.repo.input;
 import java.time.LocalDate;
 
 public record ClassForm(
-		int courseId,
+		Integer courseId,
 		LocalDate startDate,
-		int months) {
+		Integer months) {
 
 }

@@ -13,4 +13,5 @@ public class CourseSqlProperties {
 	private String findById;
 	private String search;
 	private String update;
+	private String delete;
 }
