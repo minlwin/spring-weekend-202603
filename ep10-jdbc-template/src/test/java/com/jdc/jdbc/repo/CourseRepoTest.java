@@ -91,7 +91,7 @@ public class CourseRepoTest {
 	@ParameterizedTest
 	@CsvSource({
 		"1,,,,,There is no fields for update course.",
-		"1,Java Fullstack,,,,Java Fullstack is already created.",
+		"1,Python for Data Science,,,,Python for Data Science is already created.",
 		"1,,0,,,Hours must be greater than Zero.",
 		"1,,-1,,,Hours must be greater than Zero.",
 		"1,,,-1,,Fees must not be negative value.",
