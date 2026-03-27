@@ -99,11 +99,11 @@ public class CourseRepoImpl implements CourseRepo {
 			throw new AppBusinessException("There is no fields for update course.");
 		}
 		
-		if(form.hours() <= 0) {
+		if(null != form.hours() && form.hours() <= 0) {
 			throw new AppBusinessException("Hours must be greater than Zero.");
 		}
 		
-		if(form.fees() < 0) {
+		if(null != form.fees() && form.fees() < 0) {
 			throw new AppBusinessException("Fees must not be negative value.");
 		}
 		
