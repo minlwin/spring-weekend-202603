@@ -1,13 +1,16 @@
 package com.jdc.jdbc.repo.impl;
 
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.jdc.jdbc.repo.CourseRepo;
 import com.jdc.jdbc.repo.input.CourseForm;
@@ -15,6 +18,7 @@ import com.jdc.jdbc.repo.input.CourseSearch;
 import com.jdc.jdbc.repo.output.CourseDetails;
 import com.jdc.jdbc.repo.output.CourseItem;
 import com.jdc.jdbc.utils.AppBusinessException;
+import com.jdc.jdbc.utils.props.CourseSqlProperties;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,11 +28,8 @@ public class CourseRepoImpl implements CourseRepo {
 	
 	private final JdbcTemplate template;
 	
-	@Value("${app.sql.course.insert}")
-	private String insertSql;
-	
-	@Value("${app.sql.course.count-by-name}")
-	private String countByNameSql;
+	@Autowired
+	private CourseSqlProperties props;
 
 	@Override
 	public Integer create(CourseForm form) {
@@ -48,7 +49,7 @@ public class CourseRepoImpl implements CourseRepo {
 		var keyHolder = new GeneratedKeyHolder();
 		
 		template.update(conn -> {
-			var stmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+			var stmt = conn.prepareStatement(props.getInsert(), Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, form.name());
 			stmt.setInt(2, form.hours());
 			stmt.setInt(3, form.fees());
@@ -61,19 +62,48 @@ public class CourseRepoImpl implements CourseRepo {
 
 	@Override
 	public Optional<CourseDetails> findById(int id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return template.query(props.getFindById(), new DataClassRowMapper<>(CourseDetails.class), id)
+				.stream().findAny();
 	}
 
 	@Override
 	public List<CourseItem> search(CourseSearch form) {
-		// TODO Auto-generated method stub
-		return null;
+		var sb = new StringBuffer(props.getSearch());
+		var params = new ArrayList<Object>();
+		
+		if(StringUtils.hasLength(form.keyword())) {
+			sb.append(" and name like ?");
+			params.add(form.keyword().toLowerCase().concat("%"));
+		}
+		
+		if(null != form.feesFrom()) {
+			sb.append(" and fees >= ?");
+			params.add(form.feesFrom());
+		}
+		
+		if(null != form.feesTo()) {
+			sb.append(" and fees <= ?");
+			params.add(form.feesTo());
+		}
+		
+		return template.query(sb.toString(), new DataClassRowMapper<>(CourseItem.class), params.toArray());
 	}
 
 	@Override
 	public int update(int id, CourseForm form) {
-		// TODO Auto-generated method stub
+		
+		if(form.hours() <= 0) {
+			throw new AppBusinessException("Hours must be greater than Zero.");
+		}
+		
+		if(form.fees() < 0) {
+			throw new AppBusinessException("Fees must not be negative value.");
+		}
+		
+		if(findCountByName(form.name()) > 0) {
+			throw new AppBusinessException("%s course is already created.".formatted(form.name()));
+		}
+
 		return 0;
 	}
 
@@ -84,7 +114,7 @@ public class CourseRepoImpl implements CourseRepo {
 	}
 
 	private long findCountByName(String name) {
-		return template.queryForObject(countByNameSql, Long.class, name);
+		return template.queryForObject(props.getCountByName(), Long.class, name);
 	}
 	
 }
