@@ -111,7 +111,7 @@ public class CourseRepoTest {
 	}
 	
 	@ParameterizedTest
-	@ValueSource(ints = {1, 5})
+	@ValueSource(ints = {4, 5})
 	void test_delete(int id) {
 		assertEquals(1, repo.delete(id));
 	}
@@ -122,6 +122,16 @@ public class CourseRepoTest {
 		assertEquals(0, repo.delete(id));
 	}
 	
+	@ParameterizedTest
+	@CsvSource({
+		"1,Java Fullstack is already used in class.",
+		"3,Web Design Mastery is already used in class."
+	})
+	void test_delete_error(int id, String message) {
+		var error = assertThrows(AppBusinessException.class, () -> repo.delete(id));
+		assertEquals(message, error.getMessage());
+	}
+
 	@ParameterizedTest
 	@CsvSource({
 		",,,5", // If there is no search conditions, should fetch all rows

@@ -124,6 +124,16 @@ public class CourseRepoTest {
 	
 	@ParameterizedTest
 	@CsvSource({
+		"1,Java Fullstack is already used in class.",
+		"3,Web Design Mastery is already used in class."
+	})
+	void test_delete_error(int id, String message) {
+		var error = assertThrows(AppBusinessException.class, () -> repo.delete(id));
+		assertEquals(message, error.getMessage());
+	}
+	
+	@ParameterizedTest
+	@CsvSource({
 		",,,5", // If there is no search conditions, should fetch all rows
 		"Java,,,1", // If keyword is Java should fetch 1 row,
 		"Javas,,,0", // If keyword is Javas should fetch 0 row,
