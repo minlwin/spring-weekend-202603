@@ -90,11 +90,11 @@ public class CourseRepoTest {
 	
 	@ParameterizedTest
 	@CsvSource({
-		"1,,,,There is no fields for update course.",
+		"1,,,,,There is no fields for update course.",
 		"1,Java Fullstack,,,,Java Fullstack is already created.",
-		"1,,0,,Hours must be greater than Zero.",
-		"1,,-1,,Hours must be greater than Zero.",
-		"1,,,-1,Fees must not be negative value.",
+		"1,,0,,,Hours must be greater than Zero.",
+		"1,,-1,,,Hours must be greater than Zero.",
+		"1,,,-1,,Fees must not be negative value.",
 	})
 	void test_update_error(int id, String name, Integer hours, Integer fees, String description, String message) {
 		var error = assertThrows(AppBusinessException.class, () -> repo.update(id, new CourseForm(name, hours, fees, description)));
