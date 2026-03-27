@@ -92,6 +92,13 @@ public class CourseRepoImpl implements CourseRepo {
 	@Override
 	public int update(int id, CourseForm form) {
 		
+		if(!StringUtils.hasLength(form.name())
+				&& null == form.fees()
+				&& null == form.hours()
+				&& !StringUtils.hasLength(form.description())) {
+			throw new AppBusinessException("There is no fields for update course.");
+		}
+		
 		if(form.hours() <= 0) {
 			throw new AppBusinessException("Hours must be greater than Zero.");
 		}
@@ -100,7 +107,7 @@ public class CourseRepoImpl implements CourseRepo {
 			throw new AppBusinessException("Fees must not be negative value.");
 		}
 		
-		if(findCountByName(form.name()) > 0) {
+		if(StringUtils.hasLength(form.name()) && findCountByName(form.name(), id) > 0) {
 			throw new AppBusinessException("%s course is already created.".formatted(form.name()));
 		}
 
@@ -114,7 +121,20 @@ public class CourseRepoImpl implements CourseRepo {
 	}
 
 	private long findCountByName(String name) {
-		return template.queryForObject(props.getCountByName(), Long.class, name);
+		return findCountByName(name, null);
 	}
 	
+	private long findCountByName(String name, Integer id) {
+		
+		var sb = new StringBuffer(props.getCountByName());
+		var params = new ArrayList<Object>();
+		params.add(name);
+		
+		if(null != id) {
+			sb.append(" and id <> ?");
+			params.add(id);
+		}
+		
+		return template.queryForObject(sb.toString(), Long.class, params.toArray());
+	}
 }
