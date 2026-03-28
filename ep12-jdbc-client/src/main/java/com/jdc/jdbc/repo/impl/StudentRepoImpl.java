@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.jdc.jdbc.repo.StudentRepo;
 import com.jdc.jdbc.repo.input.StudentForm;
 import com.jdc.jdbc.repo.input.StudentSearch;
-import com.jdc.jdbc.repo.output.ClassItem;
 import com.jdc.jdbc.repo.output.StudentDetails;
+import com.jdc.jdbc.repo.output.StudentItem;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class StudentRepoImpl implements StudentRepo {
 	
 	@Override
-	public List<ClassItem> search(StudentSearch form) {
+	public List<StudentItem> search(StudentSearch form) {
 		// TODO Auto-generated method stub
 		return null;
 	}

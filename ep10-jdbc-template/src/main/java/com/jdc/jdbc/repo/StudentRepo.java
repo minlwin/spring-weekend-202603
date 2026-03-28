@@ -5,12 +5,12 @@ import java.util.Optional;
 
 import com.jdc.jdbc.repo.input.StudentForm;
 import com.jdc.jdbc.repo.input.StudentSearch;
-import com.jdc.jdbc.repo.output.ClassItem;
 import com.jdc.jdbc.repo.output.StudentDetails;
+import com.jdc.jdbc.repo.output.StudentItem;
 
 public interface StudentRepo {
 
-	List<ClassItem> search(StudentSearch form);
+	List<StudentItem> search(StudentSearch form);
 
 	Optional<StudentDetails> findById(int id);
 	
