@@ -1,11 +1,12 @@
 package com.jdc.jdbc.repo.impl;
 
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.jdc.jdbc.repo.StudentRepo;
@@ -13,6 +14,8 @@ import com.jdc.jdbc.repo.input.StudentForm;
 import com.jdc.jdbc.repo.input.StudentSearch;
 import com.jdc.jdbc.repo.output.ClassItem;
 import com.jdc.jdbc.repo.output.StudentDetails;
+import com.jdc.jdbc.utils.AppBusinessException;
+import com.jdc.jdbc.utils.props.StudentSqlProperties;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,14 +23,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StudentRepoImpl implements StudentRepo {
 	
+	private final StudentSqlProperties sqls;
 	private final JdbcTemplate template;
 	
-	@Value("${app.sql.student.find-by-id}")
-	private String findByIdSql;
-
 	@Override
 	public Optional<StudentDetails> findById(int id) {
-		var result = template.query(findByIdSql, new DataClassRowMapper<>(StudentDetails.class), id);
+		var result = template.query(sqls.getFindById(), new DataClassRowMapper<>(StudentDetails.class), id);
 		return result.stream().findAny();
 	}
 
@@ -39,8 +40,30 @@ public class StudentRepoImpl implements StudentRepo {
 
 	@Override
 	public Integer create(StudentForm form) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if(!isValidPhone(form.phone())) {
+			throw new AppBusinessException("Invalid phone number.");
+		}
+		
+		if(!isValidEmail(form.email())) {
+			throw new AppBusinessException("Invalid email address.");
+		}
+		
+		if(countByEmail(form.email()) > 0) {
+			throw new AppBusinessException("Email is already used.");
+		}
+		
+		var keyHolder = new GeneratedKeyHolder();
+		
+		template.update(conn -> {
+			var stmt = conn.prepareStatement(sqls.getInsert(), Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, form.name());
+			stmt.setString(2, form.phone());
+			stmt.setString(3, form.email());
+			return stmt;
+		}, keyHolder);
+		
+		return keyHolder.getKey().intValue();
 	}
 
 	@Override
@@ -53,6 +76,27 @@ public class StudentRepoImpl implements StudentRepo {
 	public Integer delete(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private long countByEmail(String email) {
+		return template.queryForObject(sqls.getCountByEmail(), Long.class, email);
+	}
+
+	private boolean isValidPhone(String phone) {
+		var pattern = "^(\\+959|09)[0-9\\- ]+$";
+		return phone.matches(pattern);
+	}
+
+	private boolean isValidEmail(String email) {
+		
+		var array = email.split("@");
+		if(array.length >= 2) {
+			var domain = array[array.length - 1];
+			if(domain.contains(".")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

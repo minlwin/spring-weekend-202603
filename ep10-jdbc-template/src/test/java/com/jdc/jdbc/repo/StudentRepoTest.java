@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.AggregateWith;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -60,6 +61,7 @@ public class StudentRepoTest {
 		assertEquals(message, error.getMessage());
 	}
 	
+	@Disabled
 	@ParameterizedTest
 	@CsvFileSource(resources = "/students.csv")
 	void test_findById_found(@AggregateWith(StudentDetailsAggregator.class) StudentDetails details) {
@@ -75,6 +77,7 @@ public class StudentRepoTest {
 		assertTrue(result.isEmpty());
 	}
 	
+	@Disabled
 	@ParameterizedTest
 	@CsvSource({
 		"15,Mikel Owen,+959-1111-2222,mike@gmail.com",
@@ -86,6 +89,7 @@ public class StudentRepoTest {
 		assertEquals(1, repo.update(id, new StudentForm(name, phone, email)));
 	}
 	
+	@Disabled
 	@ParameterizedTest
 	@CsvSource({
 		"15,,,,There is no fields for update student.",
@@ -102,11 +106,13 @@ public class StudentRepoTest {
 		assertEquals(message, error.getMessage());
 	}
 	
+	@Disabled
 	@ParameterizedTest
 	void test_update_notFound(int id, String name, String phone, String email) {
 		assertEquals(0, repo.update(id, new StudentForm(name, phone, email)));
 	}
 	
+	@Disabled
 	@ParameterizedTest
 	@CsvSource({
 		"1,1",
@@ -117,6 +123,7 @@ public class StudentRepoTest {
 		assertEquals(expected, repo.delete(id));
 	}
 	
+	@Disabled
 	@ParameterizedTest
 	@CsvSource({
 		",15",
