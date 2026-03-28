@@ -36,7 +36,6 @@ public class StudentRepoImpl implements StudentRepo {
 	
 	@Override
 	public List<StudentItem> search(StudentSearch form) {
-		
 		var sql = new StringBuffer(sqls.getSearch());
 		var params = new HashMap<String, Object>();
 		
