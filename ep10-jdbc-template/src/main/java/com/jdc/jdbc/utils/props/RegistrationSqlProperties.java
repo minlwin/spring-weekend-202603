@@ -18,5 +18,4 @@ public class RegistrationSqlProperties {
 	private String delete;
 	private String countByClass;
 	private String countByStudent;
-	private String delete;
 }

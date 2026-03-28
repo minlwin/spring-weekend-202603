@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.AggregateWith;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -43,7 +42,7 @@ public class StudentRepoTest {
 	})
 	void test_insert(String name, String phone, String email) {
 		var result = repo.create(new StudentForm(name, phone, email));
-		assertEquals(16, result);
+		assertEquals(17, result);
 	}
 	
 	@ParameterizedTest
@@ -61,35 +60,32 @@ public class StudentRepoTest {
 		assertEquals(message, error.getMessage());
 	}
 	
-	@Disabled
 	@ParameterizedTest
 	@CsvFileSource(resources = "/students.csv")
 	void test_findById_found(@AggregateWith(StudentDetailsAggregator.class) StudentDetails details) {
 		var result = repo.findById(details.id());
 		assertTrue(result.isPresent());
-		assertEquals(details, result);
+		assertEquals(details, result.get());
 	}
 	
 	@ParameterizedTest
-	@ValueSource(ints = {0, 16})
+	@ValueSource(ints = {0, 17})
 	void test_findById_notFound(int id) {
 		var result = repo.findById(id);
 		assertTrue(result.isEmpty());
 	}
 	
-	@Disabled
 	@ParameterizedTest
 	@CsvSource({
-		"15,Mikel Owen,+959-1111-2222,mike@gmail.com",
-		"15,Mikel Owen,+959 1111 2222,mike@gmail.com",
-		"15,Mikel Owen,09 1111 2222,mike@gmail.com",
+		"15,Mikel Owen,,",
+		"15,,+959 1111 2222,",
+		"15,,,mike@gmail.com",
 		"15,Mikel Owen,091112222,mike@gmail.com",
 	})
 	void test_update_found(int id, String name, String phone, String email) {
 		assertEquals(1, repo.update(id, new StudentForm(name, phone, email)));
 	}
 	
-	@Disabled
 	@ParameterizedTest
 	@CsvSource({
 		"15,,,,There is no fields for update student.",
@@ -106,27 +102,39 @@ public class StudentRepoTest {
 		assertEquals(message, error.getMessage());
 	}
 	
-	@Disabled
 	@ParameterizedTest
+	@CsvSource({
+		"17,Mikel Owen,+959-1111-2222,mike@gmail.com",
+		"17,Mikel Owen,+959 1111 2222,mike@gmail.com",
+		"17,Mikel Owen,09 1111 2222,mike@gmail.com",
+		"17,Mikel Owen,091112222,mike@gmail.com",
+	})
 	void test_update_notFound(int id, String name, String phone, String email) {
 		assertEquals(0, repo.update(id, new StudentForm(name, phone, email)));
 	}
 	
-	@Disabled
 	@ParameterizedTest
 	@CsvSource({
-		"1,1",
-		"15,1",
-		"16,0"
+		"16,1",
+		"17,0"
 	})
 	void test_delete(int id, int expected) {
 		assertEquals(expected, repo.delete(id));
 	}
 	
-	@Disabled
 	@ParameterizedTest
 	@CsvSource({
-		",15",
+		"1,Alice Johnson is regisered in a class.",
+		"2,Bob Smith is regisered in a class.",
+	})
+	void test_delete_error(int id, String message) {
+		var error = assertThrows(AppBusinessException.class, () -> repo.delete(id));
+		assertEquals(message, error.getMessage());
+	}
+	
+	@ParameterizedTest
+	@CsvSource({
+		",16",
 		"Alice,1",
 		"alice,1",
 		"aLice,1",
