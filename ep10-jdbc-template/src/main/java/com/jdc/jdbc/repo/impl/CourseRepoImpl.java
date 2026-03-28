@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -30,6 +31,9 @@ public class CourseRepoImpl implements CourseRepo {
 	
 	@Autowired
 	private CourseSqlProperties props;
+	
+	@Value("${app.sql.class.count-by-course}")
+	private String countClassSql;
 
 	@Override
 	public Integer create(CourseForm form) {
@@ -138,12 +142,21 @@ public class CourseRepoImpl implements CourseRepo {
 
 	@Override
 	public int delete(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		if(countClass(id) > 0) {
+			var course = findById(id).get();
+			throw new AppBusinessException("%s is already used in class.".formatted(course.name()));
+		}
+		
+		return template.update(props.getDelete(), id);
 	}
 
 	private long findCountByName(String name) {
 		return findCountByName(name, null);
+	}
+	
+	private long countClass(int id) {
+		return template.queryForObject(countClassSql, Long.class, id);
 	}
 	
 	private long findCountByName(String name, Integer id) {
