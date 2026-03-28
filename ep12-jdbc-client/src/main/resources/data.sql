@@ -28,7 +28,8 @@ INSERT INTO students (name, phone, email) VALUES
 ('Laura Palmer', '09123456792', 'laura@example.com'),
 ('Mike Wazowski', '09123456793', 'mike@example.com'),
 ('Nina Simone', '09123456794', 'nina@example.com'),
-('Oscar Wilde', '09123456795', 'oscar@example.com');
+('Oscar Wilde', '09123456795', 'oscar@example.com'),
+('Aung Aung', '09123456796', 'aung@example.com');
 
 -- 4. Insert 20 Registrations (Mapping Students to Classes)
 -- Class 1 (Java) - 8 Students

@@ -10,7 +10,9 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "app.sql.student")
 public class StudentSqlProperties {
 	private String findById;
-	private String delete;
 	private String search;
+	private String countByEmail;
+	private String insert;
+	private String delete;
 	private String update;
 }
