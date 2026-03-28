@@ -30,7 +30,7 @@ DROP TABLE IF EXISTS students;
 CREATE TABLE students (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(40) NOT NULL,
-    phone VARCHAR(12) NOT NULL,
+    phone VARCHAR(16) NOT NULL,
     email VARCHAR(60) NOT NULL
 );
 
