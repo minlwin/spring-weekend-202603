@@ -11,6 +11,5 @@ public class ClassSqlProperties {
 	private String delete;
 	private String search;
 	private String update;
-	private String countByStudent;
 	private String countByCourse;
 }
