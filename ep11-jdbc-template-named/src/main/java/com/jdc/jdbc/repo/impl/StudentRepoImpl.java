@@ -40,7 +40,7 @@ public class StudentRepoImpl implements StudentRepo {
 		var params = new HashMap<String, Object>();
 		
 		if(StringUtils.hasLength(form.keyword())) {
-			sql.append("lower(name) like :keyword");
+			sql.append(" and lower(name) like :keyword");
 			params.put("keyword", form.keyword().toLowerCase().concat("%"));
 		}
 		
