@@ -47,9 +47,9 @@ public class RegistrationRepoTest {
 	
 	@ParameterizedTest
 	@CsvSource({
-		"4,1,There is no class with id 4.",
-		"1,16,There is no student with id 16.",
-		"4,16,There is no class with id 4.",
+		"6,1,There is no class with id 6.",
+		"1,17,There is no student with id 17.",
+		"6,17,There is no class with id 6.",
 		"1,1,Registration with id 001000001 is already created."
 	})
 	void test_create_error(int classId, int studentId, String expected) {
