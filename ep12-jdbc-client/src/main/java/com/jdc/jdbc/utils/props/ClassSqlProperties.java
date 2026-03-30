@@ -9,9 +9,10 @@ import lombok.Data;
 @Configuration
 @ConfigurationProperties(prefix = "app.sql.class")
 public class ClassSqlProperties {
-	private String findById;
-	private String delete;
-	private String search;
+	private String insert;
 	private String update;
+	private String delete;
+	private String findById;
+	private String search;
 	private String countByCourse;
 }
