@@ -43,7 +43,7 @@ public class ClassRepoTest {
 	void test_insert(int courseId, String startDateStr, Integer months) {
 		LocalDate startDate = getDate(startDateStr);
 		var result = repo.create(new ClassForm(courseId, startDate, months));
-		assertEquals(4, result);
+		assertEquals(6, result);
 	}
 	
 	@ParameterizedTest
@@ -70,7 +70,7 @@ public class ClassRepoTest {
 	}
 	
 	@ParameterizedTest
-	@ValueSource(ints = {0, 4})
+	@ValueSource(ints = {0, 6})
 	void test_findById_notFound(int id) {
 		var result = repo.findById(id);
 		assertTrue(result.isEmpty());
@@ -89,6 +89,7 @@ public class ClassRepoTest {
 	
 	@ParameterizedTest
 	@CsvSource({
+		"3,,e,,There is no fields to update.",
 		"3,6,1d,1,There is no course with id 6.",
 		"3,5,,12,Start date must be future date.",
 		"3,5,-1d,12,Start date must be future date.",
@@ -96,7 +97,7 @@ public class ClassRepoTest {
 		"3,5,1d,0,Months must be between 1 and 12.",
 		"3,5,1d,13,Months must be between 1 and 12.",
 	})
-	void test_update_error(int id, int courseId, String startDateStr, Integer months, String message) {
+	void test_update_error(int id, Integer courseId, String startDateStr, Integer months, String message) {
 		LocalDate startDate = getDate(startDateStr);
 		var error = assertThrows(AppBusinessException.class, () -> repo.update(id, new ClassForm(courseId, startDate, months)));
 		assertEquals(message, error.getMessage());
@@ -104,7 +105,7 @@ public class ClassRepoTest {
 	
 	@ParameterizedTest
 	@CsvSource({
-		"4,1,1d,1",
+		"6,1,1d,1",
 	})
 	void test_update_notFound(int id, int courseId, String startDateStr, Integer months) {
 		LocalDate startDate = getDate(startDateStr);
@@ -114,28 +115,36 @@ public class ClassRepoTest {
 	
 	@ParameterizedTest
 	@CsvSource({
-		"1,1",
-		"3,1",
-		"4,0"
+		"4,1",
+		"5,1",
+		"6,0"
 	})
 	void test_delete(int id, int expected) {
 		assertEquals(expected, repo.delete(id));
 	}
 	
 	@ParameterizedTest
+	@ValueSource(ints = {1, 2, 3})
+	void test_delete_error(int id) {
+		var error = assertThrows(AppBusinessException.class, () -> repo.delete(id));
+		assertEquals("Registered class can't be deleted.", error.getMessage());
+	}
+	
+	@ParameterizedTest
 	@CsvSource({
-		",,,3",
-		"Java,,,1",
-		"java,,,1",
+		",,,5",
+		"Java,,,2",
+		"java,,,2",
 		"javd,,,0",
-		",2026-04-01,,3",
-		",2026-04-15,,2",
+		",2026-04-01,,5",
+		",2026-04-20,,3",
 		",2026-05-01,,1",
 		",2026-05-02,,0",
 		",,2026-03-31,0",
 		",,2026-04-01,1",
-		",,2026-04-15,2",
-		",,2026-05-01,3",
+		",,2026-04-20,3",
+		",,2026-05-01,5",
+		",2026-04-02,2026-04-19,1",
 	})
 	void test_search(String keyword, LocalDate dateFrom, LocalDate dateTo, int expected) {
 		var result = repo.search(new ClassSearch(keyword, dateFrom, dateTo));

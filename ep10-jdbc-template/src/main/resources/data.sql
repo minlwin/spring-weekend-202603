@@ -10,7 +10,9 @@ INSERT INTO courses (name, hours, fees, description) VALUES
 INSERT INTO classes (course_id, start_date, months) VALUES
 (1, '2026-04-01', 4),
 (2, '2026-04-15', 3),
-(3, '2026-05-01', 2);
+(3, '2026-04-20', 2),
+(1, '2026-04-25', 2),
+(2, '2026-05-01', 2);
 
 -- 3. Insert 15 Students
 INSERT INTO students (name, phone, email) VALUES

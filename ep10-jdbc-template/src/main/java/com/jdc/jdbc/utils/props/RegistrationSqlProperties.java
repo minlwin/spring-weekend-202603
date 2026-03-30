@@ -13,9 +13,9 @@ import lombok.Setter;
 public class RegistrationSqlProperties {
 
 	private String insert;
+	private String delete;
 	private String search;
 	private String findById;
 	private String countByClass;
 	private String countByStudent;
-	private String delete;
 }

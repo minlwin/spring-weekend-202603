@@ -11,7 +11,9 @@ import lombok.Setter;
 @Configuration
 @ConfigurationProperties(prefix = "app.sql.registrations")
 public class RegistrationSqlProperties {
+
 	private String insert;
+	private String delete;
 	private String search;
 	private String findById;
 	private String countByClass;
