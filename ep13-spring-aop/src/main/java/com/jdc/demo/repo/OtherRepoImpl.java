@@ -1,5 +1,13 @@
 package com.jdc.demo.repo;
 
-public class OtherRepoImpl {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class OtherRepoImpl implements OtherRepo {
+
+	@Override
+	public void create() {
+		System.out.println("OtherRepoImpl#create()");
+	}
 
 }
