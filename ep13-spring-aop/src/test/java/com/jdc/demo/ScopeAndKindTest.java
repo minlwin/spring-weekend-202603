@@ -5,27 +5,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.jdc.demo.provider.PaymentProvider;
 import com.jdc.demo.service.MyService;
 import com.jdc.demo.service.OtherService;
 
 @SpringBootTest
-@ActiveProfiles("getting-start")
-public class ApplicationTest {
+@ActiveProfiles("scope-kind")
+public class ScopeAndKindTest {
 
 	@Autowired
-	private MyService service;
-	
+	private PaymentProvider provider;
+	@Autowired
+	private MyService myService;
 	@Autowired
 	private OtherService otherService;
 	
 	@Test
 	void test() {
-		service.showMessage();
-		
-		service.showMessage("Testing");
-		
-		service.showMessageAndReturn();
+		provider.afterSuccessCallback("Test");
+		provider.paidFees(10);
+
+		myService.showMessage();
+		myService.divide(10);
 		
 		otherService.doJob();
+		myService.divide(0);
 	}
 }
