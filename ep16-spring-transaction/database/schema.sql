@@ -81,6 +81,8 @@ DROP TABLE IF EXISTS stock_history;
 CREATE TABLE stock_history (
 	product_id INT NOT NULL,
 	version INT NOT NULL,
+	purchase_price INT NOT NULL,
+	sale_price INT NOT NULL,
 	action_type VARCHAR(10) NOT NULL,
 	last_amount INT NOT NULL,
 	amount INT NOT NULL,
