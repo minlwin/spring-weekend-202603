@@ -17,7 +17,7 @@ import com.jdc.demo.service.PurchaseService;
 
 @SpringBootTest
 @Sql(
-	scripts = "classpath:/purchase_test.sql", 
+	scripts = "classpath:/test_data.sql", 
 	executionPhase = ExecutionPhase.BEFORE_TEST_METHOD
 )
 class PurchaseServiceTest {

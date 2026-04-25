@@ -95,9 +95,7 @@ DROP TABLE IF EXISTS sale;
 CREATE TABLE sale (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	customer_id INT NOT NULL,
-	order_at TIMESTAMP NOT NULL,
-	change_at TIMESTAMP NOT NULL,
-	status VARCHAR(20) NOT NULL,
+	sale_at TIMESTAMP NOT NULL,
 	delivery_fee INT,
 	discount INT,
 	tax_rate DOUBLE,

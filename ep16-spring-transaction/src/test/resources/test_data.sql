@@ -10,6 +10,10 @@ INSERT INTO supplier (id, name, phone, email) values (2,'Thiri Mon','09-1122-223
 INSERT INTO supplier (id, name, phone, email) values (3,'Nyein Myitter','09-1122-2235','nyein@example.com');
 INSERT INTO supplier (id, name, phone, email) values (4,'Shwe Store','09-1122-2236','shwe@example.com');
 
+TRUNCATE TABLE customer;
+INSERT INTO customer (id, name, phone, email) values (1,'Min Aung','09-9122-2233','minaung@example.com');
+INSERT INTO customer (id, name, phone, email) values (2,'Htin Aung','09-9122-2234','htinaung@example.com');
+
 TRUNCATE TABLE product;
 INSERT INTO product (id, name) values (1,'Coke');
 INSERT INTO product (id, name) values (2,'Pepsi');
