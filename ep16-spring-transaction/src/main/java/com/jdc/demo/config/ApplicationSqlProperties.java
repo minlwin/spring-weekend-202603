@@ -41,11 +41,13 @@ public class ApplicationSqlProperties {
 	@Data
 	public static class PurchaseProductSql {
 		private String create;
+		private String findByPurchaseId;
 	}
 
 	@Data
 	public static class PurchaseSql {
 		private String create;
+		private String findById;
 	}
 	
 	@Data

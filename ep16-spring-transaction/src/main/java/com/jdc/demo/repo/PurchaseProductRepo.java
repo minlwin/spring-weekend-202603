@@ -1,10 +1,13 @@
 package com.jdc.demo.repo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 import com.jdc.demo.domains.input.PurchaseFormItem;
+import com.jdc.demo.domains.output.PurchaseItem;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +20,9 @@ public class PurchaseProductRepo {
 	@Value("${app.sql.purchase-product.create}")
 	private String create;
 	
+	@Value("${app.sql.purchase-product.find-by-purchase-id}")
+	private String findByPurchaseId;
+	
 	public void create(int id, int version, PurchaseFormItem item) {
 		jdbcClient.sql(create)
 			.param("purchaseId", id)
@@ -25,6 +31,13 @@ public class PurchaseProductRepo {
 			.param("unitPrice", item.unitPrice())
 			.param("quantity", item.quantity())
 			.update();
+	}
+
+	public List<PurchaseItem> findByPurchaseId(int id) {
+		return jdbcClient.sql(findByPurchaseId)
+			.param("purchaseId", id)
+			.query(PurchaseItem.class)
+			.list();
 	}
 
 }

@@ -51,9 +51,9 @@ public class PurchaseService {
 			
 			var stock = stockRepo.findById(item.productId());
 			
+			// Calculate Sale Price
 			var purchasePrice = item.unitPrice();
-			var stockPurchasePrice = stock.purchasePrice();
-			
+			var stockPurchasePrice = stock.purchasePrice();	
 			var salePrice = getSalePrice(purchasePrice > stockPurchasePrice ? purchasePrice : stockPurchasePrice);
 			
 			purchaseProductRepo.create(id, stock.version(), item);
@@ -81,7 +81,8 @@ public class PurchaseService {
 	}
 
 	public Optional<PurchaseDetails> findById(int id) {
-		return null;
+		var header = purchaseRepo.findById(id);
+		return header.map(a -> new PurchaseDetails(a, purchaseProductRepo.findByPurchaseId(id)));
 	}
 	
 	private void validate(PurchaseForm form) {
@@ -130,8 +131,5 @@ public class PurchaseService {
 			}
 		}
 		
-	}
-	
-
-	
+	}	
 }
