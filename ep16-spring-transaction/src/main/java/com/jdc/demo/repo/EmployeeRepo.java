@@ -3,6 +3,7 @@ package com.jdc.demo.repo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +16,7 @@ public class EmployeeRepo {
 	@Value("${app.sql.employee.is-present}")
 	private String isPresent;
 
+	@Transactional(readOnly = true)
 	public boolean isPresent(int id) {
 		return jdbcClient
 				.sql(isPresent)

@@ -3,11 +3,13 @@ package com.jdc.demo.repo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class ProductSupplierRepo {
 	
 	private final JdbcClient jdbcClient;
@@ -18,6 +20,7 @@ public class ProductSupplierRepo {
 	@Value("${app.sql.product-supplier.create}")
 	private String create;
 
+	@Transactional(readOnly = true)
 	public boolean isPresent(int productId, int supplierId) {
 		return jdbcClient
 				.sql(isPresent)

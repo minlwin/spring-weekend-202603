@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.demo.domains.output.StockDto;
 import com.jdc.demo.domains.output.StockHistoryDto;
@@ -21,6 +22,7 @@ public class StockRepo {
 	@Value("${app.sql.stock.update}")
 	private String update;
 	
+	@Transactional(readOnly = true)
 	public StockDto findById(int productId) {
 		return jdbcClient.sql(findById)
 			.param("productId", productId)
@@ -28,6 +30,7 @@ public class StockRepo {
 			.single();
 	}
 
+	@Transactional
 	public void update(StockHistoryDto dto) {
 		jdbcClient.sql(update)
 			.param("productId", dto.productId())

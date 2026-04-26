@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.demo.domains.AppBusinessException;
 import com.jdc.demo.domains.input.PurchaseForm;
@@ -39,6 +40,7 @@ public class PurchaseService {
 	@Value("${app.sale-price-rate}")
 	private int salePriceRate;
 
+	@Transactional
 	public int purchase(PurchaseForm form) {
 		
 		validate(form);
@@ -56,7 +58,6 @@ public class PurchaseService {
 			var stockPurchasePrice = stock.purchasePrice();	
 			var salePrice = getSalePrice(purchasePrice > stockPurchasePrice ? purchasePrice : stockPurchasePrice);
 			
-			purchaseProductRepo.create(id, stock.version(), item);
 			
 			var stockHistory = StockHistoryDto.builder()
 					.productId(item.productId())
@@ -68,6 +69,7 @@ public class PurchaseService {
 					.build();
 			
 			stockHistoryRepo.create(stockHistory);
+			purchaseProductRepo.create(id, stockHistory.version(), item);
 			
 			stockRepo.update(stockHistory);
 		}
@@ -75,16 +77,17 @@ public class PurchaseService {
 		return id;
 	}
 	
-	private int getSalePrice(int purchasePrice) {
-		var profit = purchasePrice / 100 * salePriceRate;
-		return purchasePrice + profit;
-	}
-
+	@Transactional(readOnly = true)
 	public Optional<PurchaseDetails> findById(int id) {
 		var header = purchaseRepo.findById(id);
 		return header.map(a -> new PurchaseDetails(a, purchaseProductRepo.findByPurchaseId(id)));
 	}
 	
+	private int getSalePrice(int purchasePrice) {
+		var profit = purchasePrice / 100 * salePriceRate;
+		return purchasePrice + profit;
+	}
+
 	private void validate(PurchaseForm form) {
 		if(null == form.purchaseDate()) {
 			throw new AppBusinessException("Please enter purchase date.");

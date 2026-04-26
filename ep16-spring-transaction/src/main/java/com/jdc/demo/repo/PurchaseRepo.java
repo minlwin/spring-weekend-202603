@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.demo.domains.input.PurchaseForm;
 import com.jdc.demo.domains.output.PurchaseInfo;
@@ -23,6 +24,7 @@ public class PurchaseRepo {
 	@Value("${app.sql.purchase.find-by-id}")
 	private String findById;
 
+	@Transactional
 	public int create(PurchaseForm form) {
 		var keyHolder = new GeneratedKeyHolder();
 		
@@ -36,6 +38,7 @@ public class PurchaseRepo {
 		return keyHolder.getKey().intValue();
 	}
 
+	@Transactional(readOnly = true)
 	public Optional<PurchaseInfo> findById(int id) {
 		return jdbcClient.sql(findById)
 				.param("id", id)

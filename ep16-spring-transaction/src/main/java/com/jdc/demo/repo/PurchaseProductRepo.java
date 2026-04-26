@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.demo.domains.input.PurchaseFormItem;
 import com.jdc.demo.domains.output.PurchaseItem;
@@ -23,6 +24,7 @@ public class PurchaseProductRepo {
 	@Value("${app.sql.purchase-product.find-by-purchase-id}")
 	private String findByPurchaseId;
 	
+	@Transactional
 	public void create(int id, int version, PurchaseFormItem item) {
 		jdbcClient.sql(create)
 			.param("purchaseId", id)
@@ -33,6 +35,7 @@ public class PurchaseProductRepo {
 			.update();
 	}
 
+	@Transactional(readOnly = true)
 	public List<PurchaseItem> findByPurchaseId(int id) {
 		return jdbcClient.sql(findByPurchaseId)
 			.param("purchaseId", id)

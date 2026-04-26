@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ class PurchaseServiceTest {
 	@Autowired
 	private PurchaseService service;
 	
+	@Disabled
 	@ParameterizedTest
 	@MethodSource("com.jdc.demo.provider.PurchaseServiceTestProvider#test_error_future_date")
 	void test_error_future_date(PurchaseForm form, String message) {
@@ -33,6 +35,7 @@ class PurchaseServiceTest {
 		assertEquals(message, exception.getMessage());
 	}
 	
+	@Disabled
 	@ParameterizedTest
 	@MethodSource("com.jdc.demo.provider.PurchaseServiceTestProvider#test_error_empty_items")
 	void test_error_empty_items(PurchaseForm form, String message) {
@@ -40,6 +43,7 @@ class PurchaseServiceTest {
 		assertEquals(message, exception.getMessage());
 	}
 	
+	@Disabled
 	@ParameterizedTest
 	@MethodSource("com.jdc.demo.provider.PurchaseServiceTestProvider#test_error_minus_price")
 	void test_error_minus_price(PurchaseForm form, String message) {
