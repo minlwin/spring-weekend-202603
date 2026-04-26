@@ -12,7 +12,7 @@ public class ProductRepo {
 
 	private final JdbcClient jdbcClient;
 	
-	@Value("app.sql.product.is-present")
+	@Value("${app.sql.product.is-present}")
 	private String isPresent;
 
 	public boolean isPresent(int id) {

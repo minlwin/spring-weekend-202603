@@ -12,10 +12,10 @@ public class ProductSupplierRepo {
 	
 	private final JdbcClient jdbcClient;
 	
-	@Value("app.sql.product-supplier.is-present")
+	@Value("${app.sql.product-supplier.is-present}")
 	private String isPresent;
 
-	@Value("app.sql.product-supplier.create")
+	@Value("${app.sql.product-supplier.create}")
 	private String create;
 
 	public boolean isPresent(int productId, int supplierId) {

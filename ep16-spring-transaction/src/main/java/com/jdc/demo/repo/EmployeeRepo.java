@@ -12,7 +12,7 @@ public class EmployeeRepo {
 	
 	private final JdbcClient jdbcClient;
 	
-	@Value("app.sql.employee.is-present")
+	@Value("${app.sql.employee.is-present}")
 	private String isPresent;
 
 	public boolean isPresent(int id) {

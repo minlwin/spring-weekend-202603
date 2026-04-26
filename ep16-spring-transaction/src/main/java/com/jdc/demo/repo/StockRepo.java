@@ -17,9 +17,9 @@ public class StockRepo {
 	private final JdbcClient jdbcClient;
 	
 	@Value("${app.sql.stock.find-by-id}")
-	private final String findById;
+	private String findById;
 	@Value("${app.sql.stock.update}")
-	private final String update;
+	private String update;
 	
 	public StockDto findById(int productId) {
 		return jdbcClient.sql(findById)

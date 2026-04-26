@@ -12,7 +12,7 @@ public class SupplierRepo {
 
 	private final JdbcClient jdbcClient;
 	
-	@Value("app.sql.supplier.is-present")
+	@Value("${app.sql.supplier.is-present}")
 	private String isPresent;
 
 	public boolean isPresent(int id) {
