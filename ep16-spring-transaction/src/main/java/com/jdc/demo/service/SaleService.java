@@ -1,5 +1,7 @@
 package com.jdc.demo.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.jdc.demo.domains.input.SaleForm;
@@ -12,7 +14,7 @@ public class SaleService {
 		return 0;
 	}
 		
-	public SaleDetails findById(int id) {
+	public Optional<SaleDetails> findById(int id) {
 		return null;
 	}
 }

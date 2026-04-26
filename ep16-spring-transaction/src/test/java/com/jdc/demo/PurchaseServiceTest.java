@@ -2,6 +2,7 @@ package com.jdc.demo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -51,6 +52,7 @@ class PurchaseServiceTest {
 	void test_success(String testPattern, PurchaseForm form, PurchaseDetails expected) {
 		var id = service.purchase(form);
 		var details = service.findById(id);
-		assertEquals(expected, details);
+		assertTrue(details.isPresent());
+		assertEquals(expected, details.get());
 	}
 }
