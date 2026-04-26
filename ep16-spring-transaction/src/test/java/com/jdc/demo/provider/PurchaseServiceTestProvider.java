@@ -28,7 +28,7 @@ public class PurchaseServiceTestProvider {
 
 	public static Stream<Arguments> test_error_empty_items() {
 		var form = PurchaseForm.builder()
-				.purchaseDate(LocalDate.now().plusDays(1))
+				.purchaseDate(LocalDate.now())
 				.employeeId(1)
 				.supplierId(1)
 				.transportationFees(10000)
@@ -41,7 +41,7 @@ public class PurchaseServiceTestProvider {
 
 	public static Stream<Arguments> test_error_minus_price() {
 		var form = PurchaseForm.builder()
-				.purchaseDate(LocalDate.now().plusDays(1))
+				.purchaseDate(LocalDate.now())
 				.employeeId(1)
 				.supplierId(1)
 				.transportationFees(10000)
