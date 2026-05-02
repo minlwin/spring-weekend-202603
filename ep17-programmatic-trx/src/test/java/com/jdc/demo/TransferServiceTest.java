@@ -59,7 +59,7 @@ public class TransferServiceTest {
 	static Stream<Arguments> test_success_src() {
 		return Stream.of(Arguments.of(
 			new TransferForm("0001", "0002", 99500),
-			new TransferResult("%s%04d".formatted(LocalDate.now().format(DF), 1), "Transfer amount : 99500 from Aunt Aung to Thidar"),
+			new TransferResult("%s%04d".formatted(LocalDate.now().format(DF), 1), "Transfer amount : 99500 from Aung Aung to Thidar"),
 			500,
 			199500
 		));
