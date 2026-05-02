@@ -19,4 +19,16 @@ public class AccountService {
 		return repo.findById(code)
 				.orElseThrow(() -> new BusinessException("There is no account with code %s.".formatted(code)));
 	}
+
+	@Transactional
+	public void withdraw(AccountInfo account, int amount) {
+		var netAmount = account.amount() - amount;
+		repo.update(account.code(), netAmount);
+	}
+
+	@Transactional
+	public void deposit(AccountInfo account, int amount) {
+		var netAmount = account.amount() + amount;
+		repo.update(account.code(), netAmount);
+	}
 }

@@ -18,6 +18,8 @@ public class AccountRepo {
 	
 	@Value("${app.sql.account.find-by-code}")
 	private String findById;
+	@Value("${app.sql.account.update}")
+	private String update;
 
 	@Transactional(readOnly = true)
 	public Optional<AccountInfo> findById(String code) {
@@ -25,6 +27,14 @@ public class AccountRepo {
 				.param("code", code)
 				.query(AccountInfo.class)
 				.optional();
+	}
+
+	@Transactional
+	public void update(String code, int amount) {
+		client.sql(update)
+			.param("code", code)
+			.param("amount", amount)
+			.update();
 	}
 
 }
