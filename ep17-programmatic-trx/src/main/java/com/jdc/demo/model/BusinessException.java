@@ -1,0 +1,7 @@
+package com.jdc.demo.model;
+
+public class BusinessException extends RuntimeException{
+
+	private static final long serialVersionUID = 1L;
+
+}
