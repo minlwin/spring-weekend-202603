@@ -7,7 +7,6 @@ DROP TABLE IF EXISTS account;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
-
 CREATE TABLE account (
 	code VARCHAR(4) PRIMARY KEY,
 	name VARCHAR(40) NOT NULL,
@@ -18,8 +17,6 @@ CREATE TABLE account (
 
 insert into account (code, name, amount) values ('0001', 'Aung Aung', 100000);
 insert into account (code, name, amount) values ('0002', 'Thidar', 100000);
-
-
 
 CREATE TABLE transaction_seq (
 	trx_date DATE PRIMARY KEY,
