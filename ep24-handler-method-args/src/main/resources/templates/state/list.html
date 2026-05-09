@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>State List</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<div class="container mt-4">
+		<!-- Title -->
+		<h1>States</h1>
+		<h2>Using Path Variable</h2>
+		
+		<!-- Grid -->
+		<section class="mt-4 row row-cols-4 gap-2">
+			<a th:each="state : ${list}" th:text="${state.name}" th:href="@{|/state/${state.id}|}" class="btn btn-primary">Yangon</a>
+		</section>
+	</div>
+
+</body>
+</html>

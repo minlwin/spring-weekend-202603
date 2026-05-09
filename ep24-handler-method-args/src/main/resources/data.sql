@@ -1,0 +1,16 @@
+INSERT INTO state (id, name, capital, population) VALUES
+(1, 'Kachin State', 'Myitkyina', 1689654),
+(2, 'Kayah State', 'Loikaw', 286627),
+(3, 'Kayin State', 'Hpa-An', 1574079),
+(4, 'Chin State', 'Hakha', 478801),
+(5, 'Sagaing Region', 'Monywa', 5320279),
+(6, 'Tanintharyi Region', 'Dawei', 1406434),
+(7, 'Bago Region', 'Bago', 4863255),
+(8, 'Magway Region', 'Magway', 3917131),
+(9, 'Mandalay Region', 'Mandalay', 6165723),
+(10, 'Mon State', 'Mawlamyine', 2054393),
+(11, 'Rakhine State', 'Sittwe', 3188023),
+(12, 'Yangon Region', 'Yangon', 7360703),
+(13, 'Shan State', 'Taunggyi', 5824322),
+(14, 'Ayeyarwady Region', 'Pathein', 6175482),
+(15, 'Naypyidaw Union Territory', 'Naypyidaw', 1160242);
