@@ -14,5 +14,6 @@ public class SqlConfigProps {
 	public static class State {
 		private String findAll;
 		private String findById;
+		private String search;
 	}
 }

@@ -14,9 +14,15 @@
 		<h2>Using Path Variable</h2>
 		
 		<!-- Grid -->
-		<section class="mt-4 row row-cols-4 gap-2">
-			<a th:each="state : ${list}" th:text="${state.name}" th:href="@{|/state/${state.id}|}" class="btn btn-primary">Yangon</a>
+		<section class="mt-4 row row-cols-4 gy-2">
+			<div class="col" th:each="state : ${list}" >
+				<a th:text="${state.name}" th:href="@{|/state/${state.id}|}" class="btn btn-primary d-block">Yangon</a>
+			</div>
 		</section>
+		
+		<div class="mt-4">
+			<a th:href="@{/}" class="btn btn-outline-primary">Home</a>
+		</div>
 	</div>
 
 </body>
