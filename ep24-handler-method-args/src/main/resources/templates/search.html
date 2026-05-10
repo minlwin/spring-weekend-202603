@@ -1,10 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Request Params</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
 <body>
+
+	<div class="container mt-4">
+		<h1>Search State</h1>
+		
+		<!-- Search Form -->
+		<form class="d-flex align-items-end gap-3 mb-3">
+			<div>
+				<label class="form-label">Keyword</label>
+				<input type="text" class="form-control" name="keyword" th:value="${param.keyword}" />
+			</div>
+			<div>
+				<label class="form-label">Population From</label>
+				<input type="number" class="form-control" name="from" th:value="${param.from}" />
+			</div>
+			<div>
+				<label class="form-label">To</label>
+				<input type="number" class="form-control" name="to" th:value="${param.to}" />
+			</div>
+			
+			<div>
+				<button type="submit" class="btn btn-outline-primary">
+					<i class="bi-search"></i> Search
+				</button>
+			</div>
+		</form>
+		
+		<!-- Result Table -->
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Capital</th>
+					<th>Population</th>
+					<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="item : ${result}">
+					<td th:text="${item.id}">1</td>
+					<td th:text="${item.name}">Yangon</td>
+					<td th:text="${item.capital}">Yangon</td>
+					<td th:text="${item.population}">1,000,000</td>
+					<td>
+						<a th:href="@{|/state/${item.id}|}" class="btn-link">
+							<i class="bi-arrow-right"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
 </body>
 </html>

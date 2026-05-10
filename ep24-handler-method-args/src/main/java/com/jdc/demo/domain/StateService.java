@@ -49,7 +49,7 @@ public class StateService {
 		var params = new HashMap<String, Object>();
 		
 		if(StringUtils.hasLength(keyword)) {
-			sqlBuilder.append(" and lower(name) like :keyword and lower(capital) like :keyword");
+			sqlBuilder.append(" and (lower(name) like :keyword or lower(capital) like :keyword)");
 			params.put("keyword", "%s%%".formatted(keyword.toLowerCase()));
 		}
 		
