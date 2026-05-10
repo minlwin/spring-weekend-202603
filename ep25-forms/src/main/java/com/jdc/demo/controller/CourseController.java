@@ -1,18 +1,23 @@
 package com.jdc.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jdc.demo.domain.constants.CourseLevel;
+import com.jdc.demo.domain.input.CourseSearch;
 
 @Controller
 @RequestMapping("courses")
 public class CourseController {
 
 	@GetMapping
-	String search() {
+	String search(ModelMap model, CourseSearch search) {
+		System.out.println(search);
+		model.put("form", search);
 		return "courses/list";
 	}
 
@@ -21,24 +26,11 @@ public class CourseController {
 		return "courses/details";
 	}
 
-	@GetMapping("create")
-	String create() {
-		return "courses/edit";
-	}
-
-	@GetMapping("{id}/edit")
-	String edit(@PathVariable int id) {
-		return "courses/edit";
-	}
 	
-	@PostMapping
-	String save() {
-		return "redirect:/courses/1";
-	}
-	
-	@ModelAttribute("title")
-	String getTitle() {
-		return "Courses";
+	@ModelAttribute
+	void setModel(ModelMap model) {
+		model.put("title", "Courses");
+		model.put("levels", CourseLevel.values());
 	}
 	
 }

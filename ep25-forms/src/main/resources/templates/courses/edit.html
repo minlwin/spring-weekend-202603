@@ -8,6 +8,43 @@
 	
 	<main>
 		<h3>Course Edit</h3>
+		
+		<form th:action="@{/courses/edit}" th:object="${form}" method="post">
+			
+			<div class="row mb-3">
+				<!-- Name -->
+				<div class="col-6" th:insert="~{/fragments/component :: formGroup('Name', ~{::name})}">
+					<input th:field="*{name}" th:fragment="name" type="text" class="form-control" placeholder="Enter Course Name" />
+				</div>
+			</div>
+			
+			<div class="row mb-3">
+				<!-- Level -->
+				<div class="col-3" th:insert="~{/fragments/component :: formGroup('Level', ~{::level})}">
+					<select th:field="*{level}" th:fragment="level" class="form-select">
+						<option value="">Select One</option>
+						<option th:each="item : ${levels}" th:value="${item}">[[${item}]]</option>
+					</select>
+				</div>
+				
+				<!-- Hours -->
+				<div class="col-3" th:insert="~{/fragments/component :: formGroup('Hours', ~{::hours})}">
+					<input th:field="*{hours}" th:fragment="hours" type="number" class="form-control" placeholder="Enter Course Hours" />
+				</div>
+			</div>
+			
+			<!-- Description -->
+			<div class="mb-3" th:insert="~{/fragments/component :: formGroup('Description', ~{::description})}">
+				<textarea th:field="*{description}" th:fragment="description" class="form-control"></textarea>
+			</div>
+			
+			<div>
+				<button type="submit" class="btn btn-primary">
+					<i class="bi-save"></i> Save
+				</button>
+			</div>
+			
+		</form>
 	</main>
 </body>
 </html>

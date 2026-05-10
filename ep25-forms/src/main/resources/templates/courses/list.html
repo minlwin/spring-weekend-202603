@@ -11,21 +11,22 @@
 		<h3>Course Management</h3>
 		
 		<!-- Search Form -->
-		<form class="d-flex align-items-end gap-3 mb-3">
+		<form class="d-flex align-items-end gap-3 mb-3" th:object="${form}">
 			<div th:replace="~{/fragments/component :: formGroup('Level', ~{::levelSelect})}" >
-				<select th:fragment="levelSelect" name="level" class="form-select">
+				<select th:fragment="levelSelect" th:field="*{level}" class="form-select">
 					<option value="">Search All</option>
+					<option th:each="item : ${levels}" th:value="${item}">[[${item}]]</option>
 				</select>
 			</div>
 			<div th:replace="~{/fragments/component :: formGroup('Course Name', ~{::nameInput})}" >
-				<input th:fragment="nameInput" type="text" name="keyword" placeholder="Search Name" class="form-control" />
+				<input th:fragment="nameInput" th:field="*{keyword}" type="text" placeholder="Search Name" class="form-control" />
 			</div>
 			<div>
 				<button type="submit" class="btn btn-primary">
 					<i class="bi-search"></i> Search
 				</button>
 				
-				<a th:href="@{/courses/create}" class="btn btn-danger">
+				<a th:href="@{/courses/edit}" class="btn btn-danger">
 					<i class="bi-plus"></i> Add New
 				</a>
 			</div>
@@ -38,7 +39,6 @@
 					<th>ID</th>
 					<th>Name</th>
 					<th>Level</th>
-					<th>Articles</th>
 					<th>Hours</th>
 					<th></th>
 				</tr>
@@ -48,10 +48,9 @@
 					<td>1</td>
 					<td>Java Basic</td>
 					<td>Basic</td>
-					<td>8</td>
 					<td>120</td>
 					<td>
-						<a href="#" class="btn-link">
+						<a th:href="@{|/courses/1|}" class="btn-link">
 							<i class="bi-arrow-right"></i>
 						</a>
 					</td>
