@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/fragments/layout :: html(content=~{::main})}">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	
+	<main>
+		<!-- Page Title -->
+		<h3>Course Management</h3>
+		
+		<!-- Search Form -->
+		<form class="d-flex align-items-end gap-3 mb-3" th:object="${form}">
+			<div >
+				<label class="d-block mb-1">Level</label>
+				<select th:field="*{level}" class="form-select">
+					<option value="">Search All</option>
+					<option th:each="item : ${levels}" th:value="${item}">[[${item}]]</option>
+				</select>
+			</div>
+			<div>
+				<label class="d-block mb-1">Keyword</label>
+				<input th:field="*{keyword}" type="text" placeholder="Search Name" class="form-control" />
+			</div>
+			<div>
+				<button type="submit" class="btn btn-primary">
+					<i class="bi-search"></i> Search
+				</button>
+				
+				<a th:href="@{/courses/edit}" class="btn btn-danger">
+					<i class="bi-plus"></i> Add New
+				</a>
+			</div>
+		</form>
+		
+		<!-- Result Table -->
+		<table th:unless="${#lists.isEmpty(result)}" class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Level</th>
+					<th>Hours</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${result}">
+					<td th:text="${item.id}">1</td>
+					<td th:text="${item.name}">Java Basic</td>
+					<td th:text="${item.level}">Basic</td>
+					<td th:text="${item.hours}">120</td>
+					<td>
+						<a th:href="@{|/courses/${item.id}|}" class="btn-link">
+							<i class="bi-arrow-right"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div th:if="${#lists.isEmpty(result)}" th:insert="~{/fragments/component :: nodata('Course')}"></div>
+	</main>
+</body>
+</html>
