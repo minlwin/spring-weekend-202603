@@ -28,14 +28,14 @@ public class CourseEditController {
 	}
 	
 	@PostMapping
-	String save(@Validated @ModelAttribute("form") CourseForm form, BindingResult result) {	
+	String save(@Validated @ModelAttribute CourseForm form, BindingResult result) {	
 		if(result.hasErrors()) {
-			return "course/edit";
+			return "courses/edit";
 		}
 		return "redirect:/courses/1";
 	}
 
-	@ModelAttribute("form")
+	@ModelAttribute
 	CourseForm getForm() {
 		return new CourseForm();
 	}

@@ -9,32 +9,39 @@
 	<main>
 		<h3>Course Edit</h3>
 		
-		<form th:action="@{/courses/edit}" th:object="${form}" method="post">
+		<form th:action="@{/courses/edit}" th:object="${courseForm}" method="post">
 			
 			<div class="row mb-3">
 				<!-- Name -->
-				<div class="col-6" th:insert="~{/fragments/component :: formGroup('Name', ~{::name})}">
-					<input th:field="*{name}" th:fragment="name" type="text" class="form-control" placeholder="Enter Course Name" />
+				<div class="col-6">
+					<label class="d-block mb-1">Course Name</label>
+					<input th:field="*{name}" type="text" class="form-control" placeholder="Enter Course Name" />
+					<span th:errors="*{name}"></span>
 				</div>
 			</div>
 			
 			<div class="row mb-3">
 				<!-- Level -->
-				<div class="col-3" th:insert="~{/fragments/component :: formGroup('Level', ~{::level})}">
-					<select th:field="*{level}" th:fragment="level" class="form-select">
+				<div class="col-3">
+					<label class="d-block mb-1">Course Level</label>
+					<select th:field="*{level}" class="form-select">
 						<option value="">Select One</option>
 						<option th:each="item : ${levels}" th:value="${item}">[[${item}]]</option>
 					</select>
+					<span th:errors="*{level}"></span>
 				</div>
 				
 				<!-- Hours -->
-				<div class="col-3" th:insert="~{/fragments/component :: formGroup('Hours', ~{::hours})}">
-					<input th:field="*{hours}" th:fragment="hours" type="number" class="form-control" placeholder="Enter Course Hours" />
+				<div class="col-3">
+					<label class="d-block mb-1">Hours</label>
+					<input th:field="*{hours}" type="number" class="form-control" placeholder="Enter Course Hours" />
+					<span th:errors="*{hours}"></span>
 				</div>
 			</div>
 			
 			<!-- Description -->
-			<div class="mb-3" th:insert="~{/fragments/component :: formGroup('Description', ~{::description})}">
+			<div class="mb-3">
+				<label class="d-block mb-1">Description</label>
 				<textarea th:field="*{description}" th:fragment="description" class="form-control"></textarea>
 			</div>
 			
