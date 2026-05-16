@@ -7,10 +7,10 @@
 <body>
 	
 	<main>
-		<h3>Course Edit</h3>
+		<h3 th:text="${id == null ? 'Create Course' : 'Edit Course'}">Course Edit</h3>
 		
 		<form th:action="@{/courses/edit}" th:object="${courseForm}" method="post">
-			
+			<input type="hidden" name="id" th:value="${id}" />
 			<div class="row mb-3">
 				<!-- Name -->
 				<div class="col-6">

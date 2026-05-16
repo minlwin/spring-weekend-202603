@@ -8,6 +8,24 @@
 	
 	<main>
 		<h3>Course Details</h3>
+		
+		<div class="row row-cols-2 w-50">
+			<div class="col">ID</div>
+			<div class="col">[[${details.id}]]</div>
+			<div class="col">Name</div>
+			<div class="col">[[${details.name}]]</div>
+			<div class="col">Level</div>
+			<div class="col">[[${details.level}]]</div>
+			<div class="col">Hours</div>
+			<div class="col">[[${details.hours}]]</div>
+			<div class="col">Description</div>
+			<div class="col">[[${details.description}]]</div>
+			<div class="col">
+				<a th:href="@{|/courses/edit/${details.id}|}" class="btn btn-primary">
+					<i class="bi-pencil"></i> Edit Course
+				</a>
+			</div>
+		</div>
 	</main>
 </body>
 </html>

@@ -12,14 +12,16 @@
 		
 		<!-- Search Form -->
 		<form class="d-flex align-items-end gap-3 mb-3" th:object="${form}">
-			<div th:replace="~{/fragments/component :: formGroup('Level', ~{::levelSelect})}" >
-				<select th:fragment="levelSelect" th:field="*{level}" class="form-select">
+			<div >
+				<label class="d-block mb-1">Level</label>
+				<select th:field="*{level}" class="form-select">
 					<option value="">Search All</option>
 					<option th:each="item : ${levels}" th:value="${item}">[[${item}]]</option>
 				</select>
 			</div>
-			<div th:replace="~{/fragments/component :: formGroup('Course Name', ~{::nameInput})}" >
-				<input th:fragment="nameInput" th:field="*{keyword}" type="text" placeholder="Search Name" class="form-control" />
+			<div>
+				<label class="d-block mb-1">Keyword</label>
+				<input th:field="*{keyword}" type="text" placeholder="Search Name" class="form-control" />
 			</div>
 			<div>
 				<button type="submit" class="btn btn-primary">
@@ -33,7 +35,7 @@
 		</form>
 		
 		<!-- Result Table -->
-		<table class="table table-striped">
+		<table th:unless="${#lists.isEmpty(result)}" class="table table-striped">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -44,19 +46,21 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1</td>
-					<td>Java Basic</td>
-					<td>Basic</td>
-					<td>120</td>
+				<tr th:each="item : ${result}">
+					<td th:text="${item.id}">1</td>
+					<td th:text="${item.name}">Java Basic</td>
+					<td th:text="${item.level}">Basic</td>
+					<td th:text="${item.hours}">120</td>
 					<td>
-						<a th:href="@{|/courses/1|}" class="btn-link">
+						<a th:href="@{|/courses/${item.id}|}" class="btn-link">
 							<i class="bi-arrow-right"></i>
 						</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		
+		<div th:if="${#lists.isEmpty(result)}" th:insert="~{/fragments/component :: nodata('Course')}"></div>
 	</main>
 </body>
 </html>
