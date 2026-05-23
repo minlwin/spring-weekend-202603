@@ -1,0 +1,30 @@
+volumes:
+  jpadata:
+  springdata:
+
+services:
+  jpadb:
+    image: mysql:9.6
+    container_name: jpadb
+    environment:
+      - MYSQL_DATABASE=mydb
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=myuser
+      - MYSQL_PASSWORD=mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - jpadata:/var/lib/mysql
+
+  springdb:
+    image: mysql:9.6
+    container_name: springdb
+    environment:
+      - MYSQL_DATABASE=mydb
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=myuser
+      - MYSQL_PASSWORD=mypassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - springdata:/var/lib/mysql
