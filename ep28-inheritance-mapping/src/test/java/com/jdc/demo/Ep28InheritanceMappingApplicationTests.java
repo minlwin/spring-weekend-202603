@@ -1,13 +1,13 @@
-package com.jdc.demo.test;
+package com.jdc.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class LoadContextTest {
-	
+class Ep28InheritanceMappingApplicationTests {
+
 	@Test
-	void test() {
-		
+	void contextLoads() {
 	}
+
 }
