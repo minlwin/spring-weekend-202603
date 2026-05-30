@@ -20,6 +20,8 @@ public class Course {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	
+	// LEVEL -> Basic, Intermediate, Advance
 	@Enumerated(EnumType.STRING)
 	private CourseLevel level;
 	private int hours;
