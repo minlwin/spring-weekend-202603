@@ -17,6 +17,13 @@ public class CourseListItem {
 	private CourseLevel level;
 	private int hours;
 	
+	public CourseListItem(Course course) {
+		this.id = course.getId();
+		this.name = course.getName();
+		this.level = course.getLevel();
+		this.hours = course.getHours();
+	}
+	
 	public static CourseListItem from(Course course) {
 		return new CourseListItem(course.getId(), course.getName(), course.getLevel(), course.getHours());
 	}

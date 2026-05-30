@@ -13,7 +13,7 @@ import jakarta.persistence.EntityManager;
 public abstract class AbstractCourseService implements CourseService{
 
 	@Autowired
-	private EntityManager em;
+	protected EntityManager em;
 	
 	@Override
 	@Transactional

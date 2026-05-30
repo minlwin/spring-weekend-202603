@@ -18,7 +18,7 @@ public class CourseForm {
 	@NotBlank(message = "Please enter course name")
 	private String name;
 	
-	@NotBlank(message = "Please select course level")
+	@NotNull(message = "Please select course level")
 	private CourseLevel level;
 	
 	@NotNull(message = "Please enter course hours")
