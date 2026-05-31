@@ -8,6 +8,76 @@
 	
 	<main>
 		<h3>Class Management</h3>
+		
+		<!-- Search Form -->
+		<form class="d-flex align-items-end gap-3 mb-3">
+			<!-- Courses -->
+			<div>
+				<label class="d-block mb-1">Course</label>
+				<select class="form-select">
+					<option value="">Search All</option>
+					<option th:each="item : ${courses}" th:value="${item.id}">[[${item.name}]]</option>
+				</select>
+			</div>
+			
+			<!-- Status -->
+			<div>
+				<label class="d-block mb-1">Status</label>
+				<select class="form-select">
+					<option value="">Search All</option>
+					<option th:each="item : ${levels}" th:value="${item}">[[${item}]]</option>
+				</select>
+			</div>
+			
+			<!-- Date From -->
+			<div>
+				<label class="d-block mb-1">Start From</label>
+				<input type="date" class="form-control" />
+			</div>
+			
+			<!-- Buttons -->
+			<div>
+				<button type="submit" class="btn btn-primary">
+					<i class="bi-search"></i> Search
+				</button>
+				
+				<a th:href="@{/classes/edit}" class="btn btn-danger">
+					<i class="bi-plus"></i> Create Class
+				</a>
+			</div>
+		</form>
+		
+		<!-- Result Table -->
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Course Name</th>
+					<th>Level</th>
+					<th>Start Date</th>
+					<th>Status</th>
+					<th class="text-end">Fees</th>
+					<th class="text-end">Available Seat</th>
+					<th class="text-end">Registrations</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Java Basic</td>
+					<td>Basic</td>
+					<td>2026/5/15</td>
+					<td>Start</td>
+					<td class="text-end">300,000 MMK</td>
+					<td class="text-end">30</td>
+					<td class="text-end">26</td>
+					<td class="text-center">
+						<a th:href="@{|/classes/${1}|}" class="btn-link">
+							<i class="bi-arrow-right"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</main>
 </body>
 </html>
