@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jdc.demo.domain.entity.Course.Level;
+import com.jdc.demo.domain.input.ClassesSearch;
 import com.jdc.demo.domain.input.CourseSearch;
+import com.jdc.demo.service.ClassesService;
 import com.jdc.demo.service.CourseService;
 
 @Controller
@@ -19,14 +21,18 @@ public class ClassesController {
 	
 	@Autowired
 	private CourseService courseService;
+	@Autowired
+	private ClassesService classesService;
 
 	@GetMapping
-	String search() {
+	String search(@ModelAttribute("classesSearch") ClassesSearch form, ModelMap model) {
+		model.put("list", classesService.search(form));
 		return "classes/list";
 	}
 	
 	@GetMapping("{id}")
-	String findById(@PathVariable int id) {
+	String findById(@PathVariable int id, ModelMap model) {
+		model.put("details", classesService.findById(id));
 		return "classes/details";
 	}
 	
@@ -50,5 +56,10 @@ public class ClassesController {
 		model.put("title", "Classes");
 		model.put("courses", courseService.search(new CourseSearch()));
 		model.put("levels", Level.values());
+	}
+	
+	@ModelAttribute
+	ClassesSearch search() {
+		return new ClassesSearch();
 	}
 }
