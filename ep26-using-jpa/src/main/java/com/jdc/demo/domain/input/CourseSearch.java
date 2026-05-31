@@ -1,6 +1,6 @@
 package com.jdc.demo.domain.input;
 
-import com.jdc.demo.domain.constants.CourseLevel;
+import com.jdc.demo.domain.entity.Course.Level;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CourseSearch {
 
-	private CourseLevel level;
+	private Level level;
 	private String keyword;
 }

@@ -1,7 +1,7 @@
 package com.jdc.demo.domain.input;
 
-import com.jdc.demo.domain.constants.CourseLevel;
 import com.jdc.demo.domain.entity.Course;
+import com.jdc.demo.domain.entity.Course.Level;
 import com.jdc.demo.domain.output.CourseDetails;
 
 import jakarta.validation.constraints.NotBlank;
@@ -19,7 +19,7 @@ public class CourseForm {
 	private String name;
 	
 	@NotNull(message = "Please select course level")
-	private CourseLevel level;
+	private Level level;
 	
 	@NotNull(message = "Please enter course hours")
 	private Integer hours;

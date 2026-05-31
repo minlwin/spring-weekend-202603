@@ -1,0 +1,54 @@
+package com.jdc.demo.domain.entity;
+
+import java.time.LocalDate;
+
+import com.jdc.demo.domain.AbstractEntity;
+import com.jdc.demo.domain.embeddables.Parent;
+
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data 
+@Entity
+@EqualsAndHashCode(callSuper = true)
+public class Student extends AbstractEntity{
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column(nullable = false)
+	private String name;
+	
+	@Column(nullable = false)
+	private Gender gender;
+
+	@Column(nullable = false)
+	private LocalDate dob;
+	
+	@Column(nullable = false)
+	private String phone;
+
+	@Column(nullable = false)
+	private String email;
+	
+	@AttributeOverride(name = "name", column = @Column(name = "father_name"))
+	@AttributeOverride(name = "phone", column = @Column(name = "father_phone"))
+	@AttributeOverride(name = "occupation", column = @Column(name = "father_occupation"))
+	private Parent father;
+	
+	@AttributeOverride(name = "name", column = @Column(name = "mother_name"))
+	@AttributeOverride(name = "phone", column = @Column(name = "mother_phone"))
+	@AttributeOverride(name = "occupation", column = @Column(name = "mother_occupation"))
+	private Parent mother;
+	
+	public enum Gender {
+		Male, Female
+	}
+}

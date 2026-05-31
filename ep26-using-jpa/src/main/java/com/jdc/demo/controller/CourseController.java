@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jdc.demo.domain.constants.CourseLevel;
+import com.jdc.demo.domain.entity.Course.Level;
 import com.jdc.demo.domain.input.CourseSearch;
 import com.jdc.demo.service.CourseService;
 
@@ -36,7 +36,7 @@ public class CourseController {
 	@ModelAttribute
 	void setModel(ModelMap model) {
 		model.put("title", "Courses");
-		model.put("levels", CourseLevel.values());
+		model.put("levels", Level.values());
 	}
 	
 }

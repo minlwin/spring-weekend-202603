@@ -1,8 +1,8 @@
 package com.jdc.demo.domain.entity;
 
 import com.jdc.demo.domain.AbstractEntity;
-import com.jdc.demo.domain.constants.CourseLevel;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,11 +20,20 @@ public class Course extends AbstractEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(nullable = false)
 	private String name;
 	
-	// LEVEL -> Basic, Intermediate, Advance
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private CourseLevel level;
+	private Level level;
+	
+	@Column(nullable = false)
 	private int hours;
+
 	private String description;
+	
+	public enum Level {
+		Basic, Intermediate, Advance
+	}
 }

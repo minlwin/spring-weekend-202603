@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jdc.demo.domain.constants.CourseLevel;
+import com.jdc.demo.domain.entity.Course.Level;
 import com.jdc.demo.domain.input.CourseForm;
 import com.jdc.demo.service.CourseService;
 
@@ -64,7 +64,7 @@ public class CourseEditController {
 	@ModelAttribute
 	void setModel(ModelMap model) {
 		model.put("title", "Courses");
-		model.put("levels", CourseLevel.values());
+		model.put("levels", Level.values());
 	}
 	
 }

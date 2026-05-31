@@ -1,7 +1,7 @@
 package com.jdc.demo.domain.output;
 
-import com.jdc.demo.domain.constants.CourseLevel;
 import com.jdc.demo.domain.entity.Course;
+import com.jdc.demo.domain.entity.Course.Level;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
 public class CourseDetails {
 	private int id;
 	private String name;
-	private CourseLevel level;
+	private Level level;
 	private int hours;
 	private String description;
 	

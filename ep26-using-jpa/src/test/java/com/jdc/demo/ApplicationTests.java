@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
-import com.jdc.demo.domain.constants.CourseLevel;
+import com.jdc.demo.domain.entity.Course.Level;
 import com.jdc.demo.domain.input.CourseForm;
 import com.jdc.demo.domain.input.CourseSearch;
 import com.jdc.demo.service.CourseService;
@@ -35,7 +35,7 @@ class ApplicationTests {
 		"Spring MVC,Intermediate,120,",
 		"Full Stack Spring,Advance,180,Job Ready Course",
 	})
-	void test_create(String name, CourseLevel level, int hours, String description) {
+	void test_create(String name, Level level, int hours, String description) {
 		var form = new CourseForm(name, level, hours, description);
 		var id = service.create(form);
 		assertEquals(11, id);
@@ -50,7 +50,7 @@ class ApplicationTests {
 		"Basic,re,1",
 		"Advance,re,0"
 	})
-	void test_search(CourseLevel level, String keyword, int size) {
+	void test_search(Level level, String keyword, int size) {
 		var form = new CourseSearch(level, keyword);
 		var result = service.search(form);
 		assertEquals(size, result.size());

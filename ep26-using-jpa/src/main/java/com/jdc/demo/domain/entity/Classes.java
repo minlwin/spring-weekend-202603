@@ -6,6 +6,7 @@ import java.util.List;
 import com.jdc.demo.domain.AbstractEntity;
 import com.jdc.demo.domain.embeddables.Schedule;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,14 +28,19 @@ public class Classes extends AbstractEntity{
 	@ManyToOne(optional = false)
 	private Course course;
 	
+	@Column(nullable = false)
 	private LocalDate startDate;
 	
 	@ElementCollection
 	private List<Schedule> schedules;
 	
+	@Column(nullable = false)
 	private int fees;
+
+	@Column(nullable = false)
 	private int availableSeats;
 	
+	@Column(nullable = false)
 	private Status status;
 	
 	public enum Status {
