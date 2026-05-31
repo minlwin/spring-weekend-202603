@@ -9,57 +9,70 @@
 	<main>
 		<h3>Class Edit</h3>
 		
-		<form method="post" th:action="@{/classes/edit}">
+		<form method="post" th:action="@{/classes/edit}" th:object="${classesForm}">
+			
+			<input type="hidden" name="id" th:value="${id}" />
+			<input type="hidden" name="action" id="actionInput" />
+			<input type="hidden" name="deletedIndex" id="deleteInput" />
+			
 			<div class="row mb-3">
 				<div class="col-3">
 					<label class="form-label">Course</label>
-					<select class="form-select">
+					<select th:field="*{courseId}" class="form-select">
 						<option value="">Select Course</option>
 						<option th:each="item : ${courses}" th:value="${item.id}">[[${item.name}]]</option>
 					</select>
+					<span class="text-sm text-danger" th:errors="*{courseId}"></span>
 				</div>
 				
 				<div class="col-3">
 					<label class="form-label">Start Date</label>
-					<input type="date" class="form-control" />
+					<input th:field="*{startDate}" type="date" class="form-control" />
+					<span class="text-sm text-danger" th:errors="*{startDate}"></span>
 				</div>
 			</div>
 			
 			<div class="row mb-3">
 				<div class="col-3">
 					<label class="form-label">Fees</label>
-					<input type="number" class="form-control" />
+					<input th:field="*{fees}" type="number" class="form-control" />
+					<span class="text-sm text-danger" th:errors="*{fees}"></span>
 				</div>
 				
 				<div class="col-3">
 					<label class="form-label">Available Seats</label>
-					<input type="number" class="form-control" />
+					<input th:field="*{availableSeats}" type="number" class="form-control" />
+					<span class="text-sm text-danger" th:errors="*{availableSeats}"></span>
 				</div>				
 			</div>
 			
 			<section>
 				<h5>Schedules</h5>
 				
-				<div class="row mb-3">
+				<div class="row mb-3" th:each="item, stat : *{schedules}">
 					<div class="col-3">
-						<label class="form-label">Day of Week</label>
-						<select class="form-select">
+						<label th:if="${stat.index eq 0}" class="form-label">Day of Week</label>
+						<select class="form-select" th:field="*{schedules[__${stat.index}__].days}">
 							<option value="">Select One</option>
+							<option th:each="item : ${days}" th:value="${item}">[[${item}]]</option>
 						</select>
+						<span class="text-sm text-danger" th:errors="*{schedules[__${stat.index}__].days}"></span>
 					</div>
 					
 					<div class="col-3">
-						<label class="form-label">Start Time</label>
-						<input type="time" class="form-control" />
+						<label th:if="${stat.index eq 0}" class="form-label">Start Time</label>
+						<input th:field="*{schedules[__${stat.index}__].startTime}" type="time" class="form-control" />
+						<span class="text-sm text-danger" th:errors="*{schedules[__${stat.index}__].startTime}"></span>
 					</div>
 
 					<div class="col-3">
-						<label class="form-label">End Time</label>
-						<input type="time" class="form-control" />
+						<label th:if="${stat.index eq 0}" class="form-label">End Time</label>
+						<input th:field="*{schedules[__${stat.index}__].endTimes}" type="time" class="form-control" />
+						<span class="text-sm text-danger" th:errors="*{schedules[__${stat.index}__].endTimes}"></span>
 					</div>
 					
-					<div class="col-auto btn-wrapper">
-						<button class="btn btn-outline-danger">
+					<div class="col-auto" th:classappend="${stat.index eq 0 ? 'btn-wrapper' : ''}">
+						<button class="btn btn-outline-danger deleteBtn">
 							<i class="bi-trash"></i>
 						</button>
 					</div>
@@ -70,12 +83,17 @@
 						<i class="bi-save"></i> Save Class
 					</button>
 					
-					<button type="button" class="btn btn-outline-primary">
+					<button id="addBtn" type="button" class="btn btn-outline-primary">
 						<i class="bi-plus"></i> Add Schedule
 					</button>
 				</div>
+				
+				<span class="text-sm text-danger" th:errors="*{schedules}"></span>
+				
 			</section>
 		</form>
+		
+		<script type="text/javascript" th:src="@{/js/class-edit.js}"></script>
 	</main>
 </body>
 </html>

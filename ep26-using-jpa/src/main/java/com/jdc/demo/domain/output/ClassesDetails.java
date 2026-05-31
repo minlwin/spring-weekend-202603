@@ -1,10 +1,10 @@
 package com.jdc.demo.domain.output;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 
 import com.jdc.demo.domain.embeddables.Schedule;
+import com.jdc.demo.domain.entity.Classes;
 import com.jdc.demo.domain.entity.Classes.Status;
 import com.jdc.demo.domain.entity.Course.Level;
 
@@ -20,10 +20,15 @@ public class ClassesDetails {
 	private String courseDescription;
 	
 	private LocalDate startDate;
-	private BigInteger fees;
+	private Integer fees;
 	private int availableSeats;
 	private int registrations;
 	private Status status;
 	
 	private List<Schedule> schedules;
+
+	public static ClassesDetails from(Classes entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
