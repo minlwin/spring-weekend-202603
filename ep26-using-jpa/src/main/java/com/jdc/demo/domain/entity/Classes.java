@@ -31,6 +31,9 @@ public class Classes extends AbstractEntity{
 	
 	@Column(nullable = false)
 	private LocalDate startDate;
+
+	@Column(nullable = false)
+	private int months;
 	
 	@ElementCollection
 	private List<Schedule> schedules;
@@ -48,6 +51,6 @@ public class Classes extends AbstractEntity{
 	private List<Registration> registrations;
 	
 	public enum Status {
-		Pending, Start, Finish
+		Available, Started, Finished
 	}
 }

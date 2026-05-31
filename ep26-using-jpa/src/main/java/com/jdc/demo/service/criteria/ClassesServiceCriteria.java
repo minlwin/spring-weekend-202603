@@ -37,6 +37,8 @@ public class ClassesServiceCriteria extends AbstractClassesService {
 			course.get(Course_.name),
 			course.get(Course_.level),
 			root.get(Classes_.startDate),
+			root.get(Classes_.months),
+			root.get(Classes_.status),
 			root.get(Classes_.fees),
 			root.get(Classes_.availableSeats),
 			cb.count(registration.get(Registration_.id))
@@ -48,6 +50,8 @@ public class ClassesServiceCriteria extends AbstractClassesService {
 			course.get(Course_.name),
 			course.get(Course_.level),
 			root.get(Classes_.startDate),
+			root.get(Classes_.months),
+			root.get(Classes_.status),
 			root.get(Classes_.fees),
 			root.get(Classes_.availableSeats)
 		);

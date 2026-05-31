@@ -7,6 +7,7 @@ import java.util.List;
 import com.jdc.demo.domain.embeddables.Schedule;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -16,8 +17,14 @@ public class ClassesForm {
 	
 	@NotNull(message = "Please select a course.")
 	private Integer courseId;
+	
+	@Future(message = "Start date must be future date.")
 	@NotNull(message = "Please enter start date.")
 	private LocalDate startDate;
+	
+	@NotNull(message = "Please enter months.")
+	private Integer months;
+	
 	@NotNull(message = "Please enter fees.")
 	private Integer fees;
 	@NotNull(message = "Please enter avialable seats.")

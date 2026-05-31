@@ -26,24 +26,31 @@
 				</div>
 				
 				<div class="col-3">
+					<label class="form-label">Available Seats</label>
+					<input th:field="*{availableSeats}" type="number" class="form-control" />
+					<span class="text-sm text-danger" th:errors="*{availableSeats}"></span>
+				</div>				
+			</div>
+			
+			<div class="row mb-3">
+				<div class="col-3">
 					<label class="form-label">Start Date</label>
 					<input th:field="*{startDate}" type="date" class="form-control" />
 					<span class="text-sm text-danger" th:errors="*{startDate}"></span>
 				</div>
-			</div>
-			
-			<div class="row mb-3">
+
+				<div class="col-3">
+					<label class="form-label">Months</label>
+					<input th:field="*{months}" type="number" class="form-control" />
+					<span class="text-sm text-danger" th:errors="*{months}"></span>
+				</div>
+
 				<div class="col-3">
 					<label class="form-label">Fees</label>
 					<input th:field="*{fees}" type="number" class="form-control" />
 					<span class="text-sm text-danger" th:errors="*{fees}"></span>
 				</div>
 				
-				<div class="col-3">
-					<label class="form-label">Available Seats</label>
-					<input th:field="*{availableSeats}" type="number" class="form-control" />
-					<span class="text-sm text-danger" th:errors="*{availableSeats}"></span>
-				</div>				
 			</div>
 			
 			<section>
@@ -67,8 +74,8 @@
 
 					<div class="col-3">
 						<label th:if="${stat.index eq 0}" class="form-label">End Time</label>
-						<input th:field="*{schedules[__${stat.index}__].endTimes}" type="time" class="form-control" />
-						<span class="text-sm text-danger" th:errors="*{schedules[__${stat.index}__].endTimes}"></span>
+						<input th:field="*{schedules[__${stat.index}__].endTime}" type="time" class="form-control" />
+						<span class="text-sm text-danger" th:errors="*{schedules[__${stat.index}__].endTime}"></span>
 					</div>
 					
 					<div class="col-auto" th:classappend="${stat.index eq 0 ? 'btn-wrapper' : ''}">

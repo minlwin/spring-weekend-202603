@@ -58,6 +58,7 @@ public class ClassesController {
 		form.setStartDate(data.getStartDate());
 		form.setAvailableSeats(data.getAvailableSeats());
 		form.setFees(data.getFees());
+		form.setMonths(data.getMonths());
 		form.setSchedules(data.getSchedules());
 		
 		model.put("id", id);

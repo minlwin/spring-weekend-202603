@@ -16,5 +16,5 @@ public class Schedule {
 	@NotBlank(message = "Start Time is required.")
 	private String startTime;
 	@NotBlank(message = "End Time is required.")
-	private String endTimes;
+	private String endTime;
 }

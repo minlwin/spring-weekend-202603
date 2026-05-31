@@ -2,6 +2,7 @@ package com.jdc.demo.domain.output;
 
 import java.time.LocalDate;
 
+import com.jdc.demo.domain.entity.Classes.Status;
 import com.jdc.demo.domain.entity.Course.Level;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +19,8 @@ public class ClassesListItem {
 	private String courseName;
 	private Level courseLevel;
 	private LocalDate startDate;
+	private int months;
+	private Status status;
 	private int fees;
 	private int availableSeats;
 	private long registrations;

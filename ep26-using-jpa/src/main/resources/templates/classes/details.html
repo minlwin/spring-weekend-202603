@@ -6,55 +6,82 @@
 </head>
 <body>
 	
-	<main>
+	<main th:object="${details}">
 		<h3>Class Details</h3>
 
         <div class="card border-0 bg-dark text-white rounded-4 shadow-sm mb-4 overflow-hidden">
             <div class="card-body p-4 p-md-5">
+                <h1 class="display-5 fw-bold mb-3">[[*{courseName}]]</h1>
                 <div class="d-flex align-items-center gap-2 mb-3">
                     <span class="badge bg-warning text-dark fw-semibold px-3 py-2 fs-7 text-uppercase">
-                        <i class="bi bi-layer-backward me-1"></i> Advanced Level
+                        <i class="bi bi-layer-backward me-1"></i> [[*{courseLevel}]] Level
                     </span>
                 </div>
-                <h1 class="display-5 fw-bold mb-3">Mastering Enterprise Java Architecture</h1>
-                <p class="lead text-white-50 max-w-xl mb-0">
-                    Dive deep into microservices architectures, cloud-native deployments, and advanced design patterns. This comprehensive course bridges the gap between clean code principles and scalable production systems.
+                <p class="lead text-white-50 max-w-xl mb-3">
+                   [[*{courseDescription}]]
                 </p>
+                
+		        <div class="d-flex justify-content-start gap-3 mt-4">
+		            <a th:href="@{|/classes/edit/*{id}|}" th:if="${details.status == T(com.jdc.demo.domain.entity.Classes.Status).Available}" class="btn btn-danger">
+		            	<i class="bi-pencil"></i> Edit Class
+		            </a>
+		            
+		            <button th:if="${details.status == T(com.jdc.demo.domain.entity.Classes.Status).Started}" class="btn btn-danger">
+		            	<i class="bi-lock"></i> Finish Class
+		            </button>
+		            
+		            <a href="#" th:if="${details.status == T(com.jdc.demo.domain.entity.Classes.Status).Available}" class="btn btn-primary">
+		            	<i class="bi-plus"></i> New Registration
+		            </a>
+		        </div>
+                
             </div>
         </div>
 
         <div class="row g-4">
-            <div class="col-lg-7">
+            <div class="col">
                 <div class="card border-0 shadow-sm rounded-4 h-100">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h4 class="card-title fw-bold text-dark mb-0">Class Enrollment Profile</h4>
                             <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-medium">
-                                <i class="bi bi-check-circle-fill me-1"></i> Active / Enrolling
+                                <i class="bi bi-check-circle-fill me-1"></i> [[*{status}]]
                             </span>
                         </div>
 
                         <div class="row g-4 mb-4">
-                            <div class="col-sm-6">
+                            <div class="col">
                                 <div class="d-flex align-items-center p-3 bg-light rounded-3">
                                     <div class="bg-primary text-white rounded-3 p-3 me-3">
                                         <i class="bi bi-calendar3 fs-4 lh-1"></i>
                                     </div>
                                     <div>
                                         <small class="text-muted d-block text-uppercase fw-semibold tracking-wider small">Start Date</small>
-                                        <span class="fs-5 fw-bold text-dark">Sept 15, 2026</span>
+                                        <span class="fs-5 fw-bold text-dark">[[*{startDate}]]</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col">
                                 <div class="d-flex align-items-center p-3 bg-light rounded-3">
                                     <div class="bg-success text-white rounded-3 p-3 me-3">
+                                        <i class="bi bi-hourglass fs-4 lh-1"></i>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted d-block text-uppercase fw-semibold tracking-wider small">Duration</small>
+                                        <span class="fs-5 fw-bold text-dark">[[*{months}]] Months</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                    <div class="bg-info text-white rounded-3 p-3 me-3">
                                         <i class="bi bi-currency-dollar fs-4 lh-1"></i>
                                     </div>
                                     <div>
                                         <small class="text-muted d-block text-uppercase fw-semibold tracking-wider small">Course Fees</small>
-                                        <span class="fs-5 fw-bold text-dark">$899.00</span>
+                                        <span class="fs-5 fw-bold text-dark">[[*{fees}]] MMK</span>
                                     </div>
                                 </div>
                             </div>
@@ -63,22 +90,22 @@
                         <div class="p-4 bg-light rounded-3 border border-light-subtle">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="fw-semibold text-secondary">Class Capacity Filled</span>
-                                <span class="fw-bold text-dark">42 / 50 Seats Taken</span>
+                                <span class="fw-bold text-dark">[[*{registrations}]] / [[*{availableSeats}]] Seats Taken</span>
                             </div>
                             
                             <div class="progress rounded-pill mb-3" style="height: 10px;">
-                                <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: 84%;" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-primary rounded-pill" role="progressbar" th:style="|width:*{percent}%|" aria-valuenow="[[*{percent}]]" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             
                             <div class="d-flex gap-4 text-center small text-muted pt-2 border-top border-2 border-white">
                                 <div>
                                     <i class="bi bi-people-fill text-primary me-1"></i> 
-                                    <strong>42</strong> Registered
+                                    <strong>[[*{registrations}]]</strong> Registered
                                 </div>
                                 <div class="vr"></div>
                                 <div>
                                     <i class="bi bi-pie-chart-fill text-warning me-1"></i> 
-                                    <strong>8</strong> Available Seats
+                                    <strong>[[*{availableSeats} - *{registrations}]]</strong> Available Seats
                                 </div>
                             </div>
                         </div>
@@ -87,82 +114,26 @@
                 </div>
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-3">
                 <div class="card border-0 shadow-sm rounded-4 h-100">
                     <div class="card-body p-4">
                         <h4 class="card-title fw-bold text-dark mb-3">Weekly Schedule</h4>
-                        <p class="text-muted small mb-4">Please make note of your weekly lecture and lab time tracking intervals.</p>
+                        <p class="text-muted small mb-4">Please make note of your weekly schedules.</p>
                         
-                        <div class="list-group list-group-flush border-top">
-                            
-                            <div class="list-group-item px-0 py-3 d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="bg-primary-subtle text-primary text-center rounded-3 p-2 fw-bold" style="width: 55px; min-width: 55px;">
-                                        Mon
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 fw-bold text-dark">Monday Session</h6>
-                                        <small class="text-muted">Core Lecture Block</small>
-                                    </div>
-                                </div>
+                        <div class="list-group list-group-flush border-top">          
+                            <div th:each="item : *{schedules}" class="list-group-item px-0 py-3 d-flex align-items-center justify-content-between">
+                                <div>[[${item.days}]]</div>
                                 <div class="text-end">
-                                    <span class="badge bg-light text-dark border p-2 fw-medium">
-                                        <i class="bi bi-clock me-1 text-primary"></i> 09:00 AM - 12:00 PM
+                                    <span class="p-2 fw-medium">
+                                        <i class="bi bi-clock me-1 text-primary"></i> [[${item.startTime}]] - [[${item.endTime}]]
                                     </span>
                                 </div>
                             </div>
 
-                            <div class="list-group-item px-0 py-3 d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="bg-primary-subtle text-primary text-center rounded-3 p-2 fw-bold" style="width: 55px; min-width: 55px;">
-                                        Wed
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 fw-bold text-dark">Wednesday Session</h6>
-                                        <small class="text-muted">Interactive Practical Lab</small>
-                                    </div>
-                                </div>
-                                <div class="text-end">
-                                    <span class="badge bg-light text-dark border p-2 fw-medium">
-                                        <i class="bi bi-clock me-1 text-primary"></i> 01:00 PM - 04:00 PM
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="list-group-item px-0 py-3 d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="bg-primary-subtle text-primary text-center rounded-3 p-2 fw-bold" style="width: 55px; min-width: 55px;">
-                                        Fri
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 fw-bold text-dark">Friday Session</h6>
-                                        <small class="text-muted">Review &amp; Peer Evaluation</small>
-                                    </div>
-                                </div>
-                                <div class="text-end">
-                                    <span class="badge bg-light text-dark border p-2 fw-medium">
-                                        <i class="bi bi-clock me-1 text-primary"></i> 02:00 PM - 04:00 PM
-                                    </span>
-                                </div>
-                            </div>
-
-                        </div> </div>
+                        </div> 
+                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="d-flex justify-content-start gap-3 mt-4">
-            <a href="#" class="btn btn-primary">
-            	<i class="bi-pencil"></i> Edit Class
-            </a>
-            
-            <button class="btn btn-outline-danger">
-            	<i class="bi-lock"></i> Finish Class
-            </button>
-            
-            <a href="#" class="btn btn-outline-secondary">
-            	<i class="bi-plus"></i> New Registration
-            </a>
         </div>
 
     </main>

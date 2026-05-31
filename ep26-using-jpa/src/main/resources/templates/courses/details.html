@@ -5,27 +5,48 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	
-	<main>
+
+	<main class="w-75">
 		<h3>Course Details</h3>
 		
-		<div class="row row-cols-2 w-50 gy-3 my-3">
-			<div class="col">ID</div>
-			<div class="col">[[${details.id}]]</div>
-			<div class="col">Name</div>
-			<div class="col">[[${details.name}]]</div>
-			<div class="col">Level</div>
-			<div class="col">[[${details.level}]]</div>
-			<div class="col">Hours</div>
-			<div class="col">[[${details.hours}]]</div>
-			<div class="col">Description</div>
-			<div class="col">[[${details.description}]]</div>
-			<div class="col">
-				<a th:href="@{|/courses/edit/${details.id}|}" class="btn btn-primary">
-					<i class="bi-pencil"></i> Edit Course
-				</a>
+		<section class="my-3" th:object="${details}">
+			<div class="row mb-3">
+				<div class="col-md-3 fw-bold">Course ID</div>
+				<div class="col-md-9">[[*{id}]]</div>
 			</div>
-		</div>
+	
+			<div class="row mb-3">
+				<div class="col-md-3 fw-bold">Course Name</div>
+				<div class="col-md-9">[[*{name}]]</div>
+			</div>
+	
+			<div class="row mb-3">
+				<div class="col-md-3 fw-bold">Level</div>
+				<div class="col-md-9">
+					<span class="badge bg-primary">[[*{level}]]</span>
+				</div>
+			</div>
+	
+			<div class="row mb-3">
+				<div class="col-md-3 fw-bold">Hours</div>
+				<div class="col-md-9">[[*{hours}]] Hours</div>
+			</div>
+	
+			<div class="row mb-3">
+				<div class="col-md-3 fw-bold">Description</div>
+				<div class="col-md-9">[[*{description}]]</div>
+			</div>	
+			
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col">
+					<a th:href="@{|/courses/edit/*{id}|}" class="btn btn-primary">
+						<i class="bi-pencil"></i> Edit Course
+					</a>
+				</div>
+			</div>
+		</section>
+
 	</main>
 </body>
 </html>

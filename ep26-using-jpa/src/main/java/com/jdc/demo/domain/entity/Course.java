@@ -31,6 +31,7 @@ public class Course extends AbstractEntity{
 	@Column(nullable = false)
 	private int hours;
 
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	
 	public enum Level {

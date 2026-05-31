@@ -20,15 +20,32 @@ public class ClassesDetails {
 	private String courseDescription;
 	
 	private LocalDate startDate;
+	private Integer months;
 	private Integer fees;
 	private int availableSeats;
 	private int registrations;
 	private Status status;
 	
 	private List<Schedule> schedules;
+	
+	public int getPercent() {
+		return registrations / availableSeats * 100;
+	}
 
 	public static ClassesDetails from(Classes entity) {
-		// TODO Auto-generated method stub
-		return null;
+		var dto = new ClassesDetails();
+		dto.setId(entity.getId());
+		dto.setCourseId(entity.getCourse().getId());
+		dto.setCourseName(entity.getCourse().getName());
+		dto.setCourseLevel(entity.getCourse().getLevel());
+		dto.setCourseDescription(entity.getCourse().getDescription());
+		dto.setStartDate(entity.getStartDate());
+		dto.setMonths(entity.getMonths());
+		dto.setFees(entity.getFees());
+		dto.setAvailableSeats(entity.getAvailableSeats());
+		dto.setStatus(entity.getStatus());
+		dto.setSchedules(entity.getSchedules());
+		dto.setRegistrations(entity.getRegistrations().size());
+		return dto;
 	}
 }

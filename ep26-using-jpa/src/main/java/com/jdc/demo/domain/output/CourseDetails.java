@@ -13,14 +13,13 @@ public class CourseDetails {
 	private int hours;
 	private String description;
 	
-	public static CourseDetails from(Course course) {
-		
+	public static CourseDetails from(Course course) {		
 		var dto = new CourseDetails();
 		dto.setId(course.getId());
 		dto.setName(course.getName());
 		dto.setLevel(course.getLevel());
 		dto.setHours(course.getHours());
-		
+		dto.setDescription(course.getDescription());
 		return dto;
 	}
 }
