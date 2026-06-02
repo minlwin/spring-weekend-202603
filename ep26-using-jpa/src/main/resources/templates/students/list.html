@@ -8,6 +8,69 @@
 	
 	<main>
 		<h3>Student Management</h3>
+		
+		<form class="d-flex align-items-end gap-3 mb-3" th:object="${studentSearch}" >
+			<!-- Register From -->
+			<div>
+				<label class="form-label">Register From</label>
+				<input th:field="*{from}" type="date" class="form-control" />
+			</div>
+
+			<!-- Register To -->
+			<div>
+				<label class="form-label">Register To</label>
+				<input th:field="*{to}" type="date" class="form-control" />
+			</div>
+			
+			<!-- Keyword -->
+			<div>
+				<label class="form-label">Keyword</label>
+				<input th:field="*{keyword}" class="form-control" placeholder="Search Keyword" />
+			</div>
+			
+			<!-- Search -->
+			<div class="btn-wrapper">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi-search"></i> Search
+				</button>
+			</div>
+		</form>
+
+		<!-- Result Table -->
+		<table th:unless="${#lists.isEmpty(list)}" class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Register At</th>
+					<th>Attend Classes</th>
+					<th>Parent Name</th>
+					<th>Parent Phone</th>
+					<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="item : ${list}">
+					<td th:text="${item.name}">Aung Aung</td>
+					<td th:text="${item.phone}">09181817161</td>
+					<td th:text="${item.email}">aung@gmail.com</td>
+					<td th:text="${item.registerAt}">2026-05-30 10:00</td>
+					<td th:text="${item.registrations}">3</td>
+					<td th:text="${item.parentName}">U Ko Ko</td>
+					<td th:text="${item.parentPhone}">09181716161</td>
+					<td class="text-center">
+						<a th:href="@{|/students/${item.id}|}" class="btn-link">
+							<i class="bi-arrow-right"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div th:if="${#lists.isEmpty(list)}" th:insert="~{/fragments/component :: nodata('Student')}"></div>
+
 	</main>
 </body>
 </html>

@@ -1,0 +1,24 @@
+package com.jdc.demo.service.jpql;
+
+import java.util.List;
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jdc.demo.domain.input.StudentSearch;
+import com.jdc.demo.domain.output.StudentListItem;
+import com.jdc.demo.service.base.AbstractStudentService;
+
+@Service
+@Profile("jpql")
+public class StudentServiceJpql extends AbstractStudentService{
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<StudentListItem> search(StudentSearch form) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

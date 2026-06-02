@@ -1,7 +1,6 @@
 package com.jdc.demo.domain.entity;
 
-import java.math.BigInteger;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.jdc.demo.domain.AbstractEntity;
@@ -30,8 +29,8 @@ public class Registration extends AbstractEntity{
 	private Student student;
 	
 	@Column(nullable = false)
-	private LocalDate registDate;
+	private LocalDateTime registDate;
 	
 	@Column(nullable = false)
-	private BigInteger paid;
+	private int paid;
 }

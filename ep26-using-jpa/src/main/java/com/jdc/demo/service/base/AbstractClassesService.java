@@ -12,13 +12,13 @@ import com.jdc.demo.service.ClassesService;
 
 import jakarta.persistence.EntityManager;
 
-@Transactional(readOnly = true)
 public abstract class AbstractClassesService implements ClassesService{
 	
 	@Autowired
 	protected EntityManager entityManager;
 	
 	@Override
+	@Transactional(readOnly = true)
 	public ClassesDetails findById(int id) {
 		var entity = entityManager.find(Classes.class, id);
 		return ClassesDetails.from(entity);

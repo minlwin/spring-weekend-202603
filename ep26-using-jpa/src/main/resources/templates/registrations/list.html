@@ -8,6 +8,66 @@
 	
 	<main>
 		<h3>Registration Management</h3>
+		
+		<form th:object="${registrationSearch}" class="d-flex align-items-end gap-3 mb-3" >
+			<!-- Register From -->
+			<div>
+				<label class="form-label">Register From</label>
+				<input th:field="*{from}" type="date" class="form-control" />
+			</div>
+
+			<!-- Register To -->
+			<div>
+				<label class="form-label">Register To</label>
+				<input th:field="*{from}" type="date" class="form-control" />
+			</div>
+			
+			<!-- Keyword -->
+			<div>
+				<label class="form-label">Keyword</label>
+				<input th:field="*{keyword}" class="form-control" placeholder="Search Keyword" />
+			</div>
+			
+			<!-- Search -->
+			<div class="btn-wrapper">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi-search"></i> Search
+				</button>
+			</div>
+		</form>
+		
+		<!-- Result Table -->
+		<table th:unless="${#lists.isEmpty(list)}" class="table table-striped">
+			<thead>
+				<tr>
+					<th>Course</th>
+					<th>Intake</th>
+					<th>Student</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Register At</th>
+					<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="item : ${list}">
+					<td th:text="${item.curseName}">Java Basic</td>
+					<td th:text="${item.intake}">2026-06-10</td>
+					<td th:text="${item.studentName}">Aung Aung</td>
+					<td th:text="${item.studentPhone}">09181817161</td>
+					<td th:text="${item.studentEmail}">aung@gmail.com</td>
+					<td th:text="${item.registerAt}">2026-05-30 10:00</td>
+					<td class="text-center">
+						<a th:href="@{|/registrations/${item.id}|}" class="btn-link">
+							<i class="bi-arrow-right"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div th:if="${#lists.isEmpty(list)}" th:insert="~{/fragments/component :: nodata('Registration')}"></div>
 	</main>
 </body>
 </html>

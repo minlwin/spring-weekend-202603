@@ -1,6 +1,7 @@
 package com.jdc.demo.domain.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.jdc.demo.domain.AbstractEntity;
 import com.jdc.demo.domain.embeddables.Parent;
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -47,6 +49,9 @@ public class Student extends AbstractEntity{
 	@AttributeOverride(name = "phone", column = @Column(name = "mother_phone"))
 	@AttributeOverride(name = "occupation", column = @Column(name = "mother_occupation"))
 	private Parent mother;
+	
+	@OneToMany(mappedBy = "student")
+	private List<Registration> registrations;
 	
 	public enum Gender {
 		Male, Female

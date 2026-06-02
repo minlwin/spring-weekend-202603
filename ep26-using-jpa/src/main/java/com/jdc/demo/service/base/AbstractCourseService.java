@@ -24,6 +24,7 @@ public abstract class AbstractCourseService implements CourseService{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public CourseDetails findById(int id) {
 		return CourseDetails.from(em.find(Course.class, id));
 	}

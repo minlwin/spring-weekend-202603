@@ -44,17 +44,7 @@ public class ClassesServiceCriteria extends AbstractClassesService {
 			cb.count(registration.get(Registration_.id))
 		));
 		
-		cq.groupBy(
-			root.get(Classes_.id),
-			course.get(Course_.id),
-			course.get(Course_.name),
-			course.get(Course_.level),
-			root.get(Classes_.startDate),
-			root.get(Classes_.months),
-			root.get(Classes_.status),
-			root.get(Classes_.fees),
-			root.get(Classes_.availableSeats)
-		);
+		cq.groupBy(root.get(Classes_.id));
 		
 		cq.orderBy(cb.desc(root.get(Classes_.startDate)));
 		
