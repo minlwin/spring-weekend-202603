@@ -15,4 +15,6 @@ public interface StudentService {
 
 	StudentForRegistration find(String name, String phone, String email);
 
+	Integer findId(String studentName, String studentPhone, String studentEmail);
+
 }

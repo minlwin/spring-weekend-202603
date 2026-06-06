@@ -4,12 +4,68 @@
 <head>
 <meta charset="UTF-8">
 <title>Forms | Home</title>
-
 </head>
 <body>
-	
+
 	<main>
-		<h3>Form Demo</h3>
+		<!-- Hero -->
+		<div class="card mb-4" style="background:linear-gradient(135deg,#1a73e8,#1557b0);color:#fff">
+			<div class="card-body p-4 p-md-5">
+				<h2 class="fw-bold mb-2" style="color:#fff">Training Center Management</h2>
+				<p class="mb-0" style="color:rgba(255,255,255,.85);max-width:46rem">
+					Manage courses, classes, students and registrations from one place.
+					Choose a module below to get started.
+				</p>
+			</div>
+		</div>
+
+		<!-- Module cards -->
+		<div class="row g-4">
+			<div class="col-sm-6 col-lg-3">
+				<a th:href="@{/registrations}" class="text-decoration-none">
+					<div class="card h-100">
+						<div class="card-body text-center p-4">
+							<div class="info-icon mx-auto mb-3"><i class="bi-clipboard-check fs-4"></i></div>
+							<h5 class="fw-bold mb-1">Registrations</h5>
+							<p class="text-secondary small mb-0">Enroll students into classes</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				<a th:href="@{/students}" class="text-decoration-none">
+					<div class="card h-100">
+						<div class="card-body text-center p-4">
+							<div class="info-icon mx-auto mb-3"><i class="bi-people fs-4"></i></div>
+							<h5 class="fw-bold mb-1">Students</h5>
+							<p class="text-secondary small mb-0">Browse student records</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				<a th:href="@{/classes}" class="text-decoration-none">
+					<div class="card h-100">
+						<div class="card-body text-center p-4">
+							<div class="info-icon mx-auto mb-3"><i class="bi-mortarboard fs-4"></i></div>
+							<h5 class="fw-bold mb-1">Classes</h5>
+							<p class="text-secondary small mb-0">Schedule and manage classes</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				<a th:href="@{/courses}" class="text-decoration-none">
+					<div class="card h-100">
+						<div class="card-body text-center p-4">
+							<div class="info-icon mx-auto mb-3"><i class="bi-book fs-4"></i></div>
+							<h5 class="fw-bold mb-1">Courses</h5>
+							<p class="text-secondary small mb-0">Define your course catalog</p>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
 	</main>
 </body>
 </html>

@@ -106,6 +106,26 @@ public class StudentServiceCriteria extends AbstractStudentService {
 			cb.equal(student.get(Student_.email), email)
 		);
 		
-		return entityManager.createQuery(cq).getSingleResult();
+		return entityManager.createQuery(cq)
+				.getResultList()
+				.stream().findAny().orElse(null);
+	}
+
+	@Override
+	public Integer findId(String studentName, String studentPhone, String studentEmail) {
+		var cb = entityManager.getCriteriaBuilder();
+		var cq = cb.createQuery(Integer.class);
+		var student = cq.from(Student.class);
+		cq.select(student.get(Student_.id));
+		
+		cq.where(
+			cb.equal(student.get(Student_.name), studentName),
+			cb.equal(student.get(Student_.phone), studentPhone),
+			cb.equal(student.get(Student_.email), studentEmail)
+		);
+			
+		return entityManager.createQuery(cq)
+				.getResultList()
+				.stream().findAny().orElse(null);
 	}
 }

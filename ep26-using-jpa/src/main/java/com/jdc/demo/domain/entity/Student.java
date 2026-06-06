@@ -34,18 +34,13 @@ public class Student extends AbstractEntity{
 	
 	@Column(nullable = false)
 	private String name;
-	
-	@Column(nullable = false)
-	private Gender gender;
-
-	@Column(nullable = false)
-	private LocalDate dob;
-	
 	@Column(nullable = false)
 	private String phone;
-
 	@Column(nullable = false)
 	private String email;
+	
+	private Gender gender;
+	private LocalDate dob;	
 	
 	@AttributeOverride(name = "name", column = @Column(name = "father_name"))
 	@AttributeOverride(name = "phone", column = @Column(name = "father_phone"))

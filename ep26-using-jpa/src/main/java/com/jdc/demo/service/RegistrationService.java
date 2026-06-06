@@ -14,6 +14,6 @@ public interface RegistrationService {
 
 	RegistrationDetails findById(UUID id);
 
-	int create(int classId, RegistrationForm form);
+	UUID create(int classId, RegistrationForm form);
 
 }

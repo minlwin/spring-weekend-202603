@@ -57,7 +57,7 @@
 					<td th:text="${item.studentName}">Aung Aung</td>
 					<td th:text="${item.studentPhone}">09181817161</td>
 					<td th:text="${item.studentEmail}">aung@gmail.com</td>
-					<td th:text="${item.registerAt}">2026-05-30 10:00</td>
+					<td th:text="${#temporals.format(item.registerAt, 'yyyy-MM-dd HH:mm')}">2026-05-30 10:00</td>
 					<td class="text-center">
 						<a th:href="@{|/registrations/${item.id}|}" class="btn-link">
 							<i class="bi-arrow-right"></i>

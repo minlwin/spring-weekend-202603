@@ -56,7 +56,7 @@
 					<td th:text="${item.name}">Aung Aung</td>
 					<td th:text="${item.phone}">09181817161</td>
 					<td th:text="${item.email}">aung@gmail.com</td>
-					<td th:text="${item.registerAt}">2026-05-30 10:00</td>
+					<td th:text="${#temporals.format(item.registerAt, 'yyyy-MM-dd HH:mm')}">2026-05-30 10:00</td>
 					<td th:text="${item.registrations}">3</td>
 					<td th:text="${item.parentName}">U Ko Ko</td>
 					<td th:text="${item.parentPhone}">09181716161</td>

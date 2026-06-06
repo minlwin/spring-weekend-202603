@@ -1,5 +1,7 @@
 package com.jdc.demo.domain.input;
 
+import com.jdc.demo.domain.embeddables.Parent;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -18,4 +20,12 @@ public class RegistrationForm {
 	private String motherPhone;
 	private String motherOccupation;
 	private int paid;
+	
+	public Parent getFather() {
+		return new Parent(fatherName, fatherPhone, fatherOccupation);
+	}
+
+	public Parent getMother() {
+		return new Parent(motherName, motherPhone, motherOccupation);
+	}
 }

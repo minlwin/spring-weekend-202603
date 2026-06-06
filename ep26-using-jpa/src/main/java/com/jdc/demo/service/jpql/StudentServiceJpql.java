@@ -28,4 +28,16 @@ public class StudentServiceJpql extends AbstractStudentService{
 		return null;
 	}
 
+	@Override
+	public Integer findId(String studentName, String studentPhone, String studentEmail) {
+		var jpql = "select s.id from Student s where s.name = :name and s.phone = :phone and s.email = :email";
+		return entityManager.createQuery(jpql, Integer.class)
+			.setParameter("name", studentName)
+			.setParameter("phone", studentPhone)
+			.setParameter("email", studentEmail)
+			.getResultList()
+			.stream().findAny().orElse(null);
+	
+	}
+
 }

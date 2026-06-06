@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
 	const ids = [
-		"studentNae", 
+		"studentName", 
 		"studentPhone",
 		"studentEmail",
 		"fatherName",
 		"fatherPhone",
-		"fatherOcupation",
+		"fatherOccupation",
 		"motherName",
 		"motherPhone",
-		"motherOcupation"
+		"motherOccupation"
 	]
 	
 	const elements = {}

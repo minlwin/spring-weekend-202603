@@ -5,9 +5,63 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	
-	<main>
-		<h3>Registration Details</h3>
+
+	<main th:object="${details}">
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h3 class="mb-0">Registration Details</h3>
+			<a th:href="@{/registrations}" class="btn btn-outline-secondary">
+				<i class="bi-arrow-left"></i> Back
+			</a>
+		</div>
+
+		<!-- Registration Info -->
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5 class="card-title"><i class="bi-journal-text"></i> Registration Information</h5>
+				<dl class="row mb-0">
+					<dt class="col-sm-3 text-secondary">Register At</dt>
+					<dd class="col-sm-9" th:text="*{registerAt != null ? #temporals.format(registerAt, 'yyyy-MM-dd HH:mm') : '-'}">2026-05-30 10:00</dd>
+					<dt class="col-sm-3 text-secondary">Paid</dt>
+					<dd class="col-sm-9 mb-0" th:text="*{paid}">100000</dd>
+				</dl>
+			</div>
+		</div>
+
+		<!-- Course / Class Info -->
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5 class="card-title"><i class="bi-mortarboard"></i> Class Information</h5>
+				<dl class="row mb-0">
+					<dt class="col-sm-3 text-secondary">Course</dt>
+					<dd class="col-sm-9" th:text="*{courseName}">Java Basic</dd>
+					<dt class="col-sm-3 text-secondary">Level</dt>
+					<dd class="col-sm-9" th:text="*{courseLevel} ?: '-'">Basic</dd>
+					<dt class="col-sm-3 text-secondary">Start Date</dt>
+					<dd class="col-sm-9 mb-0" th:text="*{startDate != null ? #temporals.format(startDate, 'yyyy-MM-dd') : '-'}">2026-06-10</dd>
+				</dl>
+			</div>
+		</div>
+
+		<!-- Student Info -->
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<h5 class="card-title mb-0"><i class="bi-person"></i> Student Information</h5>
+					<a th:href="@{|/students/*{studentId}|}" class="btn btn-sm btn-outline-primary">
+						View Student <i class="bi-arrow-right"></i>
+					</a>
+				</div>
+				<dl class="row mb-0">
+					<dt class="col-sm-3 text-secondary">Name</dt>
+					<dd class="col-sm-9" th:text="*{studentName}">Aung Aung</dd>
+					<dt class="col-sm-3 text-secondary">Phone</dt>
+					<dd class="col-sm-9" th:text="*{phone}">09181817161</dd>
+					<dt class="col-sm-3 text-secondary">Email</dt>
+					<dd class="col-sm-9 mb-0" th:text="*{email}">aung@gmail.com</dd>
+				</dl>
+			</div>
+		</div>
+
 	</main>
 </body>
 </html>

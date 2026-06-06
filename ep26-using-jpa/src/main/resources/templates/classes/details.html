@@ -6,87 +6,73 @@
 </head>
 <body>
 
-	<main class="w-75" th:object="${details}">
-		<h3>Class Details</h3>
+	<main th:object="${details}">
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h3 class="mb-0">Class Details</h3>
+			<a th:href="@{/classes}" class="btn btn-outline-secondary">
+				<i class="bi-arrow-left"></i> Back
+			</a>
+		</div>
 
-		<section class="my-3">
-			<div class="row mb-3">
-				<div class="col-md-3 fw-bold">Course</div>
-				<div class="col-md-9">[[*{courseName}]]</div>
+		<!-- Class Information -->
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5 class="card-title"><i class="bi-mortarboard"></i> Class Information</h5>
+				<dl class="row mb-0">
+					<dt class="col-sm-3 text-secondary">Course</dt>
+					<dd class="col-sm-9">[[*{courseName}]]</dd>
+					<dt class="col-sm-3 text-secondary">Level</dt>
+					<dd class="col-sm-9"><span class="badge bg-primary">[[*{courseLevel}]]</span></dd>
+					<dt class="col-sm-3 text-secondary">Status</dt>
+					<dd class="col-sm-9"><span class="badge bg-success">[[*{status}]]</span></dd>
+					<dt class="col-sm-3 text-secondary">Start Date</dt>
+					<dd class="col-sm-9">[[*{startDate}]]</dd>
+					<dt class="col-sm-3 text-secondary">Duration</dt>
+					<dd class="col-sm-9">[[*{months}]] Months</dd>
+					<dt class="col-sm-3 text-secondary">Fees</dt>
+					<dd class="col-sm-9">[[*{fees}]] MMK</dd>
+					<dt class="col-sm-3 text-secondary">Description</dt>
+					<dd class="col-sm-9">[[*{courseDescription}]]</dd>
+					<dt class="col-sm-3 text-secondary">Seats</dt>
+					<dd class="col-sm-9 mb-0">
+						<div class="d-flex justify-content-between mb-1">
+							<span>[[*{registrations}]] Registered</span>
+							<span>[[*{availableSeats} - *{registrations}]] Available of [[*{availableSeats}]]</span>
+						</div>
+						<div class="progress" style="height: 8px;">
+							<div class="progress-bar bg-primary" role="progressbar" th:style="|width:*{percent}%|"
+								aria-valuenow="[[*{percent}]]" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</dd>
+				</dl>
 			</div>
-
-			<div class="row mb-3">
-				<div class="col-md-3 fw-bold">Level</div>
-				<div class="col-md-9">
-					<span class="badge bg-primary">[[*{courseLevel}]]</span>
-				</div>
-			</div>
-
-			<div class="row mb-3">
-				<div class="col-md-3 fw-bold">Status</div>
-				<div class="col-md-9">
-					<span class="badge bg-success">[[*{status}]]</span>
-				</div>
-			</div>
-
-			<div class="row mb-3">
-				<div class="col-md-3 fw-bold">Start Date</div>
-				<div class="col-md-9">[[*{startDate}]]</div>
-			</div>
-
-			<div class="row mb-3">
-				<div class="col-md-3 fw-bold">Duration</div>
-				<div class="col-md-9">[[*{months}]] Months</div>
-			</div>
-
-			<div class="row mb-3">
-				<div class="col-md-3 fw-bold">Fees</div>
-				<div class="col-md-9">[[*{fees}]] MMK</div>
-			</div>
-
-			<div class="row mb-3">
-				<div class="col-md-3 fw-bold">Description</div>
-				<div class="col-md-9">[[*{courseDescription}]]</div>
-			</div>
-
-			<div class="row mb-3">
-				<div class="col-md-3 fw-bold">Seats</div>
-				<div class="col-md-9">
-					<div class="d-flex justify-content-between mb-1">
-						<span>[[*{registrations}]] Registered</span>
-						<span>[[*{availableSeats} - *{registrations}]] Available of [[*{availableSeats}]]</span>
-					</div>
-					<div class="progress" style="height: 10px;">
-						<div class="progress-bar bg-primary" role="progressbar" th:style="|width:*{percent}%|"
-							aria-valuenow="[[*{percent}]]" aria-valuemin="0" aria-valuemax="100"></div>
-					</div>
-				</div>
-			</div>
-		</section>
+		</div>
 
 		<!-- Schedules -->
-		<section class="my-3">
-			<h5>Weekly Schedule</h5>
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Day of Week</th>
-						<th>Start Time</th>
-						<th>End Time</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="item : *{schedules}">
-						<td th:text="${item.days}">Monday</td>
-						<td th:text="${item.startTime}">18:00</td>
-						<td th:text="${item.endTime}">20:00</td>
-					</tr>
-				</tbody>
-			</table>
-		</section>
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5 class="card-title"><i class="bi-calendar-week"></i> Weekly Schedule</h5>
+				<table class="table table-striped mb-0">
+					<thead>
+						<tr>
+							<th>Day of Week</th>
+							<th>Start Time</th>
+							<th>End Time</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item : *{schedules}">
+							<td th:text="${item.days}">Monday</td>
+							<td th:text="${item.startTime}">18:00</td>
+							<td th:text="${item.endTime}">20:00</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 
 		<!-- Actions -->
-		<section class="my-3">
+		<div class="d-flex gap-2">
 			<a th:href="@{|/classes/edit/*{id}|}"
 				th:if="${details.status == T(com.jdc.demo.domain.entity.Classes.Status).Available}"
 				class="btn btn-primary">
@@ -100,10 +86,10 @@
 
 			<a th:href="@{|/registrations/edit/${details.id}|}"
 				th:if="${details.status == T(com.jdc.demo.domain.entity.Classes.Status).Available}"
-				class="btn btn-danger">
+				class="btn btn-primary">
 				<i class="bi-plus"></i> New Registration
 			</a>
-		</section>
+		</div>
 
 	</main>
 

@@ -5,11 +5,91 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	
-	<main>
-		<h3>Student Management</h3>
-		
-		
+
+	<main th:object="${details}">
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h3 class="mb-0">Student Details</h3>
+			<a th:href="@{/students}" class="btn btn-outline-secondary">
+				<i class="bi-arrow-left"></i> Back
+			</a>
+		</div>
+
+		<!-- Student Info -->
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5 class="card-title"><i class="bi-person"></i> Student Information</h5>
+				<dl class="row mb-0">
+					<dt class="col-sm-3 text-secondary">Name</dt>
+					<dd class="col-sm-9" th:text="*{name}">Aung Aung</dd>
+					<dt class="col-sm-3 text-secondary">Phone</dt>
+					<dd class="col-sm-9" th:text="*{phone}">09181817161</dd>
+					<dt class="col-sm-3 text-secondary">Email</dt>
+					<dd class="col-sm-9" th:text="*{email}">aung@gmail.com</dd>
+					<dt class="col-sm-3 text-secondary">Gender</dt>
+					<dd class="col-sm-9" th:text="*{gender} ?: '-'">Male</dd>
+					<dt class="col-sm-3 text-secondary">Date of Birth</dt>
+					<dd class="col-sm-9" th:text="*{dob != null ? #temporals.format(dob, 'yyyy-MM-dd') : '-'}">2000-01-01</dd>
+					<dt class="col-sm-3 text-secondary">Register At</dt>
+					<dd class="col-sm-9 mb-0" th:text="*{registerAt != null ? #temporals.format(registerAt, 'yyyy-MM-dd HH:mm') : '-'}">2026-05-30 10:00</dd>
+				</dl>
+			</div>
+		</div>
+
+		<!-- Parents -->
+		<div class="row g-3 mb-3">
+			<div class="col-md-6">
+				<div class="card h-100">
+					<div class="card-body">
+						<h5 class="card-title"><i class="bi-person-badge"></i> Father</h5>
+						<dl class="row mb-0">
+							<dt class="col-4 text-secondary">Name</dt>
+							<dd class="col-8" th:text="*{father?.name} ?: '-'">U Ko Ko</dd>
+							<dt class="col-4 text-secondary">Phone</dt>
+							<dd class="col-8" th:text="*{father?.phone} ?: '-'">09181716161</dd>
+							<dt class="col-4 text-secondary">Occupation</dt>
+							<dd class="col-8 mb-0" th:text="*{father?.occupation} ?: '-'">Engineer</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card h-100">
+					<div class="card-body">
+						<h5 class="card-title"><i class="bi-person-badge"></i> Mother</h5>
+						<dl class="row mb-0">
+							<dt class="col-4 text-secondary">Name</dt>
+							<dd class="col-8" th:text="*{mother?.name} ?: '-'">Daw Mya</dd>
+							<dt class="col-4 text-secondary">Phone</dt>
+							<dd class="col-8" th:text="*{mother?.phone} ?: '-'">09181716162</dd>
+							<dt class="col-4 text-secondary">Occupation</dt>
+							<dd class="col-8 mb-0" th:text="*{mother?.occupation} ?: '-'">Teacher</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Registrations -->
+		<h5 class="mb-2"><i class="bi-journal-text"></i> Attended Classes</h5>
+		<table th:unless="${#lists.isEmpty(details.registrations)}" class="table table-striped">
+			<thead>
+				<tr>
+					<th>Course</th>
+					<th>Start Date</th>
+					<th>Registered At</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="reg : *{registrations}">
+					<td th:text="${reg.courseName}">Java Basic</td>
+					<td th:text="${reg.startDate != null ? #temporals.format(reg.startDate, 'yyyy-MM-dd') : '-'}">2026-06-10</td>
+					<td th:text="${#temporals.format(reg.registeredAt, 'yyyy-MM-dd HH:mm')}">2026-05-30 10:00</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div th:if="${#lists.isEmpty(details.registrations)}" th:insert="~{/fragments/component :: nodata('Registration')}"></div>
+
 	</main>
 </body>
 </html>
