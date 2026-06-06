@@ -13,6 +13,7 @@ import com.jdc.demo.domain.entity.Registration_;
 import com.jdc.demo.domain.entity.Student;
 import com.jdc.demo.domain.entity.Student_;
 import com.jdc.demo.domain.input.StudentSearch;
+import com.jdc.demo.domain.output.StudentForRegistration;
 import com.jdc.demo.domain.output.StudentListItem;
 import com.jdc.demo.service.base.AbstractStudentService;
 
@@ -77,5 +78,34 @@ public class StudentServiceCriteria extends AbstractStudentService {
 		cq.orderBy(cb.desc(student.get(Student_.createdAt)));
 		
 		return entityManager.createQuery(cq).getResultList();
+	}
+
+	@Override
+	public StudentForRegistration find(String name, String phone, String email) {
+		
+		var cb = entityManager.getCriteriaBuilder();
+		var cq = cb.createQuery(StudentForRegistration.class);
+		
+		var student = cq.from(Student.class);
+		var father = student.get(Student_.father);
+		var mother = student.get(Student_.mother);
+		
+		cq.select(cb.construct(StudentForRegistration.class, 
+			student.get(Student_.id),
+			father.get(Parent_.name),
+			father.get(Parent_.phone),
+			father.get(Parent_.occupation),
+			mother.get(Parent_.name),
+			mother.get(Parent_.phone),
+			mother.get(Parent_.occupation)
+		));
+		
+		cq.where(
+			cb.equal(student.get(Student_.name), name),
+			cb.equal(student.get(Student_.phone), phone),
+			cb.equal(student.get(Student_.email), email)
+		);
+		
+		return entityManager.createQuery(cq).getSingleResult();
 	}
 }

@@ -20,4 +20,5 @@ public abstract class AbstractStudentService implements StudentService{
 		var entity = entityManager.find(Student.class, id);
 		return StudentDetails.from(entity);
 	}
+
 }

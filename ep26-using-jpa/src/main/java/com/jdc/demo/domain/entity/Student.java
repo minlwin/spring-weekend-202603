@@ -13,11 +13,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data 
 @Entity
+@Table(uniqueConstraints = {
+	@UniqueConstraint(columnNames = {
+		"name", "phone", "email"
+	})
+})
 @EqualsAndHashCode(callSuper = true)
 public class Student extends AbstractEntity{
 

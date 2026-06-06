@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jdc.demo.domain.input.StudentSearch;
+import com.jdc.demo.domain.output.StudentForRegistration;
 import com.jdc.demo.service.StudentService;
 
 @Controller
@@ -31,6 +34,15 @@ public class StudentController {
 		model.put("details", service.findById(id));
 		return "students/details";
 	}	
+	
+	@ResponseBody
+	@GetMapping("registration")
+	StudentForRegistration findForRegistration(
+			@RequestParam String name,
+			@RequestParam String phone,
+			@RequestParam String email) {
+		return service.find(name, phone, email);
+	}
 
 	@ModelAttribute
 	void getTitle(ModelMap model) {
