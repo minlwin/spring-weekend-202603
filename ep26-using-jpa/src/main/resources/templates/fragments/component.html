@@ -36,6 +36,21 @@
 		</div>
 	</div>
 	
+	
+	<div th:fragment="info(label, value, icon)" class="card">
+		<div class="card-body">
+			<div class="d-flex gap-4">
+				<div class="d-flex justify-content-center align-items-center">
+					<i th:classappend="${icon}" class="fs-3"></i>
+				</div>
+				
+				<div>
+					<div class="text-secondary">[[${label}]]</div>
+					<div class="fs-5 ">[[${value}]]</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>

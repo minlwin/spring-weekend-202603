@@ -5,9 +5,146 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	
+
 	<main>
-		<h3>New Registration</h3>
+		<h3 class="mb-4">New Registration</h3>
+
+		<div class="row g-4">
+
+			<!-- Class Information -->
+			<div class="col-lg-4" th:object="${classInfo}">
+				<div class="card border-0 shadow-sm rounded-4 h-100">
+					<div class="card-body p-4">
+						<h4 class="card-title fw-bold text-dark mb-4">Class Information</h4>
+
+						<div class="d-flex align-items-center p-3 bg-light rounded-3 mb-3">
+							<div class="bg-primary text-white rounded-3 p-3 me-3">
+								<i class="bi bi-book fs-4 lh-1"></i>
+							</div>
+							<div>
+								<small class="text-muted d-block text-uppercase fw-semibold small">Course</small>
+								<span class="fs-5 fw-bold text-dark">[[*{courseName}]]</span>
+							</div>
+						</div>
+
+						<div class="d-flex align-items-center p-3 bg-light rounded-3 mb-3">
+							<div class="bg-success text-white rounded-3 p-3 me-3">
+								<i class="bi bi-calendar3 fs-4 lh-1"></i>
+							</div>
+							<div>
+								<small class="text-muted d-block text-uppercase fw-semibold small">Start Date</small>
+								<span class="fs-5 fw-bold text-dark">[[*{startDate}]]</span>
+							</div>
+						</div>
+
+						<div class="d-flex align-items-center p-3 bg-light rounded-3">
+							<div class="bg-info text-white rounded-3 p-3 me-3">
+								<i class="bi bi-currency-dollar fs-4 lh-1"></i>
+							</div>
+							<div>
+								<small class="text-muted d-block text-uppercase fw-semibold small">Fees</small>
+								<span class="fs-5 fw-bold text-dark">[[*{fees}]] MMK</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Registration Form -->
+			<div class="col-lg-8">
+				<form th:action="@{|/registrations/edit/${classInfo.id}|}" method="post" th:object="${registrationForm}">
+
+					<!-- Student Info -->
+					<div class="card border-0 shadow-sm rounded-4 mb-4">
+						<div class="card-body p-4">
+							<h5 class="fw-bold text-dark mb-4">
+								<i class="bi bi-person-badge text-primary me-2"></i> Student Info
+							</h5>
+							<div class="row g-3">
+								<div class="col-md-12">
+									<label class="form-label fw-medium">Name</label>
+									<input th:field="*{studentName}" type="text" class="form-control" placeholder="Enter Name" />
+									<span class="text-sm text-danger" th:errors="*{studentName}"></span>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label fw-medium">Phone</label>
+									<input th:field="*{studentPhone}" type="tel" class="form-control" placeholder="Enter Phone" />
+									<span class="text-sm text-danger" th:errors="*{studentPhone}"></span>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label fw-medium">Email</label>
+									<input th:field="*{studentEmail}" type="email" class="form-control" placeholder="Enter Email" />
+									<span class="text-sm text-danger" th:errors="*{studentEmail}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Parents -->
+					<div class="row g-4 mb-4">
+
+						<!-- Father -->
+						<div class="col-md-6">
+							<div class="card border-0 shadow-sm rounded-4 h-100">
+								<div class="card-body p-4">
+									<h5 class="fw-bold text-dark mb-4">
+										<i class="bi bi-person text-success me-2"></i> Father
+									</h5>
+									<div class="mb-3">
+										<label class="form-label fw-medium">Name</label>
+										<input th:field="*{fatherName}" type="text" class="form-control" placeholder="Enter Name" />
+									</div>
+									<div class="mb-3">
+										<label class="form-label fw-medium">Phone</label>
+										<input th:field="*{fatherPhone}" type="tel" class="form-control" placeholder="Enter Phone" />
+									</div>
+									<div>
+										<label class="form-label fw-medium">Occupation</label>
+										<input th:field="*{fatherOccupation}" type="text" class="form-control" placeholder="Enter Occupation" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Mother -->
+						<div class="col-md-6">
+							<div class="card border-0 shadow-sm rounded-4 h-100">
+								<div class="card-body p-4">
+									<h5 class="fw-bold text-dark mb-4">
+										<i class="bi bi-person text-danger me-2"></i> Mother
+									</h5>
+									<div class="mb-3">
+										<label class="form-label fw-medium">Name</label>
+										<input th:field="*{motherName}" type="text" class="form-control" placeholder="Enter Name" />
+									</div>
+									<div class="mb-3">
+										<label class="form-label fw-medium">Phone</label>
+										<input th:field="*{motherPhone}" type="tel" class="form-control" placeholder="Enter Phone" />
+									</div>
+									<div>
+										<label class="form-label fw-medium">Occupation</label>
+										<input th:field="*{motherOccupation}" type="text" class="form-control" placeholder="Enter Occupation" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- Actions -->
+					<div class="d-flex justify-content-end gap-2">
+						<a th:href="@{|/classes/${classInfo.id}|}" class="btn btn-outline-secondary">
+							<i class="bi-x-lg"></i> Cancel
+						</a>
+						<button type="submit" class="btn btn-primary">
+							<i class="bi-save"></i> Save Registration
+						</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
 	</main>
 </body>
 </html>

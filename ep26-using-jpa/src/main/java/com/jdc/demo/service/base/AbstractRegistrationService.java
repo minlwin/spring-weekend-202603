@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.demo.domain.entity.Registration;
+import com.jdc.demo.domain.input.RegistrationForm;
 import com.jdc.demo.domain.output.RegistrationDetails;
 import com.jdc.demo.service.RegistrationService;
 
@@ -21,5 +22,11 @@ public abstract class AbstractRegistrationService implements RegistrationService
 	public RegistrationDetails findById(UUID id) {
 		var entity = entityManager.find(Registration.class, id);
 		return RegistrationDetails.from(entity);
+	}
+	
+	@Override
+	public int create(int classId, RegistrationForm form) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
