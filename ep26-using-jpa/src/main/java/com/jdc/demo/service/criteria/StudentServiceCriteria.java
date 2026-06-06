@@ -78,5 +78,4 @@ public class StudentServiceCriteria extends AbstractStudentService {
 		
 		return entityManager.createQuery(cq).getResultList();
 	}
-
 }
