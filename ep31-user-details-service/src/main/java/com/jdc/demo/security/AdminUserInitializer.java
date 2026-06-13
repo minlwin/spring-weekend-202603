@@ -27,7 +27,6 @@ public class AdminUserInitializer {
 			admin.setActivated(true);
 			admin.setEmail("admin@example.com");
 			admin.setRole(Role.Admin);
-			admin.setName("Admin User");
 			admin.setPassword(passwordEncoder.encode("password"));
 			accountRepo.save(admin);
 		}

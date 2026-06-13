@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>User Details</title>
@@ -18,7 +19,26 @@
 			</a>
 			
 			<ul class="navbar-nav">
-				<li class="nav-item">
+				
+				<li sec:authorize="hasRole('Admin')" class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="bi-bar-chart"></i> Admin Home
+					</a>
+				</li>
+				
+				<li sec:authorize="hasRole('Admin')" class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="bi-people"></i> User Management
+					</a>
+				</li>
+				
+				<li sec:authorize="isAuthenticated()" class="nav-item">
+					<a id="logoutMenu" href="#" class="nav-link">
+						<i class="bi-door-closed"></i> Logout
+					</a>
+				</li>
+				
+				<li sec:authorize="isAnonymous()" class="nav-item">
 					<a th:href="@{/login}" class="nav-link">
 						<i class="bi-door-open"></i> Login
 					</a>
@@ -28,6 +48,11 @@
 	</nav>
 	
 	<div class="container mt-3" th:insert="${contents}"></div>
+	
+	<section sec:authorize="isAuthenticated()">
+		<form id="logoutForm" th:action="@{/logout}" method="post"></form>
+		<script th:src="@{/js/logout.js}"></script>
+	</section>
 
 </body>
 </html>

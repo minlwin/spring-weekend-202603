@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	th:replace="~{/fragment/layout :: html(contents=~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+
+	<main>
+		<h3><i class="bi-door-open"></i> Sign Up</h3>
+		
+		<form th:action="@{/signup}" th:object="${signUpForm}" method="post" class="w-50 mt-4">
+		
+			<div class="mb-3">
+				<label for="name" class="form-label">Name</label>
+				<input th:field="*{name}" placeholder="Enter Name" class="form-control" />
+				<span class="fs-6 text-secondary" th:errors="*{name}"></span>
+			</div>
+
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<input th:field="*{email}" placeholder="Enter Email" type="email" class="form-control" />
+				<span class="fs-6 text-secondary" th:errors="*{email}"></span>
+			</div>
+
+			<div class="mb-3">
+				<label for="password" class="form-label">Password</label>
+				<input th:field="*{password}" type="password" class="form-control" placeholder="Enter Password" />
+				<span class="fs-6 text-secondary" th:errors="*{password}"></span>
+			</div>
+			
+			<div>
+				<button class="btn btn-primary">
+					<i class="bi-person-plus"></i> Sign Up
+				</button>
+				<a th:href="@{/login}" class="btn btn-outline-primary">
+					<i class="bi-unlock"></i> Login
+				</a>
+			</div>
+		</form>
+	</main>
+
+</body>
+</html>

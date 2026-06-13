@@ -18,7 +18,7 @@ public class WebSecurityConfiguration {
 		http.authorizeHttpRequests(req -> {
 			req.requestMatchers("/admin/**").hasRole("Admin");
 			req.requestMatchers("/member/**").hasRole("Member");
-			req.requestMatchers("/", "/welcome", "/login").permitAll();
+			req.requestMatchers("/", "/welcome", "/login", "/signup").permitAll();
 			req.anyRequest().authenticated();
 		});
 		

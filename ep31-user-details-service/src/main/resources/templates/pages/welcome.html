@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	th:replace="~{/fragment/layout :: html(contents=~{::main})}">
 <head>
 <meta charset="UTF-8">
@@ -9,6 +10,8 @@
 
 	<main>
 		<h3>Welcome Page</h3>
+		
+		<div sec:authentication="name"></div>
 	</main>
 
 </body>

@@ -12,8 +12,8 @@
 		
 		<form th:action="@{/login}" method="post" class="w-50 mt-4">
 		
-			<div th:if="${param.error != null}" class="alert alert-info">
-				Please check your login information.
+			<div th:if="${param.error != null || message != null}" class="alert alert-info">
+				[[${message != null ? message : 'Please check your login information.'}]]
 			</div>
 			
 			<div class="mb-3">
@@ -26,9 +26,15 @@
 				<input id="password" name="password" type="password" class="form-control" placeholder="Enter Password" required="required" />
 			</div>
 			
-			<button class="btn btn-primary">
-				<i class="bi-unlock"></i> Login
-			</button>
+			<div>
+				<button class="btn btn-primary">
+					<i class="bi-unlock"></i> Login
+				</button>
+				
+				<a th:href="@{/signup}" class="btn btn-outline-primary">
+					<i class="bi-person-plus"></i> Sign Up
+				</a>
+			</div>
 		</form>
 	</main>
 
