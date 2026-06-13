@@ -12,10 +12,12 @@
 		
 		<form th:action="@{/login}" method="post" class="w-50 mt-4">
 		
-			<div th:if="${param.error != null || message != null}" class="alert alert-info">
-				[[${message != null ? message : 'Please check your login information.'}]]
+			<div th:if="${param.error != null}" class="alert alert-info">
+				Please check your login information.
 			</div>
 			
+			<div th:if="${message != null}" class="alert alert-info" th:text="${message}"></div>
+
 			<div class="mb-3">
 				<label for="username" class="form-label">Login Id</label>
 				<input id="username" name="username" placeholder="Enter Login Id" required="required" type="text" class="form-control" />

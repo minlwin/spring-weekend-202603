@@ -9,4 +9,6 @@ import com.jdc.demo.model.entity.Account;
 public interface AccountRepo extends JpaRepository<Account, Integer>{
 
 	Optional<Account> findOneByEmail(String email);
+	
+	long countByEmail(String email);
 }

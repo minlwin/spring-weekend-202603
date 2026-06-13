@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{/fragment/layout :: html(contents=~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Members</title>
+</head>
+<body>
+
+	<main>
+		<h3>Member Management</h3>
+		
+		<table class="table table-striped shadow-sm">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Status</th>
+					<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="item : ${list}">
+					<td th:text="${item.id}">1</td>
+					<td th:text="${item.name}">Thidar</td>
+					<td th:text="${item.phone}">091817171</td>
+					<td th:text="${item.email}">thidar@gmail.com</td>
+					<td th:text="${item.activated ? 'Enable' : 'Disable'}">Disabled</td>
+					<td>
+						<a href="#" class="icon-link">
+							<i class="bi-check-lg"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</main>
+
+</body>
+</html>

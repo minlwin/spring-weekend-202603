@@ -21,14 +21,14 @@
 			<ul class="navbar-nav">
 				
 				<li sec:authorize="hasRole('Admin')" class="nav-item">
-					<a href="#" class="nav-link">
+					<a th:href="@{/admin}" class="nav-link">
 						<i class="bi-bar-chart"></i> Admin Home
 					</a>
 				</li>
 				
 				<li sec:authorize="hasRole('Admin')" class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="bi-people"></i> User Management
+					<a th:href="@{/admin/members}" class="nav-link">
+						<i class="bi-people"></i> Member Management
 					</a>
 				</li>
 				
@@ -51,7 +51,7 @@
 	
 	<section sec:authorize="isAuthenticated()">
 		<form id="logoutForm" th:action="@{/logout}" method="post"></form>
-		<script th:src="@{/js/logout.js}"></script>
+		<script type="text/javascript" th:src="@{/js/logout.js}"></script>
 	</section>
 
 </body>

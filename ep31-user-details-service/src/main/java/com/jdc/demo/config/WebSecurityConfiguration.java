@@ -19,7 +19,8 @@ public class WebSecurityConfiguration {
 			req.requestMatchers("/admin/**").hasRole("Admin");
 			req.requestMatchers("/member/**").hasRole("Member");
 			req.requestMatchers("/", "/welcome", "/login", "/signup").permitAll();
-			req.anyRequest().authenticated();
+			req.requestMatchers("/js/**").authenticated();
+			req.anyRequest().denyAll();
 		});
 		
 		http.formLogin(form -> {

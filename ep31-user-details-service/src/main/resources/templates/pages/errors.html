@@ -4,14 +4,14 @@
 	th:replace="~{/fragment/layout :: html(contents=~{::main})}">
 <head>
 <meta charset="UTF-8">
-<title>Admin Home</title>
+<title>Error</title>
 </head>
 <body>
 
 	<main>
-		<h3>Admin Home</h3>
+		<h3>Error Page</h3>
 		
-		<div sec:authentication="name"></div>
+		<div th:text="${message}" class="alert alert-info"></div>
 	</main>
 
 </body>
