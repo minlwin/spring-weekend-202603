@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	th:replace="~{/fragment/layout :: html(contents=~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+
+	<main>
+		<h3><i class="bi-door-open"></i> Login</h3>
+		
+		<form th:action="@{/login}" method="post" class="w-50 mt-4">
+		
+			<div th:if="${param.error != null}" class="alert alert-info">
+				Please check your login information.
+			</div>
+			
+			<div class="mb-3">
+				<label for="username" class="form-label">Login Id</label>
+				<input id="username" name="username" placeholder="Enter Login Id" required="required" type="text" class="form-control" />
+			</div>
+
+			<div class="mb-3">
+				<label for="password" class="form-label">Password</label>
+				<input id="password" name="password" type="password" class="form-control" placeholder="Enter Password" required="required" />
+			</div>
+			
+			<button class="btn btn-primary">
+				<i class="bi-unlock"></i> Login
+			</button>
+		</form>
+	</main>
+
+</body>
+</html>
