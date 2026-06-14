@@ -31,13 +31,19 @@
 					<td th:text="${item.email}">thidar@gmail.com</td>
 					<td th:text="${item.activated ? 'Enable' : 'Disable'}">Disabled</td>
 					<td>
-						<a href="#" class="icon-link">
-							<i class="bi-check-lg"></i>
+						<a href="#" th:data-id="${item.id}" class="icon-link actionLink">
+							<i th:class="${item.activated ? 'bi-x-lg' : 'bi-check-lg'}"></i>
 						</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		
+		<form id="switchStatusForm" th:action="@{/admin/members}" method="post">
+			<input type="hidden" name="id" id="targetId" />
+		</form>
+		
+		<script type="text/javascript" th:src="@{/js/member-admin.js}"></script>
 	</main>
 
 </body>

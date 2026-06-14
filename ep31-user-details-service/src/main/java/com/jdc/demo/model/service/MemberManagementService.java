@@ -22,4 +22,12 @@ public class MemberManagementService {
 		return repo.searchAll();
 	}
 
+	@Transactional
+	public void switchStatus(int id) {
+		repo.findById(id).ifPresent(member -> {
+			var account = member.getAccount();
+			account.setActivated(!account.isActivated());
+		});
+	}
+
 }
