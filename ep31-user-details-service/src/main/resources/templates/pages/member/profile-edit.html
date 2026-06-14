@@ -11,6 +11,33 @@
 	<main>
 		<h3>Edit Profile</h3>
 		
+		
+		<form th:action="@{|/member/profile/edit/${email}|}" 
+			th:object="${editForm}" method="post" class="w-50">
+			
+			<div class="mb-3">
+				<label for="name" class="form-label">Name</label>
+				<input th:field="*{name}" type="text" class="form-control" placeholder="Enter your name" />
+				<span class="fs-6 text-secondary" th:errors="*{name}"></span>
+			</div>
+		
+			<div class="mb-3">
+				<label for="phone" class="form-label">Phone</label>
+				<input th:field="*{phone}" type="tel" class="form-control" placeholder="Enter your phone number" />
+				<span class="fs-6 text-secondary" th:errors="*{phone}"></span>
+			</div>
+
+			<div class="mb-3">
+				<label for="address" class="form-label">Address</label>
+				<textarea th:field="*{address}" class="form-control" placeholder="Enter your phone number"></textarea>
+				<span class="fs-6 text-secondary" th:errors="*{address}"></span>
+			</div>
+			
+			<button class="btn btn-primary" type="submit">
+				<i class="bi-save"></i> Save
+			</button>
+		</form>
+		
 	</main>
 
 </body>

@@ -4,6 +4,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +18,7 @@ import com.jdc.demo.model.BaseRepositoryImpl;
 	repositoryBaseClass = BaseRepositoryImpl.class,
 	basePackages = "com.jdc.demo.model"
 )
+@PropertySource(value = "classpath:/storage.properties")
 public class WebSecurityConfiguration {
 	
 	@Bean

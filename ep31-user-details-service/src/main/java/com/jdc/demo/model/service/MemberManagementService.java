@@ -4,24 +4,32 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jdc.demo.exceptions.AppBusinessException;
 import com.jdc.demo.model.entity.Member;
+import com.jdc.demo.model.input.ProfileForm;
 import com.jdc.demo.model.output.MemberListItem;
+import com.jdc.demo.model.output.ProfileDto;
 import com.jdc.demo.model.repo.MemberRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 
 @Service
+@Transactional(readOnly = true)
 public class MemberManagementService {
 	
 	@Autowired
 	private MemberRepo repo;
+	@Autowired
+	private ProfileImageService imageService;
 
 	@PreAuthorize("hasRole('Admin')")
 	@Transactional(readOnly = true)
@@ -65,6 +73,42 @@ public class MemberManagementService {
 		return StringUtils.hasLength(member.getPhone())
 				&& StringUtils.hasLength(member.getAddress())
 				&& StringUtils.hasLength(member.getName());
+	}
+	
+	@PostAuthorize("authentication.name eq returnObj.account.email")
+	public Member findByEmail(String email) {
+		return repo.findOneByAccountEmail(email)
+				.orElseThrow(() -> new AppBusinessException("There is no member with %s".formatted(email)));
+	}
+
+	
+	@Transactional
+	@PreAuthorize("hasRole('Member') and authentication.name eq #email")
+	public void updateProfile(String email, ProfileForm form) {
+		var member = repo.findOneByAccountEmail(email)
+				.orElseThrow(() -> new AppBusinessException("There is no member with %s".formatted(email)));
+		
+		member.setName(form.getName());
+		member.setPhone(form.getPhone());
+		member.setAddress(form.getAddress());
+	}
+
+	@Transactional
+	@PreAuthorize("hasRole('Member') and authentication.name eq #email")
+	public void uploadProfileImage(String email, MultipartFile file) {
+		var member = repo.findOneByAccountEmail(email)
+				.orElseThrow(() -> new AppBusinessException("There is no member with %s".formatted(email)));
+		
+		var imagePath = imageService.upload(member.getId(), file);
+		
+		member.setProfileImage(imagePath);
+	}
+
+	public ProfileDto getProfile() {
+		var email = SecurityContextHolder.getContext().getAuthentication().getName();
+		return repo.findOneByAccountEmail(email)
+				.map(ProfileDto::from)
+				.orElseThrow(() -> new AppBusinessException("There is no member with %s".formatted(email)));
 	}
 
 }
