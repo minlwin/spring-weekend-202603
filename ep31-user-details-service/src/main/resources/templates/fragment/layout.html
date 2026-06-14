@@ -32,6 +32,18 @@
 					</a>
 				</li>
 				
+				<li sec:authorize="hasRole('Member')" class="nav-item">
+					<a th:href="@{/admin/members}" class="nav-link">
+						<i class="bi-person"></i> Profile
+					</a>
+				</li>
+
+				<li sec:authorize="hasRole('Member')" class="nav-item">
+					<a th:href="@{/admin/members}" class="nav-link">
+						<i class="bi-shield"></i> Access History
+					</a>
+				</li>
+
 				<li sec:authorize="isAuthenticated()" class="nav-item">
 					<a id="logoutMenu" href="#" class="nav-link">
 						<i class="bi-door-closed"></i> Logout
