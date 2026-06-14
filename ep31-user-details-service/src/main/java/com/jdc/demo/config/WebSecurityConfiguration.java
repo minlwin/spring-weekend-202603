@@ -26,8 +26,7 @@ public class WebSecurityConfiguration {
 			req.requestMatchers("/admin/**").hasRole("Admin");
 			req.requestMatchers("/member/**").hasRole("Member");
 			req.requestMatchers("/", "/welcome", "/login", "/signup").permitAll();
-			req.requestMatchers("/js/**").authenticated();
-			req.anyRequest().denyAll();
+			req.anyRequest().authenticated();
 		});
 		
 		http.formLogin(form -> {
@@ -35,6 +34,10 @@ public class WebSecurityConfiguration {
 		});
 		
 		http.logout(withDefaults());
+		
+		http.exceptionHandling(exception -> {
+			exception.accessDeniedPage("/403");
+		});
 		
 		return http.build();
 	}

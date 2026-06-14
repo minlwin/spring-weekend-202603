@@ -9,17 +9,18 @@ public class CommonExceptionHandler {
 
 	@ExceptionHandler
 	ModelAndView handle(AppBusinessException e) {
-		var mv = new ModelAndView("pages/errors");
+		var mv = new ModelAndView("errors/base");
 		mv.addObject("message", e.getMessage());
 		return mv;
 	}
-	
+
 	@ExceptionHandler
 	ModelAndView handle(RuntimeException e) {
 		e.printStackTrace();
-		var mv = new ModelAndView("pages/errors");
+		var mv = new ModelAndView("errors/base");
 		mv.addObject("message", "Un expected error has been happend. Please retry your operation.");
 		return mv;
 	}
+		
 	
 }

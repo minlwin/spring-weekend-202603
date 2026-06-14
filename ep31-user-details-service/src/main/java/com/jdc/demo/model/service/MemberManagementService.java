@@ -62,9 +62,9 @@ public class MemberManagementService {
 	public boolean doesEditProfile(String name) {
 		var member = repo.findOneByAccountEmail(name)
 				.orElseThrow(() -> new AppBusinessException("There is no member with %s".formatted(name)));
-		return !StringUtils.hasLength(member.getPhone())
-				|| !StringUtils.hasLength(member.getAddress())
-				|| !StringUtils.hasLength(member.getProfileImage());
+		return StringUtils.hasLength(member.getPhone())
+				&& StringUtils.hasLength(member.getAddress())
+				&& StringUtils.hasLength(member.getName());
 	}
 
 }
