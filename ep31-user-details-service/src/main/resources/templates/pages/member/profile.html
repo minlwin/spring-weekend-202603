@@ -11,6 +11,55 @@
 	<main>
 		<h3>Profile</h3>
 		
+		<div class="row">
+			<div class="col-3">
+				<img th:if="${#strings.isEmpty(data.profileImage)}" th:src="@{/images/profile.png}" class="img-fluid img-thumbnail" alt="Profile Image" />				
+				<img th:unless="${#strings.isEmpty(data.profileImage)}" th:src="@{|/image/${data.profileImage}|}" class="img-fluid img-thumbnail" alt="Profile Image" />				
+			</div>
+			
+			<div class="col">
+				<div class="list-group">
+					<div class="list-group-item">
+						<span>Name</span>
+						<div>[[${data.name}]]</div>
+					</div>
+					<div class="list-group-item">
+						<span>Phone</span>
+						<div>[[${data.phone}]]</div>
+					</div>
+					<div class="list-group-item">
+						<span>Email</span>
+						<div>[[${data.email}]]</div>
+					</div>
+					<div class="list-group-item">
+						<span>Address</span>
+						<div>[[${data.address}]]</div>
+					</div>
+					<div class="list-group-item">
+						<span>Image</span>
+						<div>[[${data.profileImage}]]</div>
+					</div>
+				</div>
+				
+				<div class="mt-2 text-end">
+					<button id="uploadBtn" class="btn btn-primary">
+						<i class="bi-camera"></i> Upload Photo
+					</button>
+					
+					<a th:href="@{|/member/profile/edit/${data.email}|}" class="btn btn-outline-primary">
+						<i class="bi-pencil"></i> Edit Profile
+					</a>
+				</div>
+				
+			</div>
+		</div>
+		
+		<form id="uploadForm" th:action="@{|/member/profile/photo/${data.email}|}" 
+			enctype="multipart/form-data" method="post" class="d-none" >
+			<input name="file" id="fileInput" type="file" class="form-control" />
+		</form>
+		
+		<script th:src="@{/js/profile.js}"></script>
 	</main>
 
 </body>

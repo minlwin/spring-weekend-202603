@@ -1,4 +1,4 @@
-package com.jdc.demo.controller.member;
+  package com.jdc.demo.controller.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
