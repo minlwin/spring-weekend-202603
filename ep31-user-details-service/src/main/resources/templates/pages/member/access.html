@@ -11,26 +11,28 @@
 	<main>
 		<h3>Access History</h3>
 		
-		<form action="" class="row">
+		<form class="row" th:object="${form}">
 			<div class="col-auto">
 				<label class="form-label">Access Type</label>
-				<select class="form-select">
+				<select th:field="*{type}" class="form-select">
 					<option value="">Search All</option>
+					<option th:each="item : ${typeList}" th:value="${item}" th:text="${item}"></option>
 				</select>
 			</div>
 			<div class="col-auto">
 				<label class="form-label">Status</label>
-				<select class="form-select">
+				<select th:field="*{status}" class="form-select">
 					<option value="">Search All</option>
+					<option th:each="item : ${statusList}" th:value="${item}" th:text="${item}"></option>
 				</select>
 			</div>
 			<div class="col-auto">
 				<label class="form-label">From</label>
-				<input type="date" class="form-control" />
+				<input th:field="*{from}" type="date" class="form-control" />
 			</div>
 			<div class="col-auto">
 				<label class="form-label">To</label>
-				<input type="date" class="form-control" />
+				<input th:field="*{to}" type="date" class="form-control" />
 			</div>
 			<div class="col btn-wrapper">
 				<button type="submit" class="btn btn-primary">

@@ -3,7 +3,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>User Details</title>
+<title>Balance | [[${#strings.isEmpty(page) ? 'Home' : page}]]</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -16,47 +16,79 @@
 	<nav class="navbar navbar-expand navbar-dark bg-primary">
 		<div class="container">
 			<a th:href="@{/}" class="navbar-brand">
-				<i class="bi-house"></i> User Details Service
+				<i class="bi-house"></i> The Balances
 			</a>
 			
-			<ul class="navbar-nav">
-				
-				<li sec:authorize="hasRole('Admin')" class="nav-item">
-					<a th:href="@{/admin}" class="nav-link">
-						<i class="bi-bar-chart"></i> Admin Home
-					</a>
-				</li>
-				
-				<li sec:authorize="hasRole('Admin')" class="nav-item">
-					<a th:href="@{/admin/members}" class="nav-link">
-						<i class="bi-people"></i> Member Management
-					</a>
-				</li>
-				
-				<li sec:authorize="hasRole('Member')" class="nav-item">
-					<a th:href="@{/member/profile}" class="nav-link">
-						<i class="bi-person"></i> Profile
-					</a>
-				</li>
-
-				<li sec:authorize="hasRole('Member')" class="nav-item">
-					<a th:href="@{/member/access}" class="nav-link">
-						<i class="bi-shield"></i> Access History
-					</a>
-				</li>
-
-				<li sec:authorize="isAuthenticated()" class="nav-item">
-					<a id="logoutMenu" href="#" class="nav-link">
-						<i class="bi-door-closed"></i> Logout
-					</a>
-				</li>
-				
-				<li sec:authorize="isAnonymous()" class="nav-item">
+			<!-- Public Menu -->
+			<ul class="navbar-nav" sec:authorize="isAnonymous()" >
+				<li class="nav-item">
 					<a th:href="@{/login}" class="nav-link">
 						<i class="bi-door-open"></i> Login
 					</a>
 				</li>
 			</ul>
+			
+			<!-- Admin Menu -->
+			<ul sec:authorize="hasRole('Admin')" class="navbar-nav">
+				
+				<li class="nav-item">
+					<a th:href="@{/admin}" class="nav-link"  th:classappend="${page eq 'Admin Home' ? 'active' : ''}">
+						<i class="bi-bar-chart"></i> Admin Home
+					</a>
+				</li>
+				
+				<li class="nav-item">
+					<a th:href="@{/admin/members}" class="nav-link"  th:classappend="${page eq 'Members' ? 'active' : ''}">
+						<i class="bi-people"></i> Member Management
+					</a>
+				</li>
+				
+				<li class="nav-item">
+					<a id="logoutMenu" href="#" class="nav-link">
+						<i class="bi-door-closed"></i> Logout
+					</a>
+				</li>
+			</ul>
+			
+			<ul class="navbar-nav" sec:authorize="hasRole('Member')" >
+
+				<li class="nav-item">
+					<a th:href="@{/member/balance}" class="nav-link">
+						<i class="bi-pie-chart"></i> Balances
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a th:href="@{/member/ledgers}" class="nav-link">
+						<i class="bi-tags"></i> Ledgers
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a th:href="@{/member/entry/debit}" class="nav-link">
+						<i class="bi-bar-chart-line"></i> Debit
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a th:href="@{/member/entry/credit}" class="nav-link">
+						<i class="bi-bar-chart-line-fill"></i> Credit
+					</a>
+				</li>
+				
+				<li class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+						<i class="bi-person"></i> [[${#session.getAttribute('memberName')}]]
+					</a>
+					<div class="dropdown-menu">
+						<a href="#" class="dropdown-item">Profile</a>
+						<a href="#" class="dropdown-item">Access History</a>
+						<a href="#" class="dropdown-item">Change Password</a>
+						<a href="#" class="dropdown-item" id="logoutMenu">Logout</a>
+					</div>
+				</li>
+			</ul>
+
 		</div>
 	</nav>
 	

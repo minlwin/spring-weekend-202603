@@ -6,20 +6,40 @@ import org.springframework.security.authentication.event.AbstractAuthenticationF
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.jdc.demo.model.entity.AccessHistory.AccessType;
+import com.jdc.demo.model.repo.MemberRepo;
 import com.jdc.demo.model.service.AccessHistoryService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class AuthenticationEventHandlers {
 	
 	@Autowired
 	private AccessHistoryService service;
+	@Autowired
+	private MemberRepo memberRepo;
 
 	@EventListener
 	void handle(AuthenticationSuccessEvent event) {
+		
+		// Create Access Log
 		var authentication = event.getAuthentication();
 		service.success(authentication.getName(), AccessType.Login);
+		
+		// Get Request
+		var requestAttributes = RequestContextHolder.getRequestAttributes();
+		if(null != requestAttributes && requestAttributes instanceof ServletRequestAttributes attrs) {
+			HttpServletRequest request = attrs.getRequest();
+			var session = request.getSession(true);
+			
+			memberRepo.findOneByAccountEmail(authentication.getName()).ifPresent(member -> {
+				session.setAttribute("memberName", member.getName());
+			});
+		}	
 	}
 
 	@EventListener

@@ -33,6 +33,7 @@ public class WebSecurityConfiguration {
 		
 		http.formLogin(form -> {
 			form.loginPage("/login");
+			form.defaultSuccessUrl("/", true);
 		});
 		
 		http.logout(withDefaults());
