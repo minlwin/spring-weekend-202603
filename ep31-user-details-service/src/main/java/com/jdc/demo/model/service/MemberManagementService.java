@@ -13,7 +13,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jdc.demo.exceptions.AppBusinessException;
+import com.jdc.demo.model.entity.Account_;
 import com.jdc.demo.model.entity.Member;
+import com.jdc.demo.model.entity.Member_;
 import com.jdc.demo.model.input.ProfileForm;
 import com.jdc.demo.model.output.MemberListItem;
 import com.jdc.demo.model.output.ProfileDto;
@@ -38,15 +40,15 @@ public class MemberManagementService {
 		Function<CriteriaBuilder, CriteriaQuery<MemberListItem>> queryFunc = cb -> {
 			var cq = cb.createQuery(MemberListItem.class);
 			var member = cq.from(Member.class);
-			var account = member.get("account");
+			var account = member.get(Member_.account);
 			
 			cq.select(cb.construct(
 					MemberListItem.class, 
-					member.get("id"),
-					member.get("name"),
-					account.get("email"),
-					member.get("phone"),
-					account.get("activated")
+					member.get(Member_.id),
+					member.get(Member_.name),
+					account.get(Account_.email),
+					member.get(Member_.phone),
+					account.get(Account_.activated)
 				));
 			
 			cq.orderBy(cb.asc(member.get("id")));

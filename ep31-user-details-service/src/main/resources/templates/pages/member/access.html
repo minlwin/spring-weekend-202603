@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{/fragment/layout :: html(contents=~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Access History</title>
+</head>
+<body>
+
+	<main>
+		<h3>Access History</h3>
+		
+		<form action="" class="row">
+			<div class="col-auto">
+				<label class="form-label">Access Type</label>
+				<select class="form-select">
+					<option value="">Search All</option>
+				</select>
+			</div>
+			<div class="col-auto">
+				<label class="form-label">Status</label>
+				<select class="form-select">
+					<option value="">Search All</option>
+				</select>
+			</div>
+			<div class="col-auto">
+				<label class="form-label">From</label>
+				<input type="date" class="form-control" />
+			</div>
+			<div class="col-auto">
+				<label class="form-label">To</label>
+				<input type="date" class="form-control" />
+			</div>
+			<div class="col btn-wrapper">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi-search"></i> Search
+				</button>
+			</div>
+		</form>
+		
+		<table class="table table-striped shadow-sm mt-4">
+			<thead>
+				<tr>
+					<th>Access Type</th>
+					<th>Status</th>
+					<th>Access At</th>
+					<th>Remark</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="item : ${result}">
+					<td th:text="${item.type}">Login</td>
+					<td th:text="${item.status}">Success</td>
+					<td th:text="${#temporals.format(item.accessAt, 'yyyy/MM/dd HH:mm')}">2026/06/20 10:300</td>
+					<td th:text="${item.remark}"></td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</main>
+
+</body>
+</html>
