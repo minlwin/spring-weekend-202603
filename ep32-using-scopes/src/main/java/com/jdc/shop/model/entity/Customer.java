@@ -9,5 +9,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Customer extends Member {
 
+	private String phone;
 	private String address;
 }

@@ -37,7 +37,7 @@ public class AuthenticationEventHandlers {
 			var session = request.getSession(true);
 			
 			memberRepo.findOneByAccountEmail(authentication.getName()).ifPresent(member -> {
-				session.setAttribute("memberName", member.getName());
+				session.setAttribute("loginUser", member.getName());
 			});
 		}	
 	}

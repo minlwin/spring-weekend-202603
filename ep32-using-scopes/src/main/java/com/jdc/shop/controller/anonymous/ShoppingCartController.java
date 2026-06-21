@@ -1,0 +1,67 @@
+package com.jdc.shop.controller.anonymous;
+
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+
+import com.jdc.shop.controller.anonymous.output.ShoppingCart;
+import com.jdc.shop.model.service.ProductService;
+
+@Controller
+@SessionAttributes("shoppingCart")
+public class ShoppingCartController {
+	
+	@Autowired
+	private ProductService productService;
+
+	@GetMapping("anonymous/cart")
+	String showCart() {
+		return "pages/cart";
+	}
+	
+	@ResponseBody
+	@PostMapping("anonymous/cart/add/{product}")
+	int addToCart(@PathVariable UUID product, 
+			@ModelAttribute("shoppingCart") ShoppingCart cart) {
+		productService.findById(product).ifPresent(item -> {
+			cart.add(item);
+		});
+		return cart.count();
+	}
+	
+	@ResponseBody
+	@PostMapping("anonymous/cart/remove/{product}")
+	int removeFromCart(@PathVariable UUID product, 
+			@ModelAttribute("shoppingCart") ShoppingCart cart) {
+		return cart.remove(product);
+	}
+	
+	@PostMapping("anonymous/cart/clear")
+	String clear(SessionStatus session) {
+		session.setComplete();
+		return "redirect:/";
+	}
+	
+	@GetMapping("member/checkout")
+	String checkOut() {
+		return "";
+	}
+
+	@PostMapping("member/checkout")
+	String checkOutAction(SessionStatus session) {
+		return "";
+	}
+	
+	@ModelAttribute
+	ShoppingCart cart() {
+		return new ShoppingCart();
+	}
+}

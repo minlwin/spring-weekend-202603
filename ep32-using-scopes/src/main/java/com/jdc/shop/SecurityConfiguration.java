@@ -1,5 +1,7 @@
 package com.jdc.shop;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -20,16 +22,17 @@ public class SecurityConfiguration {
 	SecurityFilterChain httpSecurity(HttpSecurity http) {
 		
 		http.authorizeHttpRequests(req -> {
-			
+			req.requestMatchers("/management/**").hasAnyAuthority("Admin", "Employee");
+			req.requestMatchers("/membrer/**").hasAuthority("Customer");
+			req.requestMatchers("/", "/anonymous/**", "/auth/**", "/style/**", "/js/**").permitAll();
+			req.anyRequest().authenticated();
 		});
 		
 		http.formLogin(form -> {
-			
+			form.loginPage("/auth/signin");
 		});
 		
-		http.logout(logout -> {
-			
-		});
+		http.logout(withDefaults());
 		
 		return http.build();
 	}
