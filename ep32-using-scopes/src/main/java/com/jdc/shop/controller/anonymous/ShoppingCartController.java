@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.jdc.shop.controller.anonymous.output.ShoppingCart;
+import com.jdc.shop.model.service.InvoiceService;
 import com.jdc.shop.model.service.ProductService;
 
 @Controller
@@ -21,6 +22,9 @@ public class ShoppingCartController {
 	
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private InvoiceService invoiceService;
 
 	@GetMapping("anonymous/cart")
 	String showCart() {
@@ -50,14 +54,11 @@ public class ShoppingCartController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("member/checkout")
-	String checkOut() {
-		return "";
-	}
-
 	@PostMapping("member/checkout")
-	String checkOutAction(SessionStatus session) {
-		return "";
+	String checkOutAction(@ModelAttribute("shoppingCart") ShoppingCart cart, SessionStatus session) {
+		var id = invoiceService.checkOut(cart);
+		session.setComplete();
+		return "redirect:/member/invoice/%s".formatted(id);
 	}
 	
 	@ModelAttribute

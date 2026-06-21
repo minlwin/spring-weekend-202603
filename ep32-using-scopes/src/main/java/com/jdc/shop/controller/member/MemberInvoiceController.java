@@ -1,4 +1,4 @@
-package com.jdc.shop.controller.management;
+package com.jdc.shop.controller.member;
 
 import java.util.UUID;
 
@@ -15,25 +15,26 @@ import com.jdc.shop.model.entity.Invoice.Status;
 import com.jdc.shop.model.service.InvoiceService;
 
 @Controller
-@RequestMapping("management/invoices")
-public class InvoiceManagementController {
+@RequestMapping("member/invoice")
+public class MemberInvoiceController {
 	
 	@Autowired
 	private InvoiceService service;
 
 	@GetMapping
-	String search(InvoiceSearch form, 
+	String search(InvoiceSearch form,
 			@RequestParam(required = false, defaultValue = "0") int page, 
 			@RequestParam(required = false, defaultValue = "10") int size,
 			ModelMap model) {
 		model.put("statusList", Status.values());
 		model.put("result", service.search(form, page, size));
-		return "pages/management/invoice-list";
+		return "pages/member/invoice-list";
 	}
-
+	
 	@GetMapping("{id}")
 	String findById(@PathVariable UUID id, ModelMap model) {
 		model.put("data", service.findBuId(id));
-		return "pages/management/invoice-details";
+		return "pages/member/invoice-details";
 	}
+	
 }
