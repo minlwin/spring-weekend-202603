@@ -37,13 +37,13 @@ public class InvoiceService {
 	private final CustomerRepo customerRepo;
 	private final ProductRepo productRepo;
 
-	@PreAuthorize("authenticated()")
+	@PreAuthorize("isAuthenticated()")
 	public PageResult<InvoiceListItem> search(InvoiceSearch form, int page, int size) {
 		return repo.search(queryFunc(form), countFunc(form), page, size);
 	}
 
-	@PreAuthorize("authenticated()")
-	public InvoiceDetails findBuId(UUID id) {
+	@PreAuthorize("isAuthenticated()")
+	public InvoiceDetails findById(UUID id) {
 		return repo.findById(id)
 			.map(InvoiceDetails::from)
 			.orElse(null);

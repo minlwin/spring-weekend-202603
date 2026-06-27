@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/fragments/layout :: html(content=~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Invoice Details</title>
+</head>
+<body>
+	<main>
+		<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+			<div>
+				<div class="text-uppercase small fw-semibold text-secondary mb-1">Management / Invoices</div>
+				<h1 class="h3 mb-1">Invoice Details</h1>
+				<p class="text-secondary mb-0 font-monospace small" th:text="${data.id}">invoice-id</p>
+			</div>
+			<a th:href="@{/management/invoices}" class="btn btn-outline-secondary">
+				<i class="bi bi-arrow-left me-1"></i>Back to list
+			</a>
+		</div>
+
+		<div class="row g-4">
+			<div class="col-12 col-md-4">
+				<div class="card shadow-sm border-0 h-100">
+					<div class="card-body">
+						<h6 class="text-uppercase small fw-semibold text-secondary mb-3">Customer</h6>
+						<div class="fw-semibold mb-1" th:text="${data.customerName}">Customer name</div>
+						<div class="small text-secondary mb-1">
+							<i class="bi bi-envelope me-1"></i>
+							<span th:text="${data.customerEmail}">mail@example.com</span>
+						</div>
+						<div class="small text-secondary">
+							<i class="bi bi-telephone me-1"></i>
+							<span th:text="${data.customerPhone}">0912345678</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-4">
+				<div class="card shadow-sm border-0 h-100">
+					<div class="card-body">
+						<h6 class="text-uppercase small fw-semibold text-secondary mb-3">Invoice Info</h6>
+						<div class="small text-secondary mb-1">Date</div>
+						<div class="fw-semibold mb-3" th:text="${#temporals.format(data.invoiceAt, 'yyyy-MM-dd HH:mm')}">2026-01-01 10:00</div>
+						<div class="small text-secondary mb-1">Status</div>
+						<span th:switch="${data.status.name()}">
+							<span th:case="'Invoiced'" class="badge text-bg-primary fs-6" th:text="${data.status}">Invoiced</span>
+							<span th:case="'Delivered'" class="badge text-bg-info fs-6" th:text="${data.status}">Delivered</span>
+							<span th:case="'Canceled'" class="badge text-bg-danger fs-6" th:text="${data.status}">Canceled</span>
+							<span th:case="'Finished'" class="badge text-bg-success fs-6" th:text="${data.status}">Finished</span>
+							<span th:case="*" class="badge text-bg-secondary fs-6" th:text="${data.status}">Unknown</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card shadow-sm border-0 mt-4">
+			<div class="card-body">
+				<h6 class="text-uppercase small fw-semibold text-secondary mb-3">Items</h6>
+
+				<div class="table-responsive" th:if="${!#lists.isEmpty(data.items)}">
+					<table class="table align-middle mb-0">
+						<thead class="table-light">
+							<tr>
+								<th scope="col" class="text-end" style="width: 3rem">#</th>
+								<th scope="col">Product</th>
+								<th scope="col" class="text-end">Unit Price</th>
+								<th scope="col" class="text-end">Qty</th>
+								<th scope="col" class="text-end">Subtotal</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : ${data.items}">
+								<td class="text-end text-secondary" th:text="${item.seqNumber}">1</td>
+								<td class="fw-semibold" th:text="${item.productName}">Product name</td>
+								<td class="text-end" th:text="${#numbers.formatInteger(item.unitPrice, 1, 'COMMA')}">0</td>
+								<td class="text-end" th:text="${item.quantity}">0</td>
+								<td class="text-end fw-semibold" th:text="${#numbers.formatInteger(item.subtotal, 1, 'COMMA')}">0</td>
+							</tr>
+						</tbody>
+						<tfoot class="table-light">
+							<tr>
+								<td colspan="4" class="text-end fw-semibold">Total</td>
+								<td class="text-end fw-bold fs-5"
+									th:text="${#numbers.formatInteger(data.items.stream().mapToInt(i -> i.subtotal).sum(), 1, 'COMMA')}">0</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+
+				<div class="alert alert-light border text-secondary mb-0" th:if="${#lists.isEmpty(data.items)}">
+					No items in this invoice.
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

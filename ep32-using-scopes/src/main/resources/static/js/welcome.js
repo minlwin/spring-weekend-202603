@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-	
 	const csrfToken = document.querySelector('meta[name="_csrf"]')?.content || '';
 	const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.content || 'X-CSRF-TOKEN';
 	const cartCountDisplay = document.querySelector('.js-cart-count');
-	
+	const cartCountItem = cartCountDisplay?.closest('.nav-item');
+
 	document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 		button.addEventListener('click', async () => {
 			const endpoint = button.dataset.endpoint;
@@ -22,10 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 
 				button.textContent = 'Added';
-				
-				const cartCount = await response.json();
-				cartCountDisplay.textContent = cartCount; 
 
+				const cart = await response.json();
+				if (cartCountDisplay) {
+					cartCountDisplay.textContent = cart.count;
+				}
+
+				if (cartCountItem) {
+					cartCountItem.classList.toggle('d-none', cart.count === 0);
+				}
 			} catch (error) {
 				button.textContent = label;
 			} finally {
@@ -36,5 +41,4 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	});
-	
 });

@@ -10,7 +10,7 @@ import lombok.Data;
 @Embeddable
 public class InvoiceItemPk {
 
-	@Column(name = "inoivce_id", insertable = false, updatable = false)
+	@Column(name = "invoice_id", insertable = false, updatable = false)
 	private UUID invoiceId;
 
 	@Column(nullable = false)

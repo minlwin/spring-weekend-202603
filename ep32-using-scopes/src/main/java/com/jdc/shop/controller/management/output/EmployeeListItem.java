@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.jdc.shop.model.entity.Account_;
-import com.jdc.shop.model.entity.Customer_;
 import com.jdc.shop.model.entity.Employee;
 import com.jdc.shop.model.entity.Employee_;
 
@@ -32,7 +31,7 @@ public class EmployeeListItem {
 		cq.select(
 			cb.construct(EmployeeListItem.class, 
 			root.get(Employee_.id),
-			root.get(Customer_.name),
+			root.get(Employee_.name),
 			root.get(Employee_.phone),
 			root.get(Employee_.account).get(Account_.email),
 			root.get(Employee_.entryAt),

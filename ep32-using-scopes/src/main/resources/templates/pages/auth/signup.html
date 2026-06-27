@@ -3,12 +3,67 @@
 	th:replace="~{/fragments/layout :: html(content=~{::main})}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Sign Up</title>
 </head>
 <body>
 
 	<main>
-	
+		<div class="row justify-content-center py-4 py-lg-5">
+			<div class="col-12 col-md-10 col-lg-6 col-xl-5">
+				<div class="card shadow-sm border-0">
+					<div class="card-body p-4 p-lg-5">
+						<div class="text-center mb-4">
+							<div class="d-inline-flex align-items-center justify-content-center rounded-3 bg-primary text-white fw-semibold mb-3"
+								style="width: 3rem; height: 3rem;">SC</div>
+							<h1 class="h3 mb-2">Create account</h1>
+							<p class="text-secondary mb-0">Register as a customer to keep shopping in your session.</p>
+						</div>
+
+						<form th:action="@{/auth/signup}" th:object="${signUpForm}" method="post" class="d-grid gap-3">
+							<div>
+								<label for="name" class="form-label">Name</label>
+								<input id="name" type="text" class="form-control form-control-lg"
+									th:field="*{name}"
+									th:classappend="${#fields.hasErrors('name')} ? ' is-invalid' : ''"
+									autocomplete="name" autofocus>
+								<div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+									Enter your name.
+								</div>
+							</div>
+
+							<div>
+								<label for="email" class="form-label">Email</label>
+								<input id="email" type="email" class="form-control form-control-lg"
+									th:field="*{email}"
+									th:classappend="${#fields.hasErrors('email')} ? ' is-invalid' : ''"
+									autocomplete="email">
+								<div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+									Enter your email.
+								</div>
+							</div>
+
+							<div>
+								<label for="password" class="form-label">Password</label>
+								<input id="password" type="password" class="form-control form-control-lg"
+									th:field="*{password}"
+									th:classappend="${#fields.hasErrors('password')} ? ' is-invalid' : ''"
+									autocomplete="new-password">
+								<div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+									Enter your password.
+								</div>
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-lg w-100">Create account</button>
+						</form>
+
+						<div class="d-flex justify-content-center align-items-center flex-wrap gap-2 mt-4">
+							<a th:href="@{/anonymous/welcome}" class="link-secondary text-decoration-none">Back to catalog</a>
+							<a th:href="@{/auth/signin}" class="link-primary text-decoration-none">Sign in instead</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</main>
 
 </body>

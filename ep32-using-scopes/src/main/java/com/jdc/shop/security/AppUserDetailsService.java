@@ -24,7 +24,7 @@ public class AppUserDetailsService implements UserDetailsService {
 						.password(account.getPassword())
 						.authorities(account.getRole().name())
 						.build())
-				.orElseThrow();
+				.orElseThrow(() -> new UsernameNotFoundException(username));
 	}
 
 }

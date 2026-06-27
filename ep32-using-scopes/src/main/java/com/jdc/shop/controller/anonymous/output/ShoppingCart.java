@@ -17,7 +17,7 @@ public class ShoppingCart implements Serializable{
 		return new ArrayList<>(this.items.values());
 	}
 
-	public int remove(UUID id) {
+	public ShoppingCart remove(UUID id) {
 		var item = items.get(id);
 		
 		if(null != item) {
@@ -26,10 +26,10 @@ public class ShoppingCart implements Serializable{
 			}
 		}
 		
-		return count();
+		return this;
 	}
 
-	public void add(ProductDto product) {
+	public ShoppingCart add(ProductDto product) {
 		
 		var item = items.get(product.getId());
 		
@@ -43,9 +43,11 @@ public class ShoppingCart implements Serializable{
 		}
 		
 		item.addOne();
+
+		return this;
 	}
 
-	public int count() {
+	public int getCount() {
 		return items.values().stream()
 				.mapToInt(a -> a.getQuantity()).sum();
 	}

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.jdc.shop.model.BaseEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,7 +26,7 @@ public abstract class Member extends BaseEntity{
 	private UUID id;
 	
 	@MapsId
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Account account;
 	
 	@Column(nullable = false)

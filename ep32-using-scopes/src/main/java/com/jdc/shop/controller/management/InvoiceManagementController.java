@@ -34,7 +34,7 @@ public class InvoiceManagementController {
 
 	@GetMapping("{id}")
 	String findById(@PathVariable UUID id, ModelMap model) {
-		model.put("data", service.findBuId(id));
+		model.put("data", service.findById(id));
 		return "pages/management/invoice-details";
 	}
 }

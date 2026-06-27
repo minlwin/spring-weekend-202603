@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/fragments/layout :: html(content=~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Customer Management</title>
+</head>
+<body>
+	<main>
+		<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+			<div>
+				<div class="text-uppercase small fw-semibold text-secondary mb-1">Management</div>
+				<h1 class="h3 mb-1">Customers</h1>
+				<p class="text-secondary mb-0">Search customer records and review purchase history.</p>
+			</div>
+		</div>
+
+		<div class="card shadow-sm border-0 mb-4">
+			<div class="card-body">
+				<form th:action="@{/management/customers}" method="get" class="row g-3 align-items-end">
+					<div class="col-12 col-md-3">
+						<label for="from" class="form-label">From</label>
+						<input id="from" name="from" type="date" class="form-control"
+							th:value="${param.from != null ? param.from[0] : ''}">
+					</div>
+					<div class="col-12 col-md-3">
+						<label for="to" class="form-label">To</label>
+						<input id="to" name="to" type="date" class="form-control"
+							th:value="${param.to != null ? param.to[0] : ''}">
+					</div>
+					<div class="col-12 col-md-4">
+						<label for="keyword" class="form-label">Keyword</label>
+						<input id="keyword" name="keyword" type="search" class="form-control"
+							placeholder="Name, phone, or email"
+							th:value="${param.keyword != null ? param.keyword[0] : ''}">
+					</div>
+					<div class="col-12 col-md-2">
+						<button type="submit" class="btn btn-secondary">
+							<i class="bi bi-search me-1"></i>Search
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="card shadow-sm border-0">
+			<div class="card-body">
+				<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+					<div class="text-secondary small">
+						Showing <span th:text="${#lists.size(result.contents)}">0</span>
+						of <span th:text="${result.pager.count}">0</span> customers
+					</div>
+					<div class="text-secondary small" th:text="|Page ${result.pager.page + 1}|">Page 1</div>
+				</div>
+
+				<div class="table-responsive" th:if="${!#lists.isEmpty(result.contents)}">
+					<table class="table table-hover align-middle mb-0">
+						<thead class="table-light">
+							<tr>
+								<th scope="col">Name</th>
+								<th scope="col">Phone</th>
+								<th scope="col">Email</th>
+								<th scope="col">Entry At</th>
+								<th scope="col" class="text-end">Invoices</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : ${result.contents}">
+								<td class="fw-semibold" th:text="${item.name}">Customer name</td>
+								<td th:text="${item.phone}">0912345678</td>
+								<td th:text="${item.email}">mail@example.com</td>
+								<td th:text="${#temporals.format(item.entryAt, 'yyyy-MM-dd HH:mm')}">2026-01-01 10:00</td>
+								<td class="text-end">
+									<span class="badge text-bg-secondary" th:text="${item.invoiceCount}">0</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="alert alert-light border text-secondary mb-0" th:if="${#lists.isEmpty(result.contents)}">
+					No customers match the current filters.
+				</div>
+
+				<div th:replace="~{/fragments/components :: pagination(pager=${result.pager}, baseUrl=@{/management/customers(from=${param.from != null ? param.from[0] : null}, to=${param.to != null ? param.to[0] : null}, keyword=${param.keyword != null ? param.keyword[0] : null})})}"></div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

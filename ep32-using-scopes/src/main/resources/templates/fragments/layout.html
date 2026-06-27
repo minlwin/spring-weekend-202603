@@ -22,7 +22,7 @@
 			
 			<ul sec:authorize="hasAuthority('Customer')" class="navbar-nav">
 
-				<li class="nav-item" th:if="${cartCount gt 0}">
+				<li class="nav-item" th:classappend="${cartCount eq 0 ? 'd-none' : ''}">
 					<a href="#" class="nav-link">
 						<i class="bi-cart3 me-1"></i> <span class="js-cart-count">[[${cartCount}]]</span>
 					</a>
@@ -70,8 +70,8 @@
 
 			<ul sec:authorize="isAnonymous()" class="navbar-nav">
 
-				<li class="nav-item" th:if="${cartCount gt 0}">
-					<a href="#" class="nav-link">
+				<li class="nav-item" th:classappend="${cartCount eq 0 ? 'd-none' : ''}">
+					<a th:href="@{/anonymous/cart}" class="nav-link">
 						<i class="bi-cart3 me-1"></i> <span class="js-cart-count">[[${cartCount}]]</span>
 					</a>
 				</li>

@@ -3,21 +3,21 @@
 	th:replace="~{/fragments/layout :: html(content=~{::main})}">
 <head>
 <meta charset="UTF-8">
-<title>My Invoices</title>
+<title>Invoice Management</title>
 </head>
 <body>
 	<main>
 		<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
 			<div>
-				<div class="text-uppercase small fw-semibold text-secondary mb-1">My Account</div>
-				<h1 class="h3 mb-1">My Invoices</h1>
-				<p class="text-secondary mb-0">View and track your order history.</p>
+				<div class="text-uppercase small fw-semibold text-secondary mb-1">Management</div>
+				<h1 class="h3 mb-1">Invoices</h1>
+				<p class="text-secondary mb-0">Search and review all customer invoices.</p>
 			</div>
 		</div>
 
 		<div class="card shadow-sm border-0 mb-4">
 			<div class="card-body">
-				<form th:action="@{/member/invoice}" method="get" class="row g-3 align-items-end">
+				<form th:action="@{/management/invoices}" method="get" class="row g-3 align-items-end">
 					<div class="col-12 col-md-2">
 						<label for="status" class="form-label">Status</label>
 						<select id="status" name="status" class="form-select">
@@ -26,15 +26,21 @@
 								th:selected="${param.status != null and param.status[0] == s.name()}">Invoiced</option>
 						</select>
 					</div>
-					<div class="col-12 col-md-3">
+					<div class="col-12 col-md-2">
 						<label for="from" class="form-label">From</label>
 						<input id="from" name="from" type="date" class="form-control"
 							th:value="${param.from != null ? param.from[0] : ''}">
 					</div>
-					<div class="col-12 col-md-3">
+					<div class="col-12 col-md-2">
 						<label for="to" class="form-label">To</label>
 						<input id="to" name="to" type="date" class="form-control"
 							th:value="${param.to != null ? param.to[0] : ''}">
+					</div>
+					<div class="col-12 col-md-4">
+						<label for="keyword" class="form-label">Keyword</label>
+						<input id="keyword" name="keyword" type="search" class="form-control"
+							placeholder="Customer name, phone, or email"
+							th:value="${param.keyword != null ? param.keyword[0] : ''}">
 					</div>
 					<div class="col-12 col-md-2">
 						<button type="submit" class="btn btn-secondary">
@@ -59,6 +65,7 @@
 					<table class="table table-hover align-middle mb-0">
 						<thead class="table-light">
 							<tr>
+								<th scope="col">Customer</th>
 								<th scope="col">Invoice At</th>
 								<th scope="col">Status</th>
 								<th scope="col" class="text-end">Items</th>
@@ -68,6 +75,11 @@
 						</thead>
 						<tbody>
 							<tr th:each="item : ${result.contents}">
+								<td>
+									<div class="fw-semibold" th:text="${item.customerName}">Customer name</div>
+									<div class="small text-secondary" th:text="${item.customerEmail}">mail@example.com</div>
+									<div class="small text-secondary" th:text="${item.customerPhone}">0912345678</div>
+								</td>
 								<td th:text="${#temporals.format(item.invoiceAt, 'yyyy-MM-dd HH:mm')}">2026-01-01 10:00</td>
 								<td>
 									<span th:switch="${item.status.name()}">
@@ -81,7 +93,7 @@
 								<td class="text-end" th:text="${item.totalItems}">0</td>
 								<td class="text-end fw-semibold" th:text="${#numbers.formatInteger(item.totalAmount, 1, 'COMMA')}">0</td>
 								<td class="text-end">
-									<a th:href="@{/member/invoice/{id}(id=${item.id})}" class="btn btn-sm btn-outline-secondary">
+									<a th:href="@{/management/invoices/{id}(id=${item.id})}" class="btn btn-sm btn-outline-secondary">
 										<i class="bi bi-eye me-1"></i>View
 									</a>
 								</td>
@@ -91,10 +103,10 @@
 				</div>
 
 				<div class="alert alert-light border text-secondary mb-0" th:if="${#lists.isEmpty(result.contents)}">
-					No invoices found.
+					No invoices match the current filters.
 				</div>
 
-				<div th:replace="~{/fragments/components :: pagination(pager=${result.pager}, baseUrl=@{/member/invoice(status=${param.status != null ? param.status[0] : null}, from=${param.from != null ? param.from[0] : null}, to=${param.to != null ? param.to[0] : null})})}"></div>
+				<div th:replace="~{/fragments/components :: pagination(pager=${result.pager}, baseUrl=@{/management/invoices(status=${param.status != null ? param.status[0] : null}, from=${param.from != null ? param.from[0] : null}, to=${param.to != null ? param.to[0] : null}, keyword=${param.keyword != null ? param.keyword[0] : null})})}"></div>
 			</div>
 		</div>
 	</main>

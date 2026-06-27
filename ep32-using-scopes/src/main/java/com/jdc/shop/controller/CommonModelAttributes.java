@@ -26,7 +26,7 @@ public class CommonModelAttributes {
 	@ModelAttribute(name = "cartCount")
 	int getCartCount(@SessionAttribute(name = "shoppingCart", required = false) ShoppingCart cart) {
 		if(null != cart) {
-			return cart.count();
+			return cart.getCount();
 		}
 		return 0;
 	}

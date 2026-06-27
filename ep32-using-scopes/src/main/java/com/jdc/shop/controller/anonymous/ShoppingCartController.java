@@ -26,33 +26,33 @@ public class ShoppingCartController {
 	private final InvoiceService invoiceService;
 
 	@GetMapping("anonymous/cart")
-	String showCart() {
+	String showCart(@ModelAttribute("shoppingCart") ShoppingCart cart) {
 		return "pages/cart";
 	}
-	
+
 	@ResponseBody
 	@PostMapping("anonymous/cart/add/{product}")
-	int addToCart(@PathVariable UUID product, 
+	ShoppingCart addToCart(@PathVariable UUID product,
 			@ModelAttribute("shoppingCart") ShoppingCart cart) {
 		productService.findById(product).ifPresent(item -> {
 			cart.add(item);
 		});
-		return cart.count();
+		return cart;
 	}
-	
+
 	@ResponseBody
 	@PostMapping("anonymous/cart/remove/{product}")
-	int removeFromCart(@PathVariable UUID product, 
+	ShoppingCart removeFromCart(@PathVariable UUID product,
 			@ModelAttribute("shoppingCart") ShoppingCart cart) {
 		return cart.remove(product);
 	}
-	
+
 	@PostMapping("anonymous/cart/clear")
 	String clear(SessionStatus session) {
 		session.setComplete();
 		return "redirect:/";
 	}
-	
+
 	@PostMapping("member/checkout")
 	String checkOutAction(@ModelAttribute("shoppingCart") ShoppingCart cart, SessionStatus session) {
 		var id = invoiceService.checkOut(cart);
@@ -60,7 +60,7 @@ public class ShoppingCartController {
 		return "redirect:/member/invoice/%s".formatted(id);
 	}
 	
-	@ModelAttribute
+	@ModelAttribute(name = "shoppingCart")
 	ShoppingCart cart() {
 		return new ShoppingCart();
 	}
