@@ -1,6 +1,5 @@
 package com.jdc.demo.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
@@ -14,14 +13,14 @@ import com.jdc.demo.model.repo.MemberRepo;
 import com.jdc.demo.model.service.AccessHistoryService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class AuthenticationEventHandlers {
 	
-	@Autowired
-	private AccessHistoryService service;
-	@Autowired
-	private MemberRepo memberRepo;
+	private final AccessHistoryService service;
+	private final MemberRepo memberRepo;
 
 	@EventListener
 	void handle(AuthenticationSuccessEvent event) {

@@ -1,6 +1,5 @@
 package com.jdc.demo.controller.member;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jdc.demo.model.input.ProfileForm;
 import com.jdc.demo.model.service.MemberManagementService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("member/profile/edit/{email}")
 public class ProfileEditController {
 	
-	@Autowired
-	private MemberManagementService service;
+	private final MemberManagementService service;
 
 	@GetMapping
 	@PreAuthorize("authentication.name eq #email")

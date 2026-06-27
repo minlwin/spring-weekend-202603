@@ -1,6 +1,5 @@
 package com.jdc.demo.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -9,12 +8,13 @@ import com.jdc.demo.model.service.MemberManagementService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class NewMemberInterceptor implements HandlerInterceptor{
 
-	@Autowired
-	private MemberManagementService service;
+	private final MemberManagementService service;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

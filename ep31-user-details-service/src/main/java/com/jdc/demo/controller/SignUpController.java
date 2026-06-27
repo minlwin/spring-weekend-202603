@@ -1,6 +1,5 @@
 package com.jdc.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -13,12 +12,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.jdc.demo.model.input.SignUpForm;
 import com.jdc.demo.model.service.SignUpService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("signup")
 public class SignUpController {
 	
-	@Autowired
-	private SignUpService service;
+	private final SignUpService service;
 
 	@GetMapping
 	String index() {

@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
@@ -22,13 +21,14 @@ import com.jdc.demo.model.repo.AccessHistoryRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AccessHistoryService {
 	
-	@Autowired
-	private AccessHistoryRepo repo;
+	private final AccessHistoryRepo repo;
 	
 	public void success(String name, AccessType type) {
 		var entity = new AccessHistory();

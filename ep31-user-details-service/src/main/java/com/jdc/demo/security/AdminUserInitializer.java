@@ -1,6 +1,5 @@
 package com.jdc.demo.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,13 +10,14 @@ import com.jdc.demo.model.entity.Account;
 import com.jdc.demo.model.entity.Account.Role;
 import com.jdc.demo.model.repo.AccountRepo;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class AdminUserInitializer {
 	
-	@Autowired
-	private AccountRepo accountRepo;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final AccountRepo accountRepo;
+	private final PasswordEncoder passwordEncoder;
 
 	@Transactional
 	@EventListener(classes = ContextRefreshedEvent.class)

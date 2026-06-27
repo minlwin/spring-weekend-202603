@@ -1,6 +1,5 @@
 package com.jdc.demo.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,11 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.jdc.demo.security.NewMemberInterceptor;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 public class WebMvcConfiguration implements WebMvcConfigurer{
 	
-	@Autowired
-	private NewMemberInterceptor memberInterceptor;
+	private final NewMemberInterceptor memberInterceptor;
+	
 	@Value("${app.storage.path}")
 	private String storage;
 

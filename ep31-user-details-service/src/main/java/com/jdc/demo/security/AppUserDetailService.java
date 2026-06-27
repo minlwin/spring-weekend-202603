@@ -1,6 +1,5 @@
 package com.jdc.demo.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.jdc.demo.model.repo.AccountRepo;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AppUserDetailService implements UserDetailsService{
 
-	@Autowired
-	private AccountRepo accountRepo;
+	private final AccountRepo accountRepo;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,6 +1,5 @@
 package com.jdc.demo.controller.admin;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jdc.demo.model.service.MemberManagementService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("admin/members")
 public class MemberManagementController {
 
-	@Autowired
-	private MemberManagementService service;
+	private final MemberManagementService service;
 	
 	@GetMapping
 	String index(ModelMap model) {

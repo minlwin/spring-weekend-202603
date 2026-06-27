@@ -3,7 +3,6 @@ package com.jdc.demo.model.service;
 import java.util.List;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,15 +22,15 @@ import com.jdc.demo.model.repo.MemberRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class MemberManagementService {
 	
-	@Autowired
-	private MemberRepo repo;
-	@Autowired
-	private ProfileImageService imageService;
+	private final MemberRepo repo;
+	private final ProfileImageService imageService;
 
 	@PreAuthorize("hasRole('Admin')")
 	@Transactional(readOnly = true)
