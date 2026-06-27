@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -27,17 +26,16 @@ import com.jdc.shop.model.repository.ProductRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class InvoiceService {
 
-	@Autowired
-	private InvoiceRepo repo;
-	@Autowired
-	private CustomerRepo customerRepo;
-	@Autowired
-	private ProductRepo productRepo;
+	private final InvoiceRepo repo;
+	private final CustomerRepo customerRepo;
+	private final ProductRepo productRepo;
 
 	@PreAuthorize("authenticated()")
 	public PageResult<InvoiceListItem> search(InvoiceSearch form, int page, int size) {

@@ -1,6 +1,5 @@
 package com.jdc.shop.controller.management;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.jdc.shop.controller.management.input.CustomerSearch;
 import com.jdc.shop.model.service.CustomerService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @RequestMapping("management/customers")
+@RequiredArgsConstructor
 public class CustomerManagementController {
 	
-	@Autowired
-	private CustomerService service;
+	private final CustomerService service;
 
 	@GetMapping
 	String search(CustomerSearch form,

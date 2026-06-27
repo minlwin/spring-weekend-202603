@@ -1,6 +1,5 @@
 package com.jdc.demo.controller.member;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +10,14 @@ import com.jdc.demo.model.entity.AccessHistory.Status;
 import com.jdc.demo.model.input.AccessSearch;
 import com.jdc.demo.model.service.AccessHistoryService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("member/access")
 public class AccessHistoryController {
 	
-	@Autowired
-	private AccessHistoryService service;
+	private final AccessHistoryService service;
 
 	@GetMapping
 	String search(AccessSearch form, ModelMap model) {

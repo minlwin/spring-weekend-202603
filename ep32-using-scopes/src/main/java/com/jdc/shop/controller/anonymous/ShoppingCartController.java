@@ -2,7 +2,6 @@ package com.jdc.shop.controller.anonymous;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,15 +15,15 @@ import com.jdc.shop.controller.anonymous.output.ShoppingCart;
 import com.jdc.shop.model.service.InvoiceService;
 import com.jdc.shop.model.service.ProductService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @SessionAttributes("shoppingCart")
+@RequiredArgsConstructor
 public class ShoppingCartController {
 	
-	@Autowired
-	private ProductService productService;
-
-	@Autowired
-	private InvoiceService invoiceService;
+	private final ProductService productService;
+	private final InvoiceService invoiceService;
 
 	@GetMapping("anonymous/cart")
 	String showCart() {

@@ -2,7 +2,6 @@ package com.jdc.shop.controller.management;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +13,14 @@ import com.jdc.shop.controller.management.input.InvoiceSearch;
 import com.jdc.shop.model.entity.Invoice.Status;
 import com.jdc.shop.model.service.InvoiceService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @RequestMapping("management/invoices")
+@RequiredArgsConstructor
 public class InvoiceManagementController {
 	
-	@Autowired
-	private InvoiceService service;
+	private final InvoiceService service;
 
 	@GetMapping
 	String search(InvoiceSearch form, 

@@ -1,7 +1,5 @@
 package com.jdc.shop;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -32,7 +30,9 @@ public class SecurityConfiguration {
 			form.loginPage("/auth/signin");
 		});
 		
-		http.logout(withDefaults());
+		http.logout(logout -> {
+			logout.logoutSuccessUrl("/");
+		});
 		
 		return http.build();
 	}

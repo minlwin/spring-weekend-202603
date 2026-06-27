@@ -3,7 +3,6 @@ package com.jdc.shop.model.service;
 import java.time.LocalDateTime;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +19,14 @@ import com.jdc.shop.model.repository.EmployeeRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class EmployeeService {
 	
-	@Autowired
-	private EmployeeRepo repo;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final EmployeeRepo repo;
+	private final PasswordEncoder passwordEncoder;
 
 	@Transactional
 	public void create(EmployeeForm form) {

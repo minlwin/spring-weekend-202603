@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/fragments/layout :: html(content=~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Sign In</title>
+</head>
+<body>
+	<main>
+		<div class="row justify-content-center py-4 py-lg-5">
+			<div class="col-5">
+				<div class="card shadow-sm border-0">
+					<div class="card-body p-4 p-lg-5">
+						<div class="text-center mb-4">
+							<div class="d-inline-flex align-items-center justify-content-center rounded-3 bg-primary text-white fw-semibold mb-3"
+								style="width: 3rem; height: 3rem;">SC</div>
+							<h1 class="h3 mb-2">Sign in</h1>
+							<p class="text-secondary mb-0">Access the session-scoped shopping demo.</p>
+						</div>
+
+						<div class="alert alert-danger py-2" th:if="${param.error != null}">
+							Invalid email or password.
+						</div>
+
+						<div class="alert alert-success py-2" th:if="${param.logout != null}">
+							You have been signed out.
+						</div>
+
+						<form th:action="@{/auth/signin}" method="post" class="d-grid gap-3">
+							<div>
+								<label for="username" class="form-label">Email</label>
+								<input id="username" name="username" type="email" class="form-control form-control-lg"
+									autocomplete="username" required autofocus>
+							</div>
+
+							<div>
+								<label for="password" class="form-label">Password</label>
+								<input id="password" name="password" type="password" class="form-control form-control-lg"
+									autocomplete="current-password" required>
+							</div>
+
+
+							<button type="submit" class="btn btn-primary btn-lg w-100">Sign in</button>
+						</form>
+
+						<div class="d-flex justify-content-center align-items-center flex-wrap gap-2 mt-4">
+							<a th:href="@{/anonymous/welcome}" class="link-secondary text-decoration-none">Back to catalog</a>
+							<a th:href="@{/auth/signup}" class="link-primary text-decoration-none">Create account</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

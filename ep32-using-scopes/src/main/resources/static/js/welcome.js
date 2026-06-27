@@ -1,0 +1,40 @@
+document.addEventListener('DOMContentLoaded', () => {
+	
+	const csrfToken = document.querySelector('meta[name="_csrf"]')?.content || '';
+	const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.content || 'X-CSRF-TOKEN';
+	const cartCountDisplay = document.querySelector('.js-cart-count');
+	
+	document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+		button.addEventListener('click', async () => {
+			const endpoint = button.dataset.endpoint;
+			const label = button.textContent;
+			button.disabled = true;
+			button.textContent = 'Adding...';
+
+			try {
+				const response = await fetch(endpoint, {
+					method: 'POST',
+					headers: csrfToken ? { [csrfHeader]: csrfToken } : {}
+				});
+
+				if (!response.ok) {
+					throw new Error('Request failed');
+				}
+
+				button.textContent = 'Added';
+				
+				const cartCount = await response.json();
+				cartCountDisplay.textContent = cartCount; 
+
+			} catch (error) {
+				button.textContent = label;
+			} finally {
+				window.setTimeout(() => {
+					button.disabled = false;
+					button.textContent = label;
+				}, 900);
+			}
+		});
+	});
+	
+});

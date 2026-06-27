@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,15 +30,15 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ProductService {
 
-	@Autowired
-	private ProductRepo repo;
-	@Autowired
-	private CategoryRepo categoryRepo;
+	private final ProductRepo repo;
+	private final CategoryRepo categoryRepo;
 
 	public PageResult<ProductDto> search(String category, String keyword, int page, int size) {
 		return repo.search(queryFunc(null, category, keyword), countFunc(null, category, keyword), page, size);

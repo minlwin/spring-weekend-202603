@@ -14,11 +14,14 @@ import com.jdc.shop.controller.management.input.EmployeeForm;
 import com.jdc.shop.controller.management.input.EmployeeSearch;
 import com.jdc.shop.model.service.EmployeeService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("management/employees")
 public class EmployeeManagementController {
 	
-	private EmployeeService service;
+	private final EmployeeService service;
 
 	@GetMapping
 	String search(EmployeeSearch form, 

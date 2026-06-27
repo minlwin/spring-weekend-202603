@@ -2,7 +2,6 @@ package com.jdc.shop.model.service;
 
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +14,13 @@ import com.jdc.shop.model.repository.CustomerRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
 	
-	@Autowired
-	private CustomerRepo repo;
+	private final CustomerRepo repo;
 
 	@Transactional(readOnly = true)
 	public PageResult<CustomerListItem> search(CustomerSearch form, int page, int size) {
