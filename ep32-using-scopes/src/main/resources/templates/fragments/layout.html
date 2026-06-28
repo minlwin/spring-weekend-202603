@@ -22,8 +22,14 @@
 			
 			<ul sec:authorize="hasAuthority('Customer')" class="navbar-nav">
 
+				<li class="nav-item">
+					<a th:href="@{/member/invoice}" class="nav-link">
+						<i class="bi-receipt me-1"></i> Invoices
+					</a>
+				</li>
+
 				<li class="nav-item" th:classappend="${cartCount eq 0 ? 'd-none' : ''}">
-					<a href="#" class="nav-link">
+					<a th:href="@{/anonymous/cart}" class="nav-link">
 						<i class="bi-cart3 me-1"></i> <span class="js-cart-count">[[${cartCount}]]</span>
 					</a>
 				</li>

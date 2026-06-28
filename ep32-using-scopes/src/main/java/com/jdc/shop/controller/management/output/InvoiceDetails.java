@@ -19,6 +19,7 @@ public class InvoiceDetails {
 	private String customerPhone;
 	private LocalDateTime invoiceAt;
 	private Status status;
+	private String address;
 
 	private List<InvoiceDetailsItem> items;
 
@@ -32,9 +33,18 @@ public class InvoiceDetails {
 		result.customerPhone = customer.getPhone();
 		result.invoiceAt = invoice.getInvoiceAt();
 		result.status = invoice.getStatus();
+		result.address = invoice.getAddress();
 		result.items = invoice.getItems().stream()
 				.map(InvoiceDetailsItem::from)
 				.toList();
 		return result;
+	}
+	
+	public int getTotal() {
+		if(items == null) {
+			return 0;
+		}
+		
+		return items.stream().mapToInt(a -> a.getSubTotal()).sum();
 	}
 }

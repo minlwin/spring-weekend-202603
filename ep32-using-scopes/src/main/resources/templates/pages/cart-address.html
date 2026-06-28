@@ -4,18 +4,18 @@
 	th:replace="~{/fragments/layout :: html(content=~{::main})}">
 <head>
 <meta charset="UTF-8">
-<title>Shopping Cart</title>
+<title>Check Out</title>
 </head>
 <body>
 
 	<main>
 		<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
 			<div>
-				<h1 class="h3 mb-1">Shopping cart</h1>
-				<p class="text-secondary mb-0">Review the items in your session and adjust quantities before checkout.</p>
+				<h1 class="h3 mb-1">Check Out</h1>
+				<p class="text-secondary mb-0">Enter your shipping address to place the order.</p>
 			</div>
-			<a th:href="@{/anonymous/welcome}" class="btn btn-outline-secondary">
-				<i class="bi bi-arrow-left me-1"></i>Continue shopping
+			<a th:href="@{/anonymous/cart}" class="btn btn-outline-secondary">
+				<i class="bi bi-arrow-left me-1"></i>Back to Cart
 			</a>
 		</div>
 
@@ -31,7 +31,7 @@
 						<div class="d-flex justify-content-between align-items-center gap-3 mb-3">
 							<h2 class="h6 mb-0">Cart items</h2>
 							<span class="badge text-bg-secondary">
-								<span class="js-cart-count">[[${shoppingCart.count}]]</span> items
+								<span>[[${shoppingCart.count}]]</span> items
 							</span>
 						</div>
 
@@ -42,31 +42,16 @@
 										<th>Product</th>
 										<th class="text-end">Qty</th>
 										<th class="text-end">Subtotal</th>
-										<th class="text-end">Actions</th>
 									</tr>
 								</thead>
-								<tbody id="cartItems">
-									<tr th:each="item : ${shoppingCart.items}" th:attr="data-item-id=${item.id}">
+								<tbody>
+									<tr th:each="item : ${shoppingCart.items}">
 										<td>
 											<div class="fw-semibold" th:text="${item.product}">Product name</div>
 											<div class="text-secondary small" th:text="|Unit price: MMK ${item.unitPrice}|">Unit price</div>
 										</td>
 										<td class="text-end" th:text="${item.quantity}">1</td>
 										<td class="text-end" th:text="|MMK ${item.unitPrice * item.quantity}|">MMK 0</td>
-										<td class="text-end">
-											<div class="btn-group btn-group-sm" role="group" aria-label="Adjust quantity">
-												<button type="button" class="btn btn-outline-secondary js-cart-remove"
-													th:attr="data-endpoint=@{/anonymous/cart/remove/{id}(id=${item.id})}"
-													aria-label="Remove one item">
-													<i class="bi bi-dash-lg"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary js-cart-add"
-													th:attr="data-endpoint=@{/anonymous/cart/add/{id}(id=${item.id})}"
-													aria-label="Add one item">
-													<i class="bi bi-plus-lg"></i>
-												</button>
-											</div>
-										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -81,19 +66,38 @@
 						<h2 class="h6 mb-3">Order summary</h2>
 						<dl class="row mb-0">
 							<dt class="col-6 text-secondary fw-normal">Items</dt>
-							<dd class="col-6 text-end js-cart-summary-count" th:text="${shoppingCart.count}">0</dd>
+							<dd class="col-6 text-end" th:text="${shoppingCart.count}">0</dd>
 							<dt class="col-6 text-secondary fw-normal">Total</dt>
-							<dd class="col-6 text-end fw-semibold text-danger js-cart-total" th:text="|MMK ${shoppingCart.total}|">MMK 0</dd>
+							<dd class="col-6 text-end fw-semibold text-danger" th:text="|MMK ${shoppingCart.total}|">MMK 0</dd>
 						</dl>
 
 						<hr>
 
-						<form th:action="@{/anonymous/cart/clear}" method="post" class="d-grid gap-2">
-							<a th:href="@{/member/checkout}" class="btn btn-secondary">
-								Check Out
-							</a>
-							<button type="submit" class="btn btn-outline-danger">
-								Clear cart
+						<form th:action="@{/member/checkout}" method="post" th:object="${shoppingCart}" class="d-grid gap-2">
+
+							<div class="mb-1" th:if="${not #lists.isEmpty(addressList)}">
+								<label class="form-label text-secondary small mb-1">Previous addresses</label>
+								<div class="d-flex flex-wrap gap-1">
+									<button type="button" class="btn btn-sm btn-outline-secondary js-address-fill"
+										th:each="addr : ${addressList}"
+										th:attr="data-address=${addr}"
+										th:text="${#strings.abbreviate(addr, 35)}">
+										Address
+									</button>
+								</div>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Shipping Address</label>
+								<textarea th:field="*{address}"
+									th:classappend="${#fields.hasErrors('address')} ? ' is-invalid'"
+									class="form-control" rows="3"
+									placeholder="Enter your shipping address"></textarea>
+								<div class="invalid-feedback" th:errors="*{address}">Please enter shipping address.</div>
+							</div>
+
+							<button type="submit" class="btn btn-secondary">
+								Place Order
 							</button>
 						</form>
 
@@ -102,7 +106,13 @@
 			</div>
 		</div>
 
-		<script th:src="@{/js/cart.js}"></script>
+		<script th:inline="javascript">
+			document.querySelectorAll('.js-address-fill').forEach(function(btn) {
+				btn.addEventListener('click', function() {
+					document.querySelector('#address').value = btn.dataset.address;
+				});
+			});
+		</script>
 	</main>
 
 </body>

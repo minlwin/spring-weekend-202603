@@ -1,10 +1,11 @@
 package com.jdc.shop.model.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import com.jdc.shop.controller.management.input.InvoiceSearch;
 import com.jdc.shop.controller.management.output.InvoiceDetails;
 import com.jdc.shop.controller.management.output.InvoiceListItem;
 import com.jdc.shop.model.PageResult;
+import com.jdc.shop.model.entity.Account_;
+import com.jdc.shop.model.entity.Customer_;
 import com.jdc.shop.model.entity.Invoice;
 import com.jdc.shop.model.entity.Invoice.Status;
 import com.jdc.shop.model.entity.InvoiceItem;
@@ -36,6 +39,9 @@ public class InvoiceService {
 	private final InvoiceRepo repo;
 	private final CustomerRepo customerRepo;
 	private final ProductRepo productRepo;
+	
+	@Value("${app.conf.max-address}")
+	private int maxAddress;
 
 	@PreAuthorize("isAuthenticated()")
 	public PageResult<InvoiceListItem> search(InvoiceSearch form, int page, int size) {
@@ -59,9 +65,11 @@ public class InvoiceService {
 		invoice.setCustomer(customer);
 		invoice.setInvoiceAt(LocalDateTime.now());
 		invoice.setStatus(Status.Invoiced);
-
+		invoice.setAddress(cart.getAddress());
+		
+		invoice = repo.save(invoice);
+		
 		var cartItems = cart.getItems();
-		var items = new ArrayList<InvoiceItem>();
 
 		for (int i = 0; i < cartItems.size(); i++) {
 			var cartItem = cartItems.get(i);
@@ -72,15 +80,33 @@ public class InvoiceService {
 			var item = new InvoiceItem();
 			item.setId(pk);
 			item.setProduct(productRepo.getReferenceById(cartItem.getId()));
+			
 			item.setUnitPrice(cartItem.getUnitPrice());
 			item.setQuantity(cartItem.getQuantity());
-			item.setInvoice(invoice);
-
-			items.add(item);
+			
+			invoice.addItem(item);
 		}
 
-		invoice.setItems(items);
-		return repo.save(invoice).getId();
+		return invoice.getId();
+	}
+	
+	
+	public List<String> findAddresses(String username) {
+		
+		Function<CriteriaBuilder, CriteriaQuery<String>> queryFunc = cb -> {
+			var cq = cb.createQuery(String.class);
+
+			var root = cq.from(Invoice.class);
+			cq.select(root.get(Invoice_.address));
+
+			cq.where(cb.equal(root.get(Invoice_.customer).get(Customer_.account).get(Account_.email), username));
+			cq.groupBy(root.get(Invoice_.address));
+			cq.orderBy(cb.desc(cb.greatest(root.get(Invoice_.invoiceAt))));
+
+			return cq;
+		};
+		
+		return repo.search(queryFunc, maxAddress);
 	}
 
 	private Function<CriteriaBuilder, CriteriaQuery<InvoiceListItem>> queryFunc(InvoiceSearch form) {
@@ -103,4 +129,5 @@ public class InvoiceService {
 			return cq;
 		};
 	}
+
 }

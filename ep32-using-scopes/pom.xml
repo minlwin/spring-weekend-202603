@@ -64,6 +64,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -119,6 +124,10 @@
 							<groupId>org.hibernate.orm</groupId>
 							<artifactId>hibernate-processor</artifactId>
 						</exclude>
+						<exclude>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-configuration-processor</artifactId>
+						</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -142,6 +151,10 @@
 									<groupId>org.hibernate.orm</groupId>
 									<artifactId>hibernate-processor</artifactId>
 								</path>
+								<exclude>
+									<groupId>org.springframework.boot</groupId>
+									<artifactId>spring-boot-configuration-processor</artifactId>
+								</exclude>
 							</annotationProcessorPaths>
 						</configuration>
 					</execution>
@@ -161,6 +174,10 @@
 									<groupId>org.hibernate.orm</groupId>
 									<artifactId>hibernate-processor</artifactId>
 								</path>
+								<exclude>
+									<groupId>org.springframework.boot</groupId>
+									<artifactId>spring-boot-configuration-processor</artifactId>
+								</exclude>
 							</annotationProcessorPaths>
 						</configuration>
 					</execution>

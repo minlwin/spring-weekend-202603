@@ -1,13 +1,12 @@
 package com.jdc.shop.controller.anonymous;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jdc.shop.controller.anonymous.input.SignUpForm;
 import com.jdc.shop.model.service.CustomerService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -44,7 +45,8 @@ public class SignUpController {
 		if (result.hasErrors()) {
 			return "pages/auth/signup";
 		}
-
+		
+		// Create Customer
 		try {
 			customerService.create(form);
 		} catch (IllegalArgumentException ex) {
@@ -52,13 +54,25 @@ public class SignUpController {
 			return "pages/auth/signup";
 		}
 
+		// Authenticate User
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(form.getEmail().trim(), form.getPassword()));
+		
+		// Set Authentication Result to Session
 		SecurityContext context = SecurityContextHolder.createEmptyContext();
 		context.setAuthentication(authentication);
 		SecurityContextHolder.setContext(context);
 		securityContextRepository.saveContext(context, request, response);
-
+		
+		// Get Saved Request
+		var requestCache = new HttpSessionRequestCache();
+		var savedRequest = requestCache.getRequest(request, response);
+		
+		if(savedRequest != null) {
+			var url = savedRequest.getRedirectUrl();
+			return "redirect:%s".formatted(url);
+		}
+				
 		return "redirect:/anonymous/welcome";
 	}
 

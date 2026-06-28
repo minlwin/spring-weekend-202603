@@ -28,9 +28,13 @@
 							<i class="bi bi-envelope me-1"></i>
 							<span th:text="${data.customerEmail}">mail@example.com</span>
 						</div>
-						<div class="small text-secondary">
+						<div th:if="not ${#strings.isEmpty(data.customerPhone)}" class="small text-secondary">
 							<i class="bi bi-telephone me-1"></i>
 							<span th:text="${data.customerPhone}">0912345678</span>
+						</div>
+						<div class="small text-secondary">
+							<i class="bi bi-map me-1"></i>
+							<span th:text="${data.address}">0912345678</span>
 						</div>
 					</div>
 				</div>
@@ -76,14 +80,14 @@
 								<td class="fw-semibold" th:text="${item.productName}">Product name</td>
 								<td class="text-end" th:text="${#numbers.formatInteger(item.unitPrice, 1, 'COMMA')}">0</td>
 								<td class="text-end" th:text="${item.quantity}">0</td>
-								<td class="text-end fw-semibold" th:text="${#numbers.formatInteger(item.subtotal, 1, 'COMMA')}">0</td>
+								<td class="text-end fw-semibold" th:text="${#numbers.formatInteger(item.subTotal, 1, 'COMMA')}">0</td>
 							</tr>
 						</tbody>
 						<tfoot class="table-light">
 							<tr>
 								<td colspan="4" class="text-end fw-semibold">Total</td>
 								<td class="text-end fw-bold fs-5"
-									th:text="${#numbers.formatInteger(data.items.stream().mapToInt(i -> i.subtotal).sum(), 1, 'COMMA')}">0</td>
+									th:text="${#numbers.formatInteger(data.total, 1, 'COMMA')}">0</td>
 							</tr>
 						</tfoot>
 					</table>

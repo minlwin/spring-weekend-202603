@@ -7,11 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class ShoppingCart implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	private Map<UUID, ShoppingCartItem> items = new LinkedHashMap<>();
+	
+	@NotBlank(message = "Please enter shipping address.")
+	private String address;
 	
 	public List<ShoppingCartItem> getItems() {
 		return new ArrayList<>(this.items.values());
@@ -45,6 +50,14 @@ public class ShoppingCart implements Serializable{
 		item.addOne();
 
 		return this;
+	}
+	
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public String getAddress() {
+		return address;
 	}
 
 	public int getCount() {

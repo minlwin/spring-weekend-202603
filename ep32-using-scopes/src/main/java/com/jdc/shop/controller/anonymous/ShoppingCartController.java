@@ -2,7 +2,11 @@ package com.jdc.shop.controller.anonymous;
 
 import java.util.UUID;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,8 +57,22 @@ public class ShoppingCartController {
 		return "redirect:/";
 	}
 
+	@GetMapping("member/checkout")
+	String checkOut(ModelMap model, Authentication authentication) {
+		
+		var lastAddresses = invoiceService.findAddresses(authentication.getName());
+		model.put("addressList", lastAddresses);
+		
+		return "pages/cart-address";
+	}
+
 	@PostMapping("member/checkout")
-	String checkOutAction(@ModelAttribute("shoppingCart") ShoppingCart cart, SessionStatus session) {
+	String checkOutAction(@Validated @ModelAttribute("shoppingCart") ShoppingCart cart, BindingResult result, SessionStatus session) {
+		
+		if(result.hasErrors()) {
+			return "pages/cart-address";
+		}
+		
 		var id = invoiceService.checkOut(cart);
 		session.setComplete();
 		return "redirect:/member/invoice/%s".formatted(id);

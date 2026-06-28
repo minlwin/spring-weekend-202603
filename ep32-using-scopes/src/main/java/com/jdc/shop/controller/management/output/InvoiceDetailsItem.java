@@ -14,7 +14,6 @@ public class InvoiceDetailsItem {
 	private String productName;
 	private int unitPrice;
 	private int quantity;
-	private int subtotal;
 
 	public static InvoiceDetailsItem from(InvoiceItem item) {
 		var result = new InvoiceDetailsItem();
@@ -23,7 +22,10 @@ public class InvoiceDetailsItem {
 		result.productName = item.getProduct().getName();
 		result.unitPrice = item.getUnitPrice();
 		result.quantity = item.getQuantity();
-		result.subtotal = item.getUnitPrice() * item.getQuantity();
 		return result;
+	}
+	
+	public int getSubTotal() {
+		return unitPrice * quantity;
 	}
 }

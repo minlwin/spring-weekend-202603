@@ -3,6 +3,7 @@ package com.jdc.shop.model.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
@@ -22,6 +23,7 @@ public class InvoiceItem {
 	@Column(nullable = false)
 	private int quantity;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
+	@JoinColumn(insertable = false, updatable = false)
 	private Invoice invoice;
 }

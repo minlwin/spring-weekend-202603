@@ -47,6 +47,13 @@ public class BaseRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implem
 				.build();
 	}
 
+	@Override
+	public <R> List<R> search(Function<CriteriaBuilder, CriteriaQuery<R>> queryFunc, int limit) {
+		var query = em.createQuery(queryFunc.apply(em.getCriteriaBuilder()));
+		query.setMaxResults(limit);
+		return query.getResultList();
+	}
+
 
 
 }

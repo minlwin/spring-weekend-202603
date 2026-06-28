@@ -9,9 +9,7 @@
 	<main>
 		<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
 			<div>
-				<div class="text-uppercase small fw-semibold text-secondary mb-1">My Account / Invoices</div>
 				<h1 class="h3 mb-1">Invoice Details</h1>
-				<p class="text-secondary mb-0 font-monospace small" th:text="${data.id}">invoice-id</p>
 			</div>
 			<a th:href="@{/member/invoice}" class="btn btn-outline-secondary">
 				<i class="bi bi-arrow-left me-1"></i>Back to list
@@ -34,6 +32,10 @@
 							<span th:case="'Finished'" class="badge text-bg-success fs-6" th:text="${data.status}">Finished</span>
 							<span th:case="*" class="badge text-bg-secondary fs-6" th:text="${data.status}">Unknown</span>
 						</span>
+					</div>
+					<div class="col-12 col-md-4">
+						<div class="small text-secondary text-uppercase fw-semibold mb-1">Address</div>
+						<div class="fw-semibold" th:text="${data.address}">2026-01-01 10:00</div>
 					</div>
 				</div>
 			</div>
@@ -60,14 +62,14 @@
 								<td class="fw-semibold" th:text="${item.productName}">Product name</td>
 								<td class="text-end" th:text="${#numbers.formatInteger(item.unitPrice, 1, 'COMMA')}">0</td>
 								<td class="text-end" th:text="${item.quantity}">0</td>
-								<td class="text-end fw-semibold" th:text="${#numbers.formatInteger(item.subtotal, 1, 'COMMA')}">0</td>
+								<td class="text-end fw-semibold" th:text="${#numbers.formatInteger(item.subTotal, 1, 'COMMA')}">0</td>
 							</tr>
 						</tbody>
 						<tfoot class="table-light">
 							<tr>
 								<td colspan="4" class="text-end fw-semibold">Total</td>
 								<td class="text-end fw-bold fs-5"
-									th:text="${#numbers.formatInteger(data.items.stream().mapToInt(i -> i.subtotal).sum(), 1, 'COMMA')}">0</td>
+									th:text="${#numbers.formatInteger(data.total, 1, 'COMMA')}">0</td>
 							</tr>
 						</tfoot>
 					</table>
