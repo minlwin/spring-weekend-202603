@@ -32,14 +32,18 @@
 								th:classappend="${param.category == null} ? ' active' : ''">
 								All categories
 							</a>
-							<a th:each="item : ${categories}"
+							<a th:each="item, iterStat : ${categories}"
 								th:href="@{/anonymous/welcome(category=${item.name}, keyword=${param.keyword != null ? param.keyword[0] : null}, size=${param.size != null ? param.size[0] : 12})}"
-								class="list-group-item list-group-item-action"
-								th:classappend="${param.category != null and param.category[0] == item.name} ? ' active' : ''"
+								th:class="|list-group-item list-group-item-action ${(param.category != null and param.category[0] == item.name) ? 'active' : (iterStat.index >= 10 ? 'd-none extra-category' : '')}|"
 								th:text="${item.name}">
 								Category
 							</a>
 						</div>
+						<button th:if="${#lists.size(categories) > 10}"
+							type="button"
+							class="btn btn-link btn-sm p-0 mt-2 text-secondary text-decoration-none js-show-more-categories">
+							<i class="bi bi-chevron-down me-1"></i>Show more
+						</button>
 					</div>
 				</div>
 

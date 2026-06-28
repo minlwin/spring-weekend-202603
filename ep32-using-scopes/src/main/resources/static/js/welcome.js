@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+	const showMoreBtn = document.querySelector('.js-show-more-categories');
+	if (showMoreBtn) {
+		showMoreBtn.addEventListener('click', () => {
+			document.querySelectorAll('.extra-category').forEach(el => el.classList.remove('d-none'));
+			showMoreBtn.remove();
+		});
+	}
+
 	const csrfToken = document.querySelector('meta[name="_csrf"]')?.content || '';
 	const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.content || 'X-CSRF-TOKEN';
 	const cartCountDisplay = document.querySelector('.js-cart-count');
