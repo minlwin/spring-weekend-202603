@@ -1,0 +1,123 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    padding: 0rem 4rem;
+}
+
+.navbar {
+    background-color: lightblue;
+    padding: 1rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.appName {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.menuItem {
+    padding: 1rem;
+}
+
+.menuItem:hover {
+    background-color: blue;
+    color: white;
+}
+
+.counter {
+    border: 1px solid;
+    text-align: center;
+    padding: 1rem;
+}
+
+.btn {
+    background-color: blue;
+    color: white;
+    padding: 1rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.6rem 0rem;
+}
+
+#calculator {
+    min-width: 360px;
+    max-width: 360px;
+}
+
+#calculator > .result {
+    display: flex;
+    justify-content: end;
+    padding: 1rem 0.6rem;
+    background-color: black;
+    color: white;
+    margin-bottom: 2px;
+    font-size: 1.6rem;
+}
+
+#calculator > .temp {
+    display: flex;
+    justify-content: end;
+    padding: 1rem 0.6rem 0rem 0.6rem;
+    background-color: black;
+    color: beige;
+    font-size: 1rem;
+}
+
+#calculator > .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+}
+
+.calcBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 58px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.calcBtn:hover {
+    background-color: red !important;
+    color: white !important;
+}
+
+.bgGray {
+    background-color: gray;
+    color: white;
+}
+
+.calcBtn.primary {
+    background-color: orange;
+}
+
+.calcBtn.secondary {
+    background-color: black;
+    color: white;
+}
+
+.calcBtn.gray {
+    background-color: gray;
+    color: white;
+}

@@ -1,12 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Layout from './pages/Layout'
+import CalculatorPage from './pages/CalculatorPage'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Layout>
-      <h1></h1>  
-    </Layout> 
+    <CalculatorPage />
   </StrictMode>,
 )
