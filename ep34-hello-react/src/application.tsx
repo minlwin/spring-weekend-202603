@@ -3,65 +3,44 @@ import WelcomePage from "./pages/WelcomePage"
 import ComponentStatePage from "./pages/ComponentStatePage"
 import CalculatorPage from "./pages/CalculatorPage"
 import EffectDemoPage from "./pages/EffectDemoPage"
+import type { MenuType } from "./model"
+import { Menu } from "./components/Menu"
+import { SelectedMenuContext } from "./model/menu.context"
+import ReducerDemoPage from "./pages/ReducerDemoPage"
 
 export default function Application() {
 
     const [selectedMenu, setSelectedMenu] = useState<MenuType>('Welcome')
 
     return (
-        <main>
-            <Menu menuAction={setSelectedMenu}/>
+        <SelectedMenuContext.Provider value={setSelectedMenu}>
+            <main>
+                <Menu />
 
-            <div className="container">
-                {selectedMenu == 'Welcome' && 
-                    <WelcomePage />
-                }
+                <div className="container">
+                    {selectedMenu == 'Welcome' && 
+                        <WelcomePage />
+                    }
 
-                {selectedMenu == 'State' && 
-                    <ComponentStatePage />
-                }
+                    {selectedMenu == 'State' && 
+                        <ComponentStatePage />
+                    }
 
-                {selectedMenu == 'Interaction' && 
-                    <CalculatorPage />
-                }
+                    {selectedMenu == 'Interaction' && 
+                        <CalculatorPage />
+                    }
 
-                {selectedMenu == 'Effect' && 
-                    <EffectDemoPage />
-                }
+                    {selectedMenu == 'Effect' && 
+                        <EffectDemoPage />
+                    }
 
-            </div>
-        </main>
+                    {selectedMenu == 'Reducer' && 
+                        <ReducerDemoPage />
+                    }
+
+                </div>
+            </main>
+        </SelectedMenuContext.Provider>
     )
 }
 
-function Menu({menuAction} : {menuAction : MenuAction}) {
-    return (
-        <nav className="navbar">
-            <span className="appName">React Component</span>
-
-            <div>
-                <MenuItem name="Welcome" onMenuClick={menuAction}/>
-                <MenuItem name="State"  onMenuClick={menuAction}/>
-                <MenuItem name="Interaction"  onMenuClick={menuAction}/>
-                <MenuItem name="Effect"  onMenuClick={menuAction}/>
-                <MenuItem name="Reference"  onMenuClick={menuAction}/>
-                <MenuItem name="Reducer"  onMenuClick={menuAction}/>
-                <MenuItem name="Context"  onMenuClick={menuAction}/>
-            </div>
-        </nav>
-    )
-}
-
-type MenuType = 
-    'Welcome' | 'State' | 'Interaction' | 'Effect' | 'Reference' | 'Reducer' | 'Context'
-
-interface MenuAction {
-    (menu:MenuType) : void
-}
-
-function MenuItem({name, onMenuClick} : {name : MenuType, onMenuClick : MenuAction}) {
-
-    return (
-        <span className='menuItem' onClick={() => onMenuClick(name)}>{name}</span>
-    )
-}

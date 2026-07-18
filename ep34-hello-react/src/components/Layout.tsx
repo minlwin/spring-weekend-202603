@@ -3,7 +3,7 @@ import type React from "react";
 export default function Layout({title, action, children} : {
     title: string,
     action? : React.ReactNode,
-    children : React.ReactNode
+    children? : React.ReactNode
 }) {
     return (
         <>

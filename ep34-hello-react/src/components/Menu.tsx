@@ -1,25 +1,29 @@
-export default function Menu() {
+import type { MenuType } from "../model"
+import { useMenuAction } from "../model/menu.context"
+
+export function Menu() {
     return (
         <nav className="navbar">
             <span className="appName">React Component</span>
 
             <div>
                 <MenuItem name="Welcome" />
-                <MenuItem name="Component State" />
-                <MenuItem name="User Interaction" />
+                <MenuItem name="State"  />
+                <MenuItem name="Interaction"  />
+                <MenuItem name="Effect"  />
+                <MenuItem name="Reference"  />
+                <MenuItem name="Reducer"  />
+                <MenuItem name="Context"  />
             </div>
         </nav>
     )
 }
 
+function MenuItem({name } : {name : MenuType}) {
 
-function MenuItem({name} : {name : string}) {
-
-    const clickMenu = () => {
-        console.log(`Click ${name}`)
-    }
+    const menuAction = useMenuAction()
 
     return (
-        <span className='menuItem' onClick={clickMenu}>{name}</span>
+        <span className='menuItem' onClick={() => menuAction(name)} >{name}</span>
     )
 }
