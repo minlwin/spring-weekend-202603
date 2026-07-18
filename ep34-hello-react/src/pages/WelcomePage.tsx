@@ -1,9 +1,7 @@
-import Layout from "../components/Layout";
+import Welcome from "../components/Welcome";
 
 export default function WelcomePage() {
     return (
-        <Layout title="My First Component">
-            <></>
-        </Layout>
+        <Welcome value="Hello Props" />
     )
 }

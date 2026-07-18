@@ -21,7 +21,7 @@ export default function ComponentStatePage() {
         }>
             <section className="grid grid-cols-3">
                 {array.map((value, index) => 
-                    <Counter key={index} name={value} />
+                    <Counter key={`${count}-${index}`} name={value} />
                 )}
             </section>
         </Layout>

@@ -1,5 +1,4 @@
 import type React from "react";
-import Menu from "./Menu";
 
 export default function Layout({title, action, children} : {
     title: string,
@@ -7,19 +6,16 @@ export default function Layout({title, action, children} : {
     children : React.ReactNode
 }) {
     return (
-        <main>
-            <Menu />
-            <div className="container">
-                <header className="pageHeader">
-                    <h3>{title}</h3>
+        <>
+            <header className="pageHeader">
+                <h3>{title}</h3>
 
-                    {action}
-                </header>
+                {action}
+            </header>
 
-                <main>
-                    {children}
-                </main>
-            </div>
-        </main>
+            <main>
+                {children}
+            </main>
+        </>
     )
 }

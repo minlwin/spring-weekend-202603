@@ -12,6 +12,7 @@ export default function Menu() {
     )
 }
 
+
 function MenuItem({name} : {name : string}) {
 
     const clickMenu = () => {
