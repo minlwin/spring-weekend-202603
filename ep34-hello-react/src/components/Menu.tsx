@@ -1,29 +1,29 @@
-import type { MenuType } from "../model"
-import { useMenuAction } from "../model/menu.context"
+import { useMenuState } from "../context/menu-state.context"
 
 export function Menu() {
     return (
-        <nav className="navbar">
-            <span className="appName">React Component</span>
+        <nav className="navbar navbar-expand navbar-dark bg-primary">
+            <div className="container">
+                <span className="navbar-brand">React Component</span>
 
-            <div>
-                <MenuItem name="Welcome" />
-                <MenuItem name="State"  />
-                <MenuItem name="Interaction"  />
-                <MenuItem name="Effect"  />
-                <MenuItem name="Reference"  />
-                <MenuItem name="Reducer"  />
-                <MenuItem name="Context"  />
+                <div className="navbar-nav">
+                    <MenuItem name="Welcome" />
+                    <MenuItem name="Interaction"  />
+                    <MenuItem name="State"  />
+                    <MenuItem name="Reducer" />
+                </div>
             </div>
         </nav>
     )
 }
 
-function MenuItem({name } : {name : MenuType}) {
+function MenuItem({name } : {name : string}) {
 
-    const menuAction = useMenuAction()
+    const {selected, setSelected} = useMenuState()
 
     return (
-        <span className='menuItem' onClick={() => menuAction(name)} >{name}</span>
+        <div className="nav-item">
+            <a className={`nav-link ${selected == name ? 'active' : ''}`} onClick={() => setSelected(name)} >{name}</a>
+        </div>
     )
 }

@@ -1,46 +1,26 @@
-import { useState } from "react"
-import WelcomePage from "./pages/WelcomePage"
-import ComponentStatePage from "./pages/ComponentStatePage"
-import CalculatorPage from "./pages/CalculatorPage"
-import EffectDemoPage from "./pages/EffectDemoPage"
-import type { MenuType } from "./model"
-import { Menu } from "./components/Menu"
-import { SelectedMenuContext } from "./model/menu.context"
-import ReducerDemoPage from "./pages/ReducerDemoPage"
+import { useState } from "react";
+import { Menu } from "./components/Menu";
+import WelcomePage from "./pages/WelcomePage";
+import ComponentStatePage from "./pages/ComponentStatePage";
+import CalculatorPage from "./pages/CalculatorPage";
+import ReducerDemoPage from "./pages/ReducerDemoPage";
+import { MenuStateContext } from "./context/menu-state.context";
 
 export default function Application() {
 
-    const [selectedMenu, setSelectedMenu] = useState<MenuType>('Welcome')
+    const [selected, setSelected] = useState("Welcome")
 
     return (
-        <SelectedMenuContext.Provider value={setSelectedMenu}>
-            <main>
-                <Menu />
+        <MenuStateContext.Provider value={{selected: selected, setSelected: setSelected}}>
+            <Menu />
 
-                <div className="container">
-                    {selectedMenu == 'Welcome' && 
-                        <WelcomePage />
-                    }
-
-                    {selectedMenu == 'State' && 
-                        <ComponentStatePage />
-                    }
-
-                    {selectedMenu == 'Interaction' && 
-                        <CalculatorPage />
-                    }
-
-                    {selectedMenu == 'Effect' && 
-                        <EffectDemoPage />
-                    }
-
-                    {selectedMenu == 'Reducer' && 
-                        <ReducerDemoPage />
-                    }
-
-                </div>
+            <main className="container mt-3">
+                {selected === 'Welcome' && <WelcomePage />}
+                {selected === 'State' && <ComponentStatePage />}
+                {selected === 'Interaction' && <CalculatorPage />}
+                {selected === 'Reducer' && <ReducerDemoPage />}
             </main>
-        </SelectedMenuContext.Provider>
+        </MenuStateContext.Provider>
     )
 }
 

@@ -19,9 +19,9 @@ export default function ComponentStatePage() {
                 <ActionButton name="Remove One" action={() => setCount(count - 1)} />
             </div>
         }>
-            <section className="grid grid-cols-3">
+            <section className="row row-cols-4 gap-4 mt-4">
                 {array.map((value, index) => 
-                    <Counter key={`${count}-${index}`} name={value} />
+                    <Counter key={count + index} name={value} />
                 )}
             </section>
         </Layout>
@@ -31,6 +31,6 @@ export default function ComponentStatePage() {
 
 function ActionButton({name, action} : {name : string, action : () => void }) {
     return (
-        <div className="btn" onClick={action}>{name}</div>
+        <div className="btn btn-primary" onClick={action}>{name}</div>
     )
 }
