@@ -25,6 +25,12 @@ export async function getAll():Promise<Course[]> {
     return model.data
 }
 
+export async function findById(id: number): Promise<Course | undefined> {
+    const model = await _readModel()
+    return model.data.filter(item => item.id == id)
+        .pop()
+}
+
 export async function create(form: CourseForm):Promise<number> {
     const model = await _readModel()
     const lastId = model.lastId + 1

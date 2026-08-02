@@ -1,9 +1,1 @@
-[
-  {
-    "id": "1",
-    "name": "Java Basic",
-    "hours": "80",
-    "price": "150000",
-    "description": "Learn Java fundamentals including syntax, OOP, collections, exception handling, file I/O, and modern Java features. Build a strong foundation for enterprise application development."
-  }
-]
+{"lastId":2,"data":[{"name":"Java Basic","hours":60,"fees":150000,"description":"Learn Java fundamentals including syntax, OOP, collections, exception handling, file I/O, and modern Java features. Build a strong foundation for enterprise application development.","id":1},{"name":"Java Web","hours":90,"fees":200000,"description":"Develop dynamic web applications using Servlets, JSP, JDBC, MVC architecture, session management, authentication, and REST APIs while working with relational databases.","id":2}]}
