@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { LogInIcon } from "lucide-react";
+import { LogInIcon, UserPlus } from "lucide-react";
+import Link from "next/link";
 
 export default function SignInPage() {
     return (
@@ -18,9 +19,15 @@ export default function SignInPage() {
                 <Input placeholder="Enter Password" type="password" />
             </Field>
 
-            <Button>
-                <LogInIcon /> Sign In
-            </Button>
+            <div className="space-x-2">
+                <Button>
+                    <LogInIcon /> Sign In
+                </Button>
+
+                <Button nativeButton={false} render={<Link href="/signup" />} variant={'outline'}>
+                    <UserPlus /> Sign Up
+                </Button>
+            </div>
         </form>
     )
 }
