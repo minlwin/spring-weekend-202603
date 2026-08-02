@@ -1,0 +1,9 @@
+[
+  {
+    "id": "1",
+    "name": "Java Basic",
+    "hours": "80",
+    "price": "150000",
+    "description": "Learn Java fundamentals including syntax, OOP, collections, exception handling, file I/O, and modern Java features. Build a strong foundation for enterprise application development."
+  }
+]
