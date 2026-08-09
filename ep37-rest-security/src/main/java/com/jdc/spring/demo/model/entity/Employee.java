@@ -1,6 +1,7 @@
 package com.jdc.spring.demo.model.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.jdc.spring.demo.model.AbstractEntity;
 
@@ -26,5 +27,7 @@ public class Employee extends AbstractEntity {
 	
 	@Column(nullable = false)
 	private String phone;
+	
+	private LocalDateTime activatedAt;
 	private LocalDate retiredAt;
 }

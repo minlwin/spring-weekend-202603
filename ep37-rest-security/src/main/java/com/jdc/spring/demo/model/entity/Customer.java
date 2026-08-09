@@ -27,6 +27,7 @@ public class Customer extends AbstractEntity {
 	
 	@Column(nullable = false)
 	private LocalDateTime registerdAt;
+	
 	private String phone;
 	private LocalDate dob;
 	

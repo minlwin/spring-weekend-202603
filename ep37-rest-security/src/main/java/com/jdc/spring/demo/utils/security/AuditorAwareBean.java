@@ -1,4 +1,4 @@
-package com.jdc.spring.demo.model;
+package com.jdc.spring.demo.utils.security;
 
 import java.util.Optional;
 
