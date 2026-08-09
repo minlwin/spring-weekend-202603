@@ -1,6 +1,7 @@
 package com.jdc.spring.demo.utils.security;
 
 import java.time.LocalDate;
+import java.util.function.Function;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,13 +25,19 @@ public class ApplicationUserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
+		Function<Account, ApplicationUser> userConverter = account -> {
+			var userDetails = User.withUsername(username)
+					.password(account.getPassword())
+					.roles(account.getRole().name())
+					.disabled(isDisabled(account))
+					.accountExpired(isExpired(account))
+					.build();
+			return new ApplicationUser((User)userDetails, account.getName());
+		};
+		
 		return accountRepo.findOneByEmail(username)
-				.map(account -> User.withUsername(username)
-						.password(account.getPassword())
-						.roles(account.getRole().name())
-						.disabled(isDisabled(account))
-						.accountExpired(isExpired(account))
-						.build())
+				.map(userConverter)
 				.orElseThrow(() -> new UsernameNotFoundException(username));
 	}
 
