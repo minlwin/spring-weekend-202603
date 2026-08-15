@@ -31,7 +31,15 @@ public class VerificationHistory {
 	@Column(nullable = false)
 	private LocalDateTime sendAt;
 	
+	private LocalDateTime verifiedAt;
+	
+	private Status status;
+	
+	public enum Status {
+		Success, Fails
+	}
+	
 	public enum Action {
-		ForgotPassword, CreateEmployee, CustomerSignUp
+		ForgotPassword, ActivateEmployee, CustomerSignUp
 	}
 }

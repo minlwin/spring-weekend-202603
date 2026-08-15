@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jdc.spring.demo.api.anonymous.input.RefreshTokenForm;
 import com.jdc.spring.demo.api.anonymous.input.SignInForm;
 import com.jdc.spring.demo.api.anonymous.output.AuthResult;
-import com.jdc.spring.demo.model.service.AuthenticationResultService;
+import com.jdc.spring.demo.api.anonymous.service.AuthenticationResultService;
 
 import lombok.RequiredArgsConstructor;
 

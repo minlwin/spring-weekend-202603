@@ -1,4 +1,4 @@
-package com.jdc.spring.demo.model.service;
+package com.jdc.spring.demo.api.anonymous.service;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

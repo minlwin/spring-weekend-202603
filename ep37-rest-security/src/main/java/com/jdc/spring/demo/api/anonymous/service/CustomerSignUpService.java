@@ -1,4 +1,4 @@
-package com.jdc.spring.demo.model.service;
+package com.jdc.spring.demo.api.anonymous.service;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +10,7 @@ import com.jdc.spring.demo.api.anonymous.output.SignUpResult;
 import com.jdc.spring.demo.model.entity.Customer;
 import com.jdc.spring.demo.model.repo.AccountRepo;
 import com.jdc.spring.demo.model.repo.CustomerRepo;
+import com.jdc.spring.demo.model.service.AccountVerificationService;
 import com.jdc.spring.demo.utils.exceptions.BusinessRuleViolationException;
 
 import lombok.RequiredArgsConstructor;

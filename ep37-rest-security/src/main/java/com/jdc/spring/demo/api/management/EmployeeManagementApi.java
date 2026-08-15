@@ -15,29 +15,35 @@ import com.jdc.spring.demo.api.management.input.EmployeeForm;
 import com.jdc.spring.demo.api.management.input.EmployeeSearch;
 import com.jdc.spring.demo.api.management.output.EmployeeDetails;
 import com.jdc.spring.demo.api.management.output.EmployeeListItem;
+import com.jdc.spring.demo.api.management.service.EmployeeService;
 import com.jdc.spring.demo.model.ModificationResult;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("management/employees")
 public class EmployeeManagementApi {
+	
+	private final EmployeeService service;
 
 	@GetMapping
 	List<EmployeeListItem> search(EmployeeSearch search) {
-		return null;
+		return service.search(search);
 	}
 	
 	@GetMapping("{id}")
 	EmployeeDetails findById(@PathVariable int id) {
-		return null;
+		return service.findById(id);
 	}
 	
 	@PostMapping
 	ModificationResult<Integer> create(@RequestBody @Validated EmployeeForm form) {
-		return null;
+		return service.create(form);
 	}
 
 	@PutMapping("{id}")
 	ModificationResult<Integer> update(@PathVariable int id, @RequestBody @Validated EmployeeForm form) {
-		return null;
+		return service.update(id, form);
 	}
 }

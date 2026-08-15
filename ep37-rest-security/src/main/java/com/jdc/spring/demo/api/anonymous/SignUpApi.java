@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.spring.demo.api.anonymous.input.SignUpForm;
 import com.jdc.spring.demo.api.anonymous.output.SignUpResult;
-import com.jdc.spring.demo.model.service.CustomerSignUpService;
+import com.jdc.spring.demo.api.anonymous.service.CustomerSignUpService;
 
 import lombok.RequiredArgsConstructor;
 
