@@ -7,14 +7,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.spring.demo.api.anonymous.input.SignUpForm;
-import com.jdc.spring.demo.api.anonymous.output.AuthResult;
+import com.jdc.spring.demo.api.anonymous.output.SignUpResult;
+import com.jdc.spring.demo.model.service.CustomerSignUpService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("auth/signup")
 public class SignUpApi {
+	
+	private final CustomerSignUpService signUpService;
 
 	@PostMapping
-	AuthResult signUp(@RequestBody @Validated SignUpForm form) {
-		return null;
+	SignUpResult signUp(@RequestBody @Validated SignUpForm form) {
+		return signUpService.signUp(form);
 	}	
 }

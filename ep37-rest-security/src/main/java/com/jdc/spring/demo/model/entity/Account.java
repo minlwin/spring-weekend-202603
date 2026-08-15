@@ -25,7 +25,6 @@ public class Account extends AbstractEntity {
 	@Column(unique = true, nullable = false)
 	private String email;
 	
-	@Column(nullable = false)
 	private String password;
 
 	@Column(nullable = false)

@@ -8,14 +8,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.spring.demo.api.anonymous.input.ActivationForm;
 import com.jdc.spring.demo.api.anonymous.output.AuthResult;
+import com.jdc.spring.demo.model.service.AccountActivationService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("auth/activate")
 public class ActivationApi {
 	
+	private final AccountActivationService service;
+	
 	@PostMapping
 	AuthResult activate(@RequestBody @Validated ActivationForm form) {
-		return null;
+		return service.activate(form);
 	}	
 	
 }

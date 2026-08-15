@@ -34,7 +34,7 @@ public class AuthTokenApi {
 
 	@PostMapping("refresh")
 	AuthResult refresh(@RequestBody @Validated RefreshTokenForm form) {
-		return null;
+		return authResultService.refresh(form.token());
 	}
 
 }

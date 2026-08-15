@@ -31,4 +31,9 @@ public class AuthenticationResultService {
 				.build();
 	}
 
+	public AuthResult refresh(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

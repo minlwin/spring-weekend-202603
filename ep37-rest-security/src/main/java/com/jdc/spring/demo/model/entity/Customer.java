@@ -28,6 +28,8 @@ public class Customer extends AbstractEntity {
 	@Column(nullable = false)
 	private LocalDateTime registerdAt;
 	
+	private LocalDateTime verifiedAt;
+
 	private String phone;
 	private LocalDate dob;
 	
