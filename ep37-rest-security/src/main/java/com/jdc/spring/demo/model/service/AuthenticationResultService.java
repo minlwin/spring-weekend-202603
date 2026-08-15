@@ -20,8 +20,7 @@ public class AuthenticationResultService {
 		
 		var user = (ApplicationUser)authentication.getPrincipal();
 		var role = user.getAuthorities().stream().map(a -> a.getAuthority())
-			.findFirst().get();
-			
+			.findFirst().get();		
 		
 		return AuthResult.builder()
 				.name(user.getName())

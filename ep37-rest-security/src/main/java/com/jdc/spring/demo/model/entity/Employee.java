@@ -29,5 +29,6 @@ public class Employee extends AbstractEntity {
 	private String phone;
 	
 	private LocalDateTime activatedAt;
+	
 	private LocalDate retiredAt;
 }
