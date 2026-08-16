@@ -16,6 +16,6 @@ public interface VerificationHistoryRepo extends BaseRepository<VerificationHist
 	@Query("select h from VerificationHistory h where h.account.email = :email and h.verifiedAt = null order by h.sendAt desc")
 	List<VerificationHistory> findForVerification(String email);
 
-	@Query("select count(h.id) from VerificationHistory h where h.account.email = :email and h.action = :action and h.sendAt >= :timeFrom and h:status = :status")
+	@Query("select count(h.id) from VerificationHistory h where h.account.email = :email and h.action = :action and h.sendAt >= :timeFrom and h.status = :status")
 	Long findFialsCount(String email, Action action, LocalDateTime timeFrom, Status status);
 }

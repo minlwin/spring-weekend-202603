@@ -2,13 +2,17 @@ package com.jdc.spring.demo;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import com.jdc.spring.demo.utils.exceptions.SecurityExceptionHandler;
 import com.jdc.spring.demo.utils.security.JwtTokenFilter;
 import com.jdc.spring.demo.utils.security.JwtTokenService;
 
@@ -16,7 +20,7 @@ import com.jdc.spring.demo.utils.security.JwtTokenService;
 public class SecurityConfig {
 
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) {
+	SecurityFilterChain securityFilterChain(HttpSecurity http, SecurityExceptionHandler securityExceptionHandler) {
 		
 		http.csrf(csrf -> csrf.disable());
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -31,6 +35,11 @@ public class SecurityConfig {
 		var jwtTokenFilter = new JwtTokenFilter(jwtTokenService());
 		http.addFilterBefore(jwtTokenFilter, AuthorizationFilter.class);
 		
+		http.exceptionHandling(exception -> {
+			exception.authenticationEntryPoint(securityExceptionHandler);
+			exception.accessDeniedHandler(securityExceptionHandler);
+		});
+		
 		return http.build();
 	}
 	
@@ -42,5 +51,15 @@ public class SecurityConfig {
 	@Bean
 	JwtTokenService jwtTokenService() {
 		return new JwtTokenService();
+	}
+	
+	@Bean
+	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
+	
+	@Bean
+	SecurityExceptionHandler securityExceptionHandler(HandlerExceptionResolver handlerExceptionResolver) {
+		return new SecurityExceptionHandler(handlerExceptionResolver);
 	}
 }

@@ -3,6 +3,7 @@ package com.jdc.spring.demo.utils.security;
 import java.io.IOException;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
@@ -22,10 +23,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		
 		var token = request.getHeader("Authorization");
 		
-		var authentication = service.parseAccessToken(token);
-		
-		if(null != authentication) {
-			SecurityContextHolder.getContext().setAuthentication(authentication);
+		if(StringUtils.hasLength(token)) {
+			var authentication = service.parseAccessToken(token);
+			
+			if(null != authentication) {
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+			}
 		}
 		
 		filterChain.doFilter(request, response);

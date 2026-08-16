@@ -13,6 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import com.jdc.spring.demo.utils.exceptions.TokenAccessExpiredException;
+import com.jdc.spring.demo.utils.exceptions.TokenInvalidateException;
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 
 public class JwtTokenService {
@@ -27,11 +32,11 @@ public class JwtTokenService {
 	
 	private SecretKey secretKey = Jwts.SIG.HS512.key().build();
 
-	@Value("app.jwt.token.issuer")
+	@Value("${app.jwt.token.issuer}")
 	private String issuer;
-	@Value("app.jwt.token.access-life")
+	@Value("${app.jwt.token.access-life}")
 	private int accessLife;
-	@Value("app.jwt.token.refresh-life")
+	@Value("${app.jwt.token.refresh-life}")
 	private int refreshLife;	
 
 	public String generateAccess(Authentication authentication) {
@@ -43,11 +48,21 @@ public class JwtTokenService {
 	}
 
 	public Authentication parseAccessToken(String token) {
-		return parse(token, Type.Access);
+		try {
+			return parse(token, Type.Access);
+		} catch (ExpiredJwtException e) {
+			throw new TokenAccessExpiredException(e);
+		} catch (JwtException e) {
+			throw new TokenInvalidateException(e);
+		}
 	}
 
 	public Authentication parseRefreshToken(String token) {
-		return parse(token, Type.Refresh);
+		try {
+			return parse(token, Type.Refresh);
+		} catch (JwtException e) {
+			throw new TokenInvalidateException(e);
+		}
 	}
 
 	private String generate(Authentication authentication, Type type) {

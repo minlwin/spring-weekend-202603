@@ -31,13 +31,13 @@ public class AccountVerificationService {
 	private final CustomerRepo customerRepo;
 	private final EmployeeRepo employeeRepo;
 	
-	@Value("app.setting.otp.life")
+	@Value("${app.setting.otp.otp-life}")
 	private int otpLife;
 	
-	@Value("app.setting.otp.life")
+	@Value("${app.setting.otp.opt-limit-duration}")
 	private int otpLimitDuration;
 
-	@Value("app.setting.otp.life")
+	@Value("${app.setting.otp.otp-limit-count}")
 	private int otpLimitCount;
 
 	@Transactional
