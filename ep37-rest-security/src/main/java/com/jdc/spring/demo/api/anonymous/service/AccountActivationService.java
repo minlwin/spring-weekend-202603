@@ -16,6 +16,7 @@ import com.jdc.spring.demo.api.anonymous.input.ResendOtpForm;
 import com.jdc.spring.demo.api.anonymous.output.AuthResult;
 import com.jdc.spring.demo.model.ModificationResult;
 import com.jdc.spring.demo.model.entity.Account.Role;
+import com.jdc.spring.demo.model.entity.VerificationHistory.Action;
 import com.jdc.spring.demo.model.repo.AccountRepo;
 import com.jdc.spring.demo.model.repo.CustomerRepo;
 import com.jdc.spring.demo.model.repo.EmployeeRepo;
@@ -59,7 +60,7 @@ public class AccountActivationService {
 		var account = safeCall(accountRepo.findOneByEmail(form.email()))
 				.apply("account").apply("email").apply(form.email());
 		
-		return verificationService.resendForActivation(account);
+		return verificationService.resendVerification(account, account.getRole() == Role.Customer ? Action.CustomerSignUp : Action.ActivateEmployee);
 	}
 
 }

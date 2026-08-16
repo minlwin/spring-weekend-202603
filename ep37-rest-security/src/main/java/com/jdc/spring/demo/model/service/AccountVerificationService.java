@@ -41,15 +41,38 @@ public class AccountVerificationService {
 	private int otpLimitCount;
 
 	@Transactional
-	public void signUp(Account account) {
-		sendVerification(account, Action.CustomerSignUp);
+	public VerificationHistory sendVerification(Account account, Action action) {
+		var history = new VerificationHistory();
+		history.setAccount(account);
+		history.setAction(action);
+		
+		var otp = ThreadLocalRandom.current().nextInt(1000, 999999);
+		// TODO Send Email
+
+		history.setCode(encoder.encode("%06d".formatted(otp)));
+		history.setSendAt(LocalDateTime.now());
+		
+		historyRepo.save(history);
+		
+		return history;
 	}
 	
 	@Transactional
-	public ModificationResult<UUID> resendForActivation(Account account) {
-		return resend(account, account.getRole() == Role.Customer ? Action.CustomerSignUp : Action.ActivateEmployee);
+	public ModificationResult<UUID> resendVerification(Account account, Action action) {
+		
+		if(historyRepo.findFialsCount(
+				account.getEmail(), 
+				action, 
+				LocalDateTime.now().minusMinutes(otpLimitDuration), 
+				Status.Fails) >= otpLimitCount) {
+			throw new BusinessRuleViolationException("You send otp %d times within %d minutes. Please wait and try again."
+						.formatted(otpLimitCount, otpLimitDuration));
+		}
+		
+		var result = sendVerification(account, action);
+		return new ModificationResult<>(result.getId());
 	}
-
+	
 	@Transactional(noRollbackFor = BusinessRuleViolationException.class)
 	public Account verify(String email, String otp) {
 		
@@ -101,37 +124,5 @@ public class AccountVerificationService {
 		
 		return account;
 	}
-
-	private ModificationResult<UUID> resend(Account account, Action action) {
-		
-		if(historyRepo.findFialsCount(
-				account.getEmail(), 
-				action, 
-				LocalDateTime.now().minusMinutes(otpLimitDuration), 
-				Status.Fails) >= otpLimitCount) {
-			throw new BusinessRuleViolationException("You send otp %d times within %d minutes. Please wait and try again."
-						.formatted(otpLimitCount, otpLimitDuration));
-		}
-		
-		var result = sendVerification(account, action);
-		return new ModificationResult<>(result.getId());
-	}
-
-	private VerificationHistory sendVerification(Account account, Action action) {
-		var history = new VerificationHistory();
-		history.setAccount(account);
-		history.setAction(action);
-		
-		var otp = ThreadLocalRandom.current().nextInt(1000, 999999);
-		// TODO Send Email
-
-		history.setCode(encoder.encode("%06d".formatted(otp)));
-		history.setSendAt(LocalDateTime.now());
-		
-		historyRepo.save(history);
-		
-		return history;
-	}
-
 	
 }

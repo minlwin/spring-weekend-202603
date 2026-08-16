@@ -32,8 +32,8 @@ public class AuthenticationResultService {
 	}
 
 	public AuthResult refresh(String token) {
-		// TODO Auto-generated method stub
-		return null;
+		var authentication = tokenService.parseRefreshToken(token);
+		return create(authentication);
 	}
 
 }

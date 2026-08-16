@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jdc.spring.demo.api.anonymous.input.SignUpForm;
 import com.jdc.spring.demo.api.anonymous.output.SignUpResult;
 import com.jdc.spring.demo.model.entity.Customer;
+import com.jdc.spring.demo.model.entity.VerificationHistory.Action;
 import com.jdc.spring.demo.model.repo.AccountRepo;
 import com.jdc.spring.demo.model.repo.CustomerRepo;
 import com.jdc.spring.demo.model.service.AccountVerificationService;
@@ -37,7 +38,7 @@ public class CustomerSignUpService {
 		customer.setRegisterdAt(LocalDateTime.now());
 		customer = customerRepo.save(customer);
 		
-		verificationService.signUp(account);
+		verificationService.sendVerification(account, Action.CustomerSignUp);
 		
 		return new SignUpResult("Sign up successfully! Please check your email and activate your account.");
 	}
