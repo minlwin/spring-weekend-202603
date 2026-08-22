@@ -46,6 +46,7 @@ public class ApplicationExceptionHandlers {
 		case BadCredentialsException _-> "Please check your password.";
 		case DisabledException _-> "You need to verify first. Please check your email.";
 		case AccountExpiredException _-> "Your account has been expired.";
+		case TokenInvalidateException te -> te.getMessage();
 		default -> "Authentication Fails.";
 		});
 	}

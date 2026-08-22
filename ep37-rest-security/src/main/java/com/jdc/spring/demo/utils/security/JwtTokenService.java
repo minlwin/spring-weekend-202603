@@ -53,15 +53,17 @@ public class JwtTokenService {
 		} catch (ExpiredJwtException e) {
 			throw new TokenAccessExpiredException(e);
 		} catch (JwtException e) {
-			throw new TokenInvalidateException(e);
+			throw new TokenInvalidateException("Invalid access information. Please login again.", e);
 		}
 	}
 
 	public Authentication parseRefreshToken(String token) {
 		try {
 			return parse(token, Type.Refresh);
+		} catch (ExpiredJwtException e) {
+			throw new TokenInvalidateException("Your access is expired. Please login again.", e);
 		} catch (JwtException e) {
-			throw new TokenInvalidateException(e);
+			throw new TokenInvalidateException("Invalid access information. Please login again.", e);
 		}
 	}
 

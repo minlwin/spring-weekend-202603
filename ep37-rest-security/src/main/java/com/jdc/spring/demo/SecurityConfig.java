@@ -26,7 +26,7 @@ public class SecurityConfig {
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
 		http.authorizeHttpRequests(request -> {
-			request.requestMatchers("/auth/**", "/resources/**").permitAll();
+			request.requestMatchers("/auth/**", "/password/**","/resources/**").permitAll();
 			request.requestMatchers("/management/**").hasAnyRole("Employee", "Admin");
 			request.requestMatchers("/member/**").hasRole("Customer");
 			request.anyRequest().authenticated();

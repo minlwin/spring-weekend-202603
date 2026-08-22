@@ -13,7 +13,7 @@ import com.jdc.spring.demo.model.entity.VerificationHistory.Status;
 
 public interface VerificationHistoryRepo extends BaseRepository<VerificationHistory, UUID>{
 
-	@Query("select h from VerificationHistory h where h.account.email = :email and h.verifiedAt = null order by h.sendAt desc")
+	@Query("select h from VerificationHistory h where h.account.email = :email and h.verifiedAt is NULL order by h.sendAt desc")
 	List<VerificationHistory> findForVerification(String email);
 
 	@Query("select count(h.id) from VerificationHistory h where h.account.email = :email and h.action = :action and h.sendAt >= :timeFrom and h.status = :status")

@@ -72,7 +72,7 @@ public class EmployeeService {
 		// Send Verification Code
 		verificationService.sendVerification(account, Action.ActivateEmployee);
 		
-		return null;
+		return new ModificationResult<>(employee.getId());
 	}
 
 	@Transactional

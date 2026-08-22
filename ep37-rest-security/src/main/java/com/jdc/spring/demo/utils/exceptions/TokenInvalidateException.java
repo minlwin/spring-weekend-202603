@@ -6,6 +6,10 @@ public class TokenInvalidateException extends AuthenticationException {
 
 	private static final long serialVersionUID = 1L;
 
+	public TokenInvalidateException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 	public TokenInvalidateException(Throwable cause) {
 		super("Invalid jwt token", cause);
 	}

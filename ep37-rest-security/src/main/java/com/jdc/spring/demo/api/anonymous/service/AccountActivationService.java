@@ -56,11 +56,14 @@ public class AccountActivationService {
 		return resultService.create(authentication);
 	}
 
+	@Transactional
 	public ModificationResult<UUID> resend(ResendOtpForm form) {
 		var account = safeCall(accountRepo.findOneByEmail(form.email()))
 				.apply("account").apply("email").apply(form.email());
 		
-		return verificationService.resendVerification(account, account.getRole() == Role.Customer ? Action.CustomerSignUp : Action.ActivateEmployee);
+		var history = verificationService.sendVerification(account, account.getRole() == Role.Customer ? Action.CustomerSignUp : Action.ActivateEmployee);
+		
+		return new ModificationResult<UUID>(history.getId());
 	}
 
 }
