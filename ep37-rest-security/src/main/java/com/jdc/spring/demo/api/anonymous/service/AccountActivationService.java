@@ -42,6 +42,7 @@ public class AccountActivationService {
 	public AuthResult activate(ActivationForm form) {
 		
 		var account = verificationService.verify(form.email(), form.securityCode());
+		account = accountRepo.getReferenceById(account.getId());
 		account.setPassword(passwordEncoder.encode(form.password()));
 		
 		if(account.getRole() == Role.Customer) {

@@ -45,6 +45,8 @@ public class PasswordManagementService {
 
 		var account = verificationService.verify(UUID.fromString(id), form.securityCode());
 		
+		account = accountRepo.getReferenceById(account.getId());
+		
 		account.setPassword(passwordEncoder.encode(form.password()));
 	}
 
