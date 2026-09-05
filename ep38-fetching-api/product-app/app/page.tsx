@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ProductListItem, ProductSearch, ProductSearchSchema } from "@/lib/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Plus, Search } from "lucide-react"
+import { ArrowRight, Plus, Search } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import * as action from "@/lib/model/action/product-action"
 
 export default function ProductListPage() {
 
@@ -23,8 +24,9 @@ export default function ProductListPage() {
     }
   })
 
-  function onSearch(form: ProductSearch) {
-
+  async function onSearch(form: ProductSearch) {
+    const result = await action.search(form)
+    setList(result)
   }
 
   return (
@@ -61,6 +63,7 @@ export default function ProductListPage() {
             <TableHead>Name</TableHead>
             <TableHead>Unit Price</TableHead>
             <TableHead>Status</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
 
@@ -70,8 +73,13 @@ export default function ProductListPage() {
               <TableCell>{item.id}</TableCell>
               <TableCell>{item.category}</TableCell>
               <TableCell>{item.name}</TableCell>
-              <TableCell>{item.price.toLocaleString()} MMK</TableCell>
+              <TableCell>{item.unitPrice.toLocaleString()} MMK</TableCell>
               <TableCell>{item.status}</TableCell>
+              <TableCell>
+                <Link href={`/${item.id}`}>
+                  <ArrowRight size={18} />
+                </Link>
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

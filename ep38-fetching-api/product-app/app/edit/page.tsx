@@ -8,8 +8,12 @@ import { ProductForm, ProductSchema } from "@/lib/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { RefreshCcw, Save } from "lucide-react"
 import { useForm } from "react-hook-form"
+import * as action from "@/lib/model/action/product-action"
+import { useRouter } from "next/navigation"
 
 export default function AddNewPage() {
+
+    const router = useRouter()
 
     const form = useForm<ProductForm>({
         resolver: zodResolver(ProductSchema),
@@ -18,12 +22,14 @@ export default function AddNewPage() {
             category: "",
             status: "",
             description: "",
-            price: 0
+            unitPrice: "0"
         }
     })
 
-    function onSave(form: ProductForm) {
-
+    async function onSave(form: ProductForm) {
+        console.log(form)
+        const result = await action.create(form)
+        router.replace(`/${result.id}`)
     }
 
     return (
@@ -33,7 +39,7 @@ export default function AddNewPage() {
             <form onSubmit={form.handleSubmit(onSave)} className="grid grid-cols-4 gap-4">
                 <FormsInput control={form.control} name="name" label="Name" className="col-span-2" />
                 <FormsInput control={form.control} name="category" label="Category" className="col-start-1" />
-                <FormsInput control={form.control} name="price" type="number" label="Price" />
+                <FormsInput control={form.control} name="unitPrice" type="number" label="Price" />
                 <FormsSelect control={form.control} name="status" label="Status" options={[
                     {value : "", label: "Select One"},
                     {value : "Available", label: "Available"},
@@ -46,7 +52,7 @@ export default function AddNewPage() {
                     <Button type="reset" variant={'outline'}>
                         <RefreshCcw /> Reset
                     </Button>
-                    <Button type="submit">
+                    <Button type="submit" disabled={!form.formState.isValid}>
                         <Save /> Save Product
                     </Button>
                 </div>

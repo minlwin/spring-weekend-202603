@@ -11,7 +11,7 @@ public record ProductDetails(
 		String name,
 		int unitPrice,
 		Status status,
-		String details,
+		String description,
 		LocalDateTime createdAt,
 		LocalDateTime modifiedAt) {
 

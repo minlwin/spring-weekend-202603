@@ -18,7 +18,7 @@ export type ProductListItem = {
     id: number
     name: string
     category: string
-    price: number
+    unitPrice: number
     status: ProductStatus
 }
 
@@ -27,11 +27,17 @@ export const ProductSchema = z.object({
     category: z.string().nonempty("Enter Category."),
     description: z.string().nullable().optional(),
     status: z.string().nonempty("Select Status."),
-    price: z.number().nullable().optional().refine(
-        value => value !== null && value !== undefined && value > 0, {
-            message: "Please enter a valid price value."
-        }
-    ),
+    unitPrice: z.string().nonempty("Please enter Price."),
 })
 
 export type ProductForm = z.infer<typeof ProductSchema>
+
+export type ProductDetails = ProductListItem & {
+    description?: string
+    createdAt?: string
+    modifiedAt?: string
+}
+
+export type ModificationResult<T> = {
+    id: T
+}

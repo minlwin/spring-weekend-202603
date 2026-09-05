@@ -33,7 +33,7 @@ public class ProductApi {
 	}
 	
 	@GetMapping("{id}")
-	ProductDetails findById(int id) {
+	ProductDetails findById(@PathVariable int id) {
 		return service.findById(id);
 	}
 	
