@@ -1,17 +1,22 @@
 volumes:
   database-vm:
+
+networks:
+  app-network:
 services:
   postgres:
     image: 'postgres:18-alpine'
     container_name: productdb
     environment:
-      - 'POSTGRES_DB=productdb'
-      - 'POSTGRES_PASSWORD=p@ssw0rd'
-      - 'POSTGRES_USER=productdb'
+      - POSTGRES_DB=productdb
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+      - POSTGRES_USER=productdb
     ports:
       - '5432'
     volumes:
       - database-vm:/var/lib/postgresql
+    networks:
+      - app-network
 
   mailhog:
     image: 'mailhog/mailhog'
@@ -19,3 +24,21 @@ services:
     ports:
       - '8025:8025'
       - '1025:1025'
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - ADMIN_USER_PASS=${ADMIN_USER_PASS}
+      - POSTGRES_PASS=${POSTGRES_PASS}
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+    networks:
+      - app-network
