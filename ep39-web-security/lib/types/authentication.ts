@@ -11,3 +11,15 @@ export const SignUpSchema = z.object({
     name: z.string().nonempty("Please enter your name."),
     email: z.string().nonempty("Please enter email.").email("Please enter valid email."),
 })
+
+export type Role = 'Admin' | 'Employee' | 'Partner' | 'Candidate'
+
+export type AuthResult = {
+    name: string
+    email: string
+    role: Role
+    accessToken: string
+    refreshToken: string
+}
+
+export type LoginUser = Omit<AuthResult, 'accessToken' | 'refreshToken' >

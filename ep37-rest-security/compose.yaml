@@ -19,7 +19,7 @@ services:
       - app-network
 
   mailhog:
-    image: 'mailhog/mailhog'
+    image: 'axllent/mailpit'
     container_name: mailhog
     ports:
       - '8025:8025'
