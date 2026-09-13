@@ -1,36 +1,10 @@
-import { ClientError, FormParams, SearchParams } from '@/lib/types'
+import { AuthResult, ClientError, FormParams, SearchParams } from '@/lib/types'
 import 'server-only'
+import * as security from "@/lib/services/security/security-context"
 
-export async function get<T>(path: string, params?: SearchParams) : Promise<T> {
-    const response = await fetch(url(path, params))
+export async function request<T>(path: string, method: string, params?: FormParams, useFile : boolean = false) : Promise<T> {
 
-    if(!response.ok) {
-        const errorResponse:ClientError = {
-            status: response.status,
-            messages: await response.json()
-        }
-
-        throw Error(JSON.stringify(errorResponse))
-    }
-
-    return await response.json()
-}
-
-export async function post<T>(path: string, params?: FormParams, useFile : boolean = false) : Promise<T> {
-    return await request(path, 'post', params, useFile)
-}
-
-export async function put<T>(path: string, params?: FormParams, useFile : boolean = false) : Promise<T> {
-    return await request(path, 'put', params, useFile)
-}
-
-export async function patch<T>(path: string, params?: FormParams, useFile : boolean = false) : Promise<T> {
-    return await request(path, 'patch', params, useFile)
-}
-
-async function request<T>(path: string, method: string, params?: FormParams, useFile : boolean = false) : Promise<T> {
-
-    const response = await fetch(url(path), getRequestInit(method, params, useFile))
+    const response = method == 'get' ? await fetch(url(path, params)) : await fetch(url(path), getRequestInit(method, params, useFile))
 
     if(!response.ok) {
         const errorResponse:ClientError = {
@@ -44,13 +18,65 @@ async function request<T>(path: string, method: string, params?: FormParams, use
     return await response.json()
 }
 
-export function securedGet() {
+export async function securedRequest<T>(path: string, method: string, params?: FormParams, useFile : boolean = false): Promise<T> {
 
+    async function requestWithToken(token: string) {
+        const requestUrl = method == 'get' ? url(path, params) : path
+        const requestInt = getRequestInit(method, params, useFile)        
+        return await fetch(requestUrl, {
+            ...requestInt,
+            headers: {
+                ...requestInt.headers,
+                'Authorization' : token
+            }
+        })
+    }
+
+    const accessToken = await security.getAccessToken()
+
+    if(!accessToken) {
+        await security.clearContext()
+        const error:ClientError = {
+            status: 401,
+            messages: ["You have to sign in for this operation."]
+        }
+        throw new Error(JSON.stringify(error))
+    }
+
+    let response = await requestWithToken(accessToken)
+
+    if(response.status === 410) {
+        const token = await security.getRefreshToken()
+        const refreshResult:AuthResult = await request('auth/token/refresh', 'post', {
+            token : token
+        })
+        const {accessToken, refreshToken, ...loginUser} = refreshResult
+
+        await security.login(accessToken, refreshToken, loginUser)
+
+        response = await requestWithToken(accessToken)
+    }
+
+    if(!response.ok) {
+        if(response.status === 401 || response.status === 403) {
+            await security.clearContext()
+        }
+
+        const errorResponse:ClientError = {
+            status: response.status,
+            messages: await response.json()
+        }
+
+        throw Error(JSON.stringify(errorResponse))
+    }
+
+
+    return await response.json()
 }
 
 function getRequestInit(method: string, params?: FormParams, useFile : boolean = false) : RequestInit {
 
-    if(!params) {
+    if(!params || method == 'get') {
         return {
             method: method,
         }
@@ -69,7 +95,7 @@ function getFormData(params: FormParams) :FormData {
     const form = new FormData
 
     for(const [key, value] of Object.entries(params)) {
-
+        form.append(key, value)
     }
 
     return form

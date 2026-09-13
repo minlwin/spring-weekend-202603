@@ -7,16 +7,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { LogIn, UserPlus } from "lucide-react"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
-import * as action from "@/lib/services/actions/signin.action"
-import { useLoginUserContxt } from "@/lib/state/login-user.context"
-import { useRouter, useSearchParams } from "next/navigation"
-import { getHome, safeCall } from "@/lib/utils"
-import { useEffect } from "react"
+import * as action from "@/lib/services/actions/security.action"
+import { useSearchParams } from "next/navigation"
+import { safeCall } from "@/lib/utils"
 
 export default function SignInPage() {
-
-    const {setLoginUser} = useLoginUserContxt()
-    const router = useRouter()
+    
     const searchParams = useSearchParams()
     const message = searchParams.get("message") || "Welcome back."
 
@@ -28,11 +24,9 @@ export default function SignInPage() {
         }
     })
 
-    async function signInAction(form : SignInForm) {
-        await safeCall(async () => {
-            const loginUser = await action.signIn(form)
-            setLoginUser(loginUser)
-            router.replace(getHome(loginUser.role))
+    function signInAction(form : SignInForm) {
+        safeCall(async () => {
+            await action.signIn(form)
         })
     }
 

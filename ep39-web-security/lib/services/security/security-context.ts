@@ -8,6 +8,7 @@ export async function login(accessToken: string, refreshToken : string, loginUse
     const props : Partial<ResponseCookie> = {
         httpOnly: true,
         maxAge: 30 * 60,
+        sameSite: 'strict',
         secure: process.env.NODE_ENV === 'production'
     }
 
@@ -35,8 +36,7 @@ export async function getRefreshToken() : Promise<string | undefined> {
 
 export async function getLoginUser() : Promise<LoginUser | undefined> {
     const cookieStore = await cookies()
-    const value = cookieStore.get('refreshToken')?.value
-
+    const value = cookieStore.get('loginUser')?.value
     if(value) {
         return JSON.parse(value)
     }
