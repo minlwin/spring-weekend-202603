@@ -1,7 +1,7 @@
 import PageHeader from "@/components/commons/page-header";
 import ManagementSideBar from "@/components/sidebar/management-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { getLoginUser } from "@/lib/services/security/security-context";
+import { getLoginUser } from "@/lib/services/storage/security-context";
 import { LayoutsProps } from "@/lib/types";
 import { getHome } from "@/lib/utils";
 import { redirect } from "next/navigation";
@@ -19,7 +19,7 @@ export default async function ManagementLayout({children} : LayoutsProps) {
     }
 
     return (
-        <SidebarProvider className="space-x-4 pr-4">
+        <SidebarProvider className="space-x-6 pr-6">
             <ManagementSideBar />
 
             <main className="space-y-4 w-full">

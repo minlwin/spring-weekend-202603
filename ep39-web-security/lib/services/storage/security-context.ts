@@ -1,9 +1,10 @@
-import { LoginUser } from '@/lib/types';
+import { AuthResult, LoginUser } from '@/lib/types';
 import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
 import 'server-only'
 
-export async function login(accessToken: string, refreshToken : string, loginUser: LoginUser) {
+export async function login(authResult : AuthResult) {
+    const {accessToken, refreshToken, ... loginUser} = authResult
     const cookieStore = await cookies()
     const props : Partial<ResponseCookie> = {
         httpOnly: true,
@@ -22,6 +23,7 @@ export async function clearContext() {
     cookieStore.delete('accessToken')
     cookieStore.delete('refreshToken')
     cookieStore.delete('loginUser')
+    cookieStore.delete('feature')
 }
 
 export async function getAccessToken() : Promise<string | undefined> {

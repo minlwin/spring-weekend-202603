@@ -1,10 +1,12 @@
-import { AuthResult, ClientError, FormParams, SearchParams } from '@/lib/types'
+import { AuthResult, ClientError, ClientRequest, FormParams } from '@/lib/types'
 import 'server-only'
-import * as security from "@/lib/services/security/security-context"
+import * as security from "@/lib/services/storage/security-context"
 
-export async function request<T>(path: string, method: string, params?: FormParams, useFile : boolean = false) : Promise<T> {
+export async function publicRequest<T>(request: ClientRequest) : Promise<T> {
 
-    const response = method == 'get' ? await fetch(url(path, params)) : await fetch(url(path), getRequestInit(method, params, useFile))
+    const response = request.method == 'get' ? 
+        await fetch(url(request.path, request.params)) : 
+        await fetch(url(request.path), getRequestInit(request))
 
     if(!response.ok) {
         const errorResponse:ClientError = {
@@ -18,11 +20,11 @@ export async function request<T>(path: string, method: string, params?: FormPara
     return await response.json()
 }
 
-export async function securedRequest<T>(path: string, method: string, params?: FormParams, useFile : boolean = false): Promise<T> {
+export async function securedRequest<T>(request: ClientRequest): Promise<T> {
 
     async function requestWithToken(token: string) {
-        const requestUrl = method == 'get' ? url(path, params) : path
-        const requestInt = getRequestInit(method, params, useFile)        
+        const requestUrl = request.method == 'get' ? url(request.path, request.params) : url(request.path)
+        const requestInt = getRequestInit(request)        
         return await fetch(requestUrl, {
             ...requestInt,
             headers: {
@@ -47,13 +49,13 @@ export async function securedRequest<T>(path: string, method: string, params?: F
 
     if(response.status === 410) {
         const token = await security.getRefreshToken()
-        const refreshResult:AuthResult = await request('auth/token/refresh', 'post', {
-            token : token
+        const refreshResult:AuthResult = await publicRequest({
+            path: 'auth/token/refresh', 
+            method: 'post', 
+            params : { token : token }
         })
-        const {accessToken, refreshToken, ...loginUser} = refreshResult
 
-        await security.login(accessToken, refreshToken, loginUser)
-
+        await security.login(refreshResult)
         response = await requestWithToken(accessToken)
     }
 
@@ -74,20 +76,20 @@ export async function securedRequest<T>(path: string, method: string, params?: F
     return await response.json()
 }
 
-function getRequestInit(method: string, params?: FormParams, useFile : boolean = false) : RequestInit {
+function getRequestInit(request: ClientRequest) : RequestInit {
 
-    if(!params || method == 'get') {
+    if(!request.params || request.method == 'get') {
         return {
-            method: method,
+            method: request.method,
         }
     }
 
     return {
-        method: method,
-        headers: !useFile ? {
+        method: request.method,
+        headers: !request.useFile ? {
             'Content-Type' : 'application/json'
         } : undefined,
-        body: useFile? getFormData(params!) : JSON.stringify(params)
+        body: request.useFile? getFormData(request.params!) : JSON.stringify(request.params)
     }
 }
 
@@ -101,7 +103,7 @@ function getFormData(params: FormParams) :FormData {
     return form
 }
 
-function url(path: string, params? : SearchParams) {
+function url(path: string, params? : FormParams) {
     const baseUrl = process.env.BASE_API
 
     if(params) {

@@ -2,18 +2,18 @@
 
 import { SignInForm } from "@/lib/types";
 import * as client from "@/lib/services/clients/auth-token.client"
-import * as security from "@/lib/services/security/security-context"
+import * as security from "@/lib/services/storage/security-context"
 import { redirect } from "next/navigation";
 import { getHome } from "@/lib/utils";
 
 export async function signIn(form: SignInForm) : Promise<void> {
-    const {accessToken, refreshToken, ... loginUser} = await client.generate(form)
+    const authResult = await client.generate(form)
 
     // Store Tokens
-    await security.login(accessToken, refreshToken, loginUser)
+    await security.login(authResult)
 
     // Redirect to Home
-    redirect(getHome(loginUser.role))
+    redirect(getHome(authResult.role))
 }
 
 export async function signOut() {

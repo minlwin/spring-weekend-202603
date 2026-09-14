@@ -1,16 +1,34 @@
 import { Briefcase } from "lucide-react"
-import { Sidebar, SidebarContent, SidebarHeader } from "../ui/sidebar"
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
 import SidebarBaseFooter from "./sidebar-base-footer"
-import { getLoginUser } from "@/lib/services/security/security-context"
+import { getLoginUser } from "@/lib/services/storage/security-context"
+import React from "react"
+import SidebarMenuLink from "./sidebar-menu-link"
+
+export type SidebarMenuItem = {
+    name: string
+    icon: React.ReactNode,
+    link: string    
+    feature?: string
+}
+
+export type SidebarMenuGroup = {
+    name?: string
+    items: SidebarMenuItem[]
+}
 
 type SidebarProps = {
-    title: string
+    title: string,
+    menus: SidebarMenuGroup[]
 }
 
 export default async function SidebarBase({
-    title
+    title,
+    menus
 } : SidebarProps) {
+    
     const loginUser = await getLoginUser()
+
     return (
         <Sidebar>
             <SidebarHeader>
@@ -29,7 +47,23 @@ export default async function SidebarBase({
             </SidebarHeader>
 
             <SidebarContent>
+            {menus.map((group, index) => (
+                <SidebarGroup key={`G-${index}`}>
+                    {group.name && 
+                        <SidebarGroupLabel>{group.name}</SidebarGroupLabel>
+                    }
 
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            {group.items.map((item, itemIndex) => (
+                                <SidebarMenuItem key={`G-${index}-I-${itemIndex}`}>
+                                    <SidebarMenuLink menu={item} />
+                                </SidebarMenuItem>
+                            ))}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
+            ))}
             </SidebarContent>
 
             <SidebarBaseFooter loginUser={loginUser} />
