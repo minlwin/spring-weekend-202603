@@ -30,7 +30,7 @@ export async function create(form : EmployeeForm) : Promise<ModificationResult<n
 export async function update(id: any, form : EmployeeForm) : Promise<ModificationResult<number>> {
     return await securedRequest({
         path: `${ENDPOINT}/${id}`,
-        method: 'post',
+        method: 'put',
         params: form
     }) 
 }

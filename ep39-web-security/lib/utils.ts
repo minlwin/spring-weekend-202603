@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { ClientError, Role } from "./types";
 import { toast, ToastT } from "sonner";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { format, formatISO } from "date-fns";
 
 export { cn } from "cn"
 
@@ -17,7 +18,7 @@ export async function safeCall(action : () => Promise<void>) {
     try {
         await action()
     } catch (e : any) {
-        if(!isRedirectError(e)) {
+        if(!isRedirectError(e) && e.message) {
             const error:ClientError = JSON.parse(e.message)
 
             if(error.status == 401 || error.status == 403) {
@@ -31,6 +32,16 @@ export async function safeCall(action : () => Promise<void>) {
 
                 toast("Message", message)
             }
+        } else {
+            console.log(e)
         }
     }
+}
+
+export function formatDateTime(value? : string) {
+    if(value) {
+        const dateTime = formatISO(value)
+        return format(dateTime, 'yyyy-MM-dd HH:mm')
+    }
+    return ""
 }

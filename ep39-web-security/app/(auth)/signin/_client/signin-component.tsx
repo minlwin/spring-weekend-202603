@@ -4,10 +4,10 @@ import { FormsInput } from "@/components/forms"
 import { Button } from "@/components/ui/button"
 import { SignInForm, SignInSchema } from "@/lib/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LogIn, UserPlus } from "lucide-react"
+import { Key, Lock, LogIn, UserPlus } from "lucide-react"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
-import * as action from "@/lib/services/actions/security.action"
+import * as action from "@/lib/services/actions/auth/security.action"
 import { useSearchParams } from "next/navigation"
 import { safeCall } from "@/lib/utils"
 
@@ -49,6 +49,12 @@ export default function SignInComponent() {
                     <UserPlus /> Sign Up
                 </Button>
             </nav>
+
+            <div>
+                <Button render={<Link href={'/password'} />} nativeButton={false} variant={"link"}>
+                    <Lock /> I forgot my password
+                </Button>
+            </div>
         </form>
     )
 }

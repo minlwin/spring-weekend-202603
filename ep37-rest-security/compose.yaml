@@ -27,18 +27,18 @@ services:
     networks:
       - app-network
 
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: backend
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - ADMIN_USER_PASS=${ADMIN_USER_PASS}
-      - POSTGRES_PASS=${POSTGRES_PASS}
-    ports:
-      - '8080:8080'
-    depends_on:
-      - postgres
-    networks:
-      - app-network
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: backend
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #     - ADMIN_USER_PASS=${ADMIN_USER_PASS}
+  #     - POSTGRES_PASS=${POSTGRES_PASS}
+  #   ports:
+  #     - '8080:8080'
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - app-network

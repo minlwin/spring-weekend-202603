@@ -6,16 +6,23 @@ import { Button } from "@/components/ui/button";
 import { EmployeeListItem, EmployeeSearch } from "@/lib/types";
 import { ArrowRight, Search, UserPlus } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as action from "@/lib/services/actions/management/employee-management.action"
-import { safeCall } from "@/lib/utils";
+import { formatDateTime, safeCall } from "@/lib/utils";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import NoData from "@/components/commons/nodata";
 
 export default function EmployeeManagementPage() {
 
     const [list, setList] = useState<EmployeeListItem[]>([])
+
+    useEffect(() => {
+        search({
+            activated: '',
+            keyword: ''
+        })
+    }, [])
 
     function search(form : EmployeeSearch) {
         safeCall(async () => {
@@ -58,7 +65,7 @@ function TableView({list} : {list : EmployeeListItem[]}) {
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.phone}</TableCell>
                     <TableCell>{item.email}</TableCell>
-                    <TableCell>{item.activatedAt}</TableCell>
+                    <TableCell>{formatDateTime(item.activatedAt)}</TableCell>
                     <TableCell>
                         <Link href={`/management/employees/${item.id}`}>
                             <ArrowRight size={16} />

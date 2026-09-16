@@ -1,5 +1,5 @@
 import { AuthResult, SignInForm } from "@/lib/types";
-import { publicRequest } from ".";
+import { publicRequest } from "..";
 
 const PATH = 'auth/token'
 

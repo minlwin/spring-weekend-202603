@@ -1,7 +1,9 @@
 import React from "react"
 
 export * from "./forms"
-export * from "./authentication"
+export * from "./auth/authentication"
+export * from "./auth/account-activation"
+export * from "./auth/password-recovery"
 export * from "./management/employee-management"
 
 export type LayoutsProps = {

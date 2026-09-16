@@ -1,4 +1,4 @@
-import EmployeeEditForm from "./_commons/employee-edit-form";
+import EmployeeEditForm from "./_client/employee-edit-form";
 
 export default async function EmployeeCreatePage() {
     return (

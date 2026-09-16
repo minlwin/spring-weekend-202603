@@ -1,7 +1,7 @@
 'use client'
 
 import { SidebarFooter, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
-import * as action from "@/lib/services/actions/security.action"
+import * as action from "@/lib/services/actions/auth/security.action"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "../ui/avatar"
 import { ChevronRight, Key, LogOut, User } from "lucide-react"

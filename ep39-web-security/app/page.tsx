@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Briefcase, Building, LogIn, Network, Power } from "lucide-react";
+import { Briefcase, Building, LogIn, Network, Power, UserShield } from "lucide-react";
 import Link from "next/link";
 
 export default function WelcomePage() {
@@ -27,6 +27,14 @@ export default function WelcomePage() {
           <LogIn /> Sign In
         </Button>
       </div>
+
+      <section className="text-center space-y-3 mt-4">
+        <h3 className="text-xl font-semibold">Account Activation</h3>
+        <p>For first time user, you have to activate your account. <br/>Please check email and finish account activation process.</p>
+        <Button render={<Link href={'/activation'}></Link>} nativeButton={false} variant={'outline'}>
+          <UserShield /> Account Activation
+        </Button>
+      </section>
     </main>
   )
 }

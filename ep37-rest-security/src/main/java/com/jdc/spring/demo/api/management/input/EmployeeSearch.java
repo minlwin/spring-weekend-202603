@@ -3,6 +3,7 @@ package com.jdc.spring.demo.api.management.input;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 
 import com.jdc.spring.demo.model.entity.Account_;
@@ -24,9 +25,12 @@ public record EmployeeSearch(
 		if(null != activated) {
 			params.add(activated ? cb.isNotNull(root.get(Employee_.activatedAt)) : cb.isNull(root.get(Employee_.activatedAt)));
 		}
+
+		var account = root.get(Employee_.account);
+		var authentication = SecurityContextHolder.getContext().getAuthentication();
+		params.add(cb.notEqual(account.get(Account_.email), authentication.getName()));		
 		
 		if(StringUtils.hasLength(keyword)) {
-			var account = root.get(Employee_.account);
 			var param = keyword.toLowerCase().concat("%");
 			params.add(cb.or(
 				cb.like(cb.lower(account.get(Account_.name)), param),
