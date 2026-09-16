@@ -19,7 +19,6 @@ import com.jdc.spring.demo.model.entity.Account.Role;
 import com.jdc.spring.demo.model.entity.VerificationHistory;
 import com.jdc.spring.demo.model.entity.VerificationHistory.Action;
 import com.jdc.spring.demo.model.entity.VerificationHistory.Status;
-import com.jdc.spring.demo.model.repo.CustomerRepo;
 import com.jdc.spring.demo.model.repo.EmployeeRepo;
 import com.jdc.spring.demo.model.repo.VerificationHistoryRepo;
 import com.jdc.spring.demo.utils.exceptions.BusinessRuleViolationException;
@@ -32,7 +31,6 @@ public class AccountVerificationService {
 	
 	private final PasswordEncoder encoder;
 	private final VerificationHistoryRepo historyRepo;
-	private final CustomerRepo customerRepo;
 	private final EmployeeRepo employeeRepo;
 	
 	private final JavaMailSender mailSender;
@@ -147,20 +145,16 @@ public class AccountVerificationService {
 		}
 		
 		// Check Action
-		if(account.getRole() == Role.Customer) {
-			var customer = customerRepo.getReferenceById(account.getId());
-			
-			if(history.getAction() == Action.CustomerSignUp && customer.getVerifiedAt() != null) {
-				throw new BusinessRuleViolationException("Invalid opt action.");
-			}
-			
-			if(history.getAction() == Action.ForgotPassword && customer.getVerifiedAt() == null) {
-				throw new BusinessRuleViolationException("Invalid opt action.");
-			}
+		if(account.getRole() == Role.Candidate) {
+			// TODO
+		} else if (account.getRole() == Role.Partner) {
+			// TODO
+		} else if (account.getRole() == Role.Member) {
+			// TODO
 		} else if (account.getRole() == Role.Employee) {
 			var employee = employeeRepo.getReferenceById(account.getId());
 			
-			if(history.getAction() == Action.ActivateEmployee && employee.getActivatedAt() != null) {
+			if(history.getAction() == Action.AccountActivation && employee.getActivatedAt() != null) {
 				throw new BusinessRuleViolationException("Invalid opt action.");
 			}
 

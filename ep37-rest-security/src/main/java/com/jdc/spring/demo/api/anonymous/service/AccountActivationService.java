@@ -18,7 +18,6 @@ import com.jdc.spring.demo.model.ModificationResult;
 import com.jdc.spring.demo.model.entity.Account.Role;
 import com.jdc.spring.demo.model.entity.VerificationHistory.Action;
 import com.jdc.spring.demo.model.repo.AccountRepo;
-import com.jdc.spring.demo.model.repo.CustomerRepo;
 import com.jdc.spring.demo.model.repo.EmployeeRepo;
 import com.jdc.spring.demo.model.service.AccountVerificationService;
 
@@ -29,7 +28,6 @@ import lombok.RequiredArgsConstructor;
 public class AccountActivationService {
 	
 	private final AccountRepo accountRepo;
-	private final CustomerRepo customerRepo;
 	private final EmployeeRepo employeeRepo;
 	private final AccountVerificationService verificationService;
 	
@@ -45,9 +43,12 @@ public class AccountActivationService {
 		account = accountRepo.getReferenceById(account.getId());
 		account.setPassword(passwordEncoder.encode(form.password()));
 		
-		if(account.getRole() == Role.Customer) {
-			var customer = customerRepo.getReferenceById(account.getId());
-			customer.setVerifiedAt(LocalDateTime.now());
+		if(account.getRole() == Role.Candidate) {
+			// TODO
+		} else if (account.getRole() == Role.Partner) {
+		
+		} else if (account.getRole() == Role.Member) {
+			
 		} else if (account.getRole() == Role.Employee) {
 			var employee = employeeRepo.getReferenceById(account.getId());
 			employee.setActivatedAt(LocalDateTime.now());
@@ -62,7 +63,7 @@ public class AccountActivationService {
 		var account = safeCall(accountRepo.findOneByEmail(form.email()))
 				.apply("account").apply("email").apply(form.email());
 		
-		var history = verificationService.sendVerification(account, account.getRole() == Role.Customer ? Action.CustomerSignUp : Action.ActivateEmployee);
+		var history = verificationService.sendVerification(account, Action.AccountActivation);
 		
 		return new ModificationResult<UUID>(history.getId());
 	}

@@ -5,8 +5,11 @@ import com.jdc.spring.demo.model.entity.Account.Role;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record SignUpForm(
+		@NotNull(message = "Please select account type.")
+		Role role,
 		@NotBlank(message = "Please enter customer name.")
 		String name,
 		@NotBlank(message = "Please enter email.")
@@ -17,7 +20,7 @@ public record SignUpForm(
 		var account = new Account();
 		account.setName(name);
 		account.setEmail(email);
-		account.setRole(Role.Customer);
+		account.setRole(role);
 		return account;
 	}
 

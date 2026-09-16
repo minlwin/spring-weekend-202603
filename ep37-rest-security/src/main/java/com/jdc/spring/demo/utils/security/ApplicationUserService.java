@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.jdc.spring.demo.model.entity.Account;
 import com.jdc.spring.demo.model.entity.Account.Role;
 import com.jdc.spring.demo.model.repo.AccountRepo;
-import com.jdc.spring.demo.model.repo.CustomerRepo;
 import com.jdc.spring.demo.model.repo.EmployeeRepo;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,6 @@ public class ApplicationUserService implements UserDetailsService {
 	
 	private final AccountRepo accountRepo;
 	private final EmployeeRepo employeeRepo;
-	private final CustomerRepo customerRepo;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -50,10 +48,8 @@ public class ApplicationUserService implements UserDetailsService {
 			return null == employee.getActivatedAt();
 		}
 		
-		if(account.getRole() == Role.Customer) {
-			var customer = customerRepo.getReferenceById(account.getId());
-			return null == customer.getVerifiedAt();
-		}
+		// TODO 
+		
 		
 		return false;
 	}

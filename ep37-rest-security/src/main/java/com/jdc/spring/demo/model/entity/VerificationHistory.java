@@ -40,6 +40,6 @@ public class VerificationHistory {
 	}
 	
 	public enum Action {
-		ForgotPassword, ActivateEmployee, CustomerSignUp
+		ForgotPassword, AccountActivation
 	}
 }

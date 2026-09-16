@@ -70,7 +70,7 @@ public class EmployeeService {
 		employee = employeeRepo.save(employee);
 		
 		// Send Verification Code
-		verificationService.sendVerification(account, Action.ActivateEmployee);
+		verificationService.sendVerification(account, Action.AccountActivation);
 		
 		return new ModificationResult<>(employee.getId());
 	}
