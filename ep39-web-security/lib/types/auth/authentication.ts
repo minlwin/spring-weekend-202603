@@ -8,9 +8,12 @@ export const SignInSchema = z.object({
 export type SignInForm = z.infer<typeof SignInSchema>
 
 export const SignUpSchema = z.object({
+    type: z.string().nonempty("Please select type."),
     name: z.string().nonempty("Please enter your name."),
     email: z.string().nonempty("Please enter email.").email("Please enter valid email."),
 })
+
+export type SignUpForm = z.infer<typeof SignUpSchema>
 
 export type Role = 'Admin' | 'Employee' | 'Partner' | 'Candidate'
 

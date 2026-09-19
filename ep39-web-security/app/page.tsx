@@ -17,13 +17,13 @@ export default function WelcomePage() {
 
 
       <div className="space-x-1">
-        <Button>
+        <Button render={<Link href={'/signup/candidate'} />} nativeButton={false}>
           <Power /> Getting Start
         </Button>
-        <Button>
+        <Button render={<Link href={'/signup/partner'} />} nativeButton={false}>
           <Network /> Employeer Sign Up
         </Button>
-        <Button render={<Link href={'/signin'}></Link>} nativeButton={false}>
+        <Button render={<Link href={'/signin'} />} nativeButton={false}>
           <LogIn /> Sign In
         </Button>
       </div>
