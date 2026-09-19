@@ -19,19 +19,15 @@ export async function safeCall(action : () => Promise<void>) {
         await action()
     } catch (e : any) {
         if(!isRedirectError(e) && e.message) {
+
             const error:ClientError = JSON.parse(e.message)
 
-            if(error.status == 401 || error.status == 403) {
-                const message = error.messages.length > 0 ? error.messages[0] : "You have to login for this operation."
-                redirect(`/signin?message=${message}`)
-            } else {
-                const message:Partial<ToastT> = {
-                    description: error.messages,
-                    type: error.status === 500 ? "error" : "warning"
-                }
-
-                toast("Message", message)
+            const message:Partial<ToastT> = {
+                description: error.messages,
+                type: error.status === 500 ? "error" : "warning"
             }
+
+            toast("Message", message)
         } else {
             console.log(e)
         }

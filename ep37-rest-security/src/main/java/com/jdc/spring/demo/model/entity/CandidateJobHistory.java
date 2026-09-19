@@ -8,6 +8,8 @@ import com.jdc.spring.demo.model.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,8 +18,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class CandidateJobHistory extends AbstractEntity{
-
-	@GeneratedValue
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	
 	@ManyToOne(optional = false)

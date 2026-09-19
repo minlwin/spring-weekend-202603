@@ -41,38 +41,38 @@ export async function securedRequest<T>(request: ClientRequest): Promise<T> {
     if(!accessToken) {
         await security.clearContext()
         redirect('/signin?message=You have to sign in for this operation.')
-    } else {
-        let response = await requestWithToken(accessToken)
-
-        if(response.status === 410) {
-            const token = await security.getRefreshToken()
-            const refreshResult:AuthResult = await publicRequest({
-                path: 'auth/token/refresh', 
-                method: 'post', 
-                params : { token : token }
-            })
-
-            await security.login(refreshResult)
-            response = await requestWithToken(refreshResult.accessToken)
-        }
-
-        if(!response.ok) {
-            const messages:string[] = await response.json()
-
-            if(response.status === 401 || response.status === 403) {
-                await security.clearContext()
-                redirect(`/signin?message=${messages[0] || 'You have to login again.'}`)
-            } 
-
-            const errorResponse:ClientError = {
-                status: response.status,
-                messages: messages
-            }
-
-            throw Error(JSON.stringify(errorResponse))
-        }
-        return await response.json()
     }
+
+    let response = await requestWithToken(accessToken)
+
+    if(response.status === 410) {
+        const token = await security.getRefreshToken()
+        const refreshResult:AuthResult = await publicRequest({
+            path: 'auth/token/refresh', 
+            method: 'post', 
+            params : { token : token }
+        })
+
+        await security.login(refreshResult)
+        response = await requestWithToken(refreshResult.accessToken)
+    }
+
+    if(!response.ok) {
+        const messages:string[] = await response.json()
+
+        if(response.status === 401 || response.status === 403) {
+            await security.clearContext()
+            redirect(`/signin?message=${messages[0] || 'You have to login again.'}`)
+        } 
+
+        const errorResponse:ClientError = {
+            status: response.status,
+            messages: messages
+        }
+
+        throw Error(JSON.stringify(errorResponse))
+    }
+    return await response.json()    
 }
 
 function getRequestInit(request: ClientRequest) : RequestInit {
@@ -85,9 +85,9 @@ function getRequestInit(request: ClientRequest) : RequestInit {
 
     return {
         method: request.method,
-        headers: !request.useFile ? {
-            'Content-Type' : 'application/json'
-        } : undefined,
+        headers: {
+            'Content-Type' : request.useFile ? 'application/x-www-form-urlencoded' : 'application/json'
+        },
         body: request.useFile? getFormData(request.params!) : JSON.stringify(request.params)
     }
 }
