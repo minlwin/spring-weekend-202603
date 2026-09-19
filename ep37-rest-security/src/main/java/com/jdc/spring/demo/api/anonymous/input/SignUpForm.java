@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record SignUpForm(
 		@NotNull(message = "Please select account type.")
-		Role role,
+		Type type,
 		@NotBlank(message = "Please enter customer name.")
 		String name,
 		@NotBlank(message = "Please enter email.")
@@ -20,8 +20,16 @@ public record SignUpForm(
 		var account = new Account();
 		account.setName(name);
 		account.setEmail(email);
-		account.setRole(role);
+		account.setRole(type.getRole());
 		return account;
+	}
+	
+	public enum Type {
+		Candidate, Partner;
+		
+		public Role getRole() {
+			return Role.valueOf(name());
+		}
 	}
 
 }

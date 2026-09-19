@@ -9,7 +9,7 @@ export default function NoData({name} : {name : string}) {
                     <AlertTriangle size={16} /> No Data
                 </ItemTitle>
                 <ItemDescription>
-                    There is no {name} data. Please change search criteria and search again.
+                    There is no {name}. Please change search criteria and search again.
                 </ItemDescription>
             </ItemContent>
         </Item>

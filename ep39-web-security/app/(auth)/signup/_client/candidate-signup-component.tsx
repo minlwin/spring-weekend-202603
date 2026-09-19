@@ -3,10 +3,12 @@
 import { FormsInput } from "@/components/forms"
 import { Button } from "@/components/ui/button"
 import { SignUpForm, SignUpSchema } from "@/lib/types"
+import { safeCall } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { UserPlus } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 import { useForm } from "react-hook-form"
+import * as action from "@/lib/services/actions/auth/security.action"
 
 export default function CandidateSignUpComponent() {
 
@@ -23,7 +25,9 @@ export default function CandidateSignUpComponent() {
     })
 
     function signUp(form: SignUpForm) {
-
+        safeCall(async () => {
+            await action.signUp(form)
+        })
     }
 
     return (

@@ -31,4 +31,7 @@ public class Partner extends AbstractEntity{
 	
 	private String position;
 	private String phone;
+	
+	@OneToOne(mappedBy = "partner")
+	private PartnerCompany company;
 }

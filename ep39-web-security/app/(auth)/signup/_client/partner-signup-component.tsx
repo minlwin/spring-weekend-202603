@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { UserPlus } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 import { useForm } from "react-hook-form"
+import * as action from "@/lib/services/actions/auth/security.action"
+import { safeCall } from "@/lib/utils"
 
 export default function PartnerSignUpComponent() {
 
@@ -23,7 +25,9 @@ export default function PartnerSignUpComponent() {
     })
 
     function signUp(form: SignUpForm) {
-
+        safeCall(async () => {
+            await action.signUp(form)
+        })
     }
     return (
         <form onSubmit={form.handleSubmit(signUp)} className="space-y-4">

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.spring.demo.api.anonymous.input.SignUpForm;
 import com.jdc.spring.demo.api.anonymous.output.SignUpResult;
+import com.jdc.spring.demo.api.anonymous.service.SignUpService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,8 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("auth/signup")
 public class SignUpApi {
 	
+	private final SignUpService service;
+	
 	@PostMapping
 	SignUpResult signUp(@RequestBody @Validated SignUpForm form) {
-		return null;
+		return service.signUp(form);
 	}	
 }

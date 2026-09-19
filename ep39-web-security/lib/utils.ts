@@ -11,7 +11,12 @@ export function getHome(role: Role) : string {
         return "/management"
     }
 
-    return `/${role.toLocaleLowerCase()}`
+    if(role == "Partner" || role == "Member") {
+        return "/partner"
+    }
+
+
+    return `/candidate`
 }
 
 export async function safeCall(action : () => Promise<void>) {

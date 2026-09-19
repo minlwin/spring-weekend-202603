@@ -1,9 +1,39 @@
+import MessageHandler from "@/components/commons/message-handler";
+import PageHeader from "@/components/commons/page-header";
+import PartnerSidebar from "@/components/sidebar/partner-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { getLoginUser } from "@/lib/services/storage/security-context";
 import { LayoutsProps } from "@/lib/types";
+import { getHome } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
-export default function PartnerLayout({children} : LayoutsProps) {
+export default async function PartnerLayout({children} : LayoutsProps) {
+
+    const loginUser = await getLoginUser()
+
+    if(!loginUser) {
+        // Redirect to Sign In Page
+        redirect("/signin?message=You have to login for this operation.")
+    }
+
+    if(!['Partner', 'Member'].includes(loginUser.role)) {
+        redirect(`${getHome(loginUser.role)}?message=You have no authority for this operation.`)
+    }
+
     return (
-        <div>
-            {children}
-        </div>
+        <SidebarProvider className="space-x-6 pr-6">
+
+            <PartnerSidebar />
+
+            <MessageHandler>
+                <main className="space-y-4 w-full">
+                    <PageHeader title={'Partner Portal'} />
+                    <section>
+                        {children}
+                    </section>
+                </main>
+            </MessageHandler>
+        </SidebarProvider>
+
     )
 }

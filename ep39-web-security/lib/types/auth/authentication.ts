@@ -15,7 +15,11 @@ export const SignUpSchema = z.object({
 
 export type SignUpForm = z.infer<typeof SignUpSchema>
 
-export type Role = 'Admin' | 'Employee' | 'Partner' | 'Candidate'
+export type SignUpResult = {
+    message : string
+}
+
+export type Role = 'Admin' | 'Employee' | 'Candidate'  | 'Partner' | 'Member'
 
 export type AuthResult = {
     name: string

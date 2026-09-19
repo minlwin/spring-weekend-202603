@@ -1,3 +1,4 @@
+import MessageHandler from "@/components/commons/message-handler";
 import PageHeader from "@/components/commons/page-header";
 import ManagementSideBar from "@/components/sidebar/management-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -22,12 +23,14 @@ export default async function ManagementLayout({children} : LayoutsProps) {
         <SidebarProvider className="space-x-6 pr-6">
             <ManagementSideBar />
 
-            <main className="space-y-4 w-full">
-                <PageHeader title={'Management Portal'} />
-                <section>
-                    {children}
-                </section>
-            </main>
+            <MessageHandler>
+                <main className="space-y-4 w-full">
+                    <PageHeader title={'Management Portal'} />
+                    <section>
+                        {children}
+                    </section>
+                </main>
+            </MessageHandler>
         </SidebarProvider>
     )
 }
