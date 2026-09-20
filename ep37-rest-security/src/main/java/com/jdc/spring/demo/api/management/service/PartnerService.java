@@ -28,6 +28,7 @@ public class PartnerService {
 			var cq = cb.createQuery(PartnerListItem.class);
 			
 			var root = cq.from(Partner.class);
+			
 			var company = root.join(PartnerCompany.class, JoinType.LEFT);
 			company.on(cb.equal(root, company.get(PartnerCompany_.partner)));
 			

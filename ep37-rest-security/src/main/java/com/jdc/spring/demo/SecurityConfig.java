@@ -28,7 +28,8 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(request -> {
 			request.requestMatchers("/auth/**", "/password/**","/resources/**").permitAll();
 			request.requestMatchers("/management/**").hasAnyRole("Employee", "Admin");
-			request.requestMatchers("/member/**").hasRole("Customer");
+			request.requestMatchers("/candidate/**").hasRole("Candidate");
+			request.requestMatchers("/partner/**").hasAnyRole("Partner", "Member");
 			request.anyRequest().authenticated();
 		});
 		

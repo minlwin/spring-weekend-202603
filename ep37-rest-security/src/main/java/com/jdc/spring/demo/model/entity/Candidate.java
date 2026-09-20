@@ -36,6 +36,8 @@ public class Candidate extends AbstractEntity{
 	
 	private String selfie;
 	private String jobTitle;
+	
+	@Column(columnDefinition = "TEXT")
 	private String biography;
 	
 	private int expectedSalaryFrom;
