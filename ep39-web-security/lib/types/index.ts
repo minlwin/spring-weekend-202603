@@ -4,6 +4,7 @@ export * from "./forms"
 export * from "./auth/authentication"
 export * from "./auth/account-activation"
 export * from "./auth/password-recovery"
+export * from "./candidate/profiles"
 export * from "./management/employee-management"
 
 export type LayoutsProps = {

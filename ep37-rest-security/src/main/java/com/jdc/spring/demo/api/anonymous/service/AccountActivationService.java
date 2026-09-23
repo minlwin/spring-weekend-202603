@@ -18,7 +18,10 @@ import com.jdc.spring.demo.model.ModificationResult;
 import com.jdc.spring.demo.model.entity.Account.Role;
 import com.jdc.spring.demo.model.entity.VerificationHistory.Action;
 import com.jdc.spring.demo.model.repo.AccountRepo;
+import com.jdc.spring.demo.model.repo.CandidateRepo;
 import com.jdc.spring.demo.model.repo.EmployeeRepo;
+import com.jdc.spring.demo.model.repo.PartnerMemberRepo;
+import com.jdc.spring.demo.model.repo.PartnerRepo;
 import com.jdc.spring.demo.model.service.AccountVerificationService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,9 @@ public class AccountActivationService {
 	
 	private final AccountRepo accountRepo;
 	private final EmployeeRepo employeeRepo;
+	private final PartnerRepo partnerRepo;
+	private final PartnerMemberRepo memberRepo;
+	private final CandidateRepo candidateRepo;
 	private final AccountVerificationService verificationService;
 	
 	private final AuthenticationManager authenticationManager;
@@ -44,11 +50,14 @@ public class AccountActivationService {
 		account.setPassword(passwordEncoder.encode(form.password()));
 		
 		if(account.getRole() == Role.Candidate) {
-			// TODO
+			var candidate = candidateRepo.getReferenceById(account.getId());
+			candidate.setVerifiedAt(LocalDateTime.now());
 		} else if (account.getRole() == Role.Partner) {
-		
+			var partner = partnerRepo.getReferenceById(account.getId());
+			partner.setVerifiedAt(LocalDateTime.now());
 		} else if (account.getRole() == Role.Member) {
-			
+			var member = memberRepo.getReferenceById(account.getId());
+			member.setVerifiedAt(LocalDateTime.now());
 		} else if (account.getRole() == Role.Employee) {
 			var employee = employeeRepo.getReferenceById(account.getId());
 			employee.setActivatedAt(LocalDateTime.now());

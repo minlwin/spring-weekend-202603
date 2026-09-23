@@ -83,12 +83,19 @@ function getRequestInit(request: ClientRequest) : RequestInit {
         }
     }
 
+    if(request.useFile) {
+        return {
+            method: request.method,
+            body: getFormData(request.params!)
+        }
+    }
+
     return {
         method: request.method,
         headers: {
-            'Content-Type' : request.useFile ? 'application/x-www-form-urlencoded' : 'application/json'
+            'Content-Type' : 'application/json'
         },
-        body: request.useFile? getFormData(request.params!) : JSON.stringify(request.params)
+        body: JSON.stringify(request.params)
     }
 }
 

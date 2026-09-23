@@ -46,3 +46,8 @@ export function formatDateTime(value? : string) {
     }
     return ""
 }
+
+export function resources(path: string) {
+    const baseUrl = process.env.BASE_API
+    return `${baseUrl}/resources/${path}`
+}
